@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.10.19)  22 MAR 2026 22:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.10.19)  24 MAR 2026 20:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -906,12 +906,21 @@ Package pdftex.def Info: logo.png  used on input line 4.
  [1
 
 {C:/Users/alext/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./logo.png>]) (main.tex
+Underfull \hbox (badness 10000) in paragraph at lines 19--26
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 27--28
+
+ []
+
 <../diagrams/bdd_initial.png, id=14, 844.65562pt x 748.29562pt>
 File: ../diagrams/bdd_initial.png Graphic file (type png)
 <use ../diagrams/bdd_initial.png>
-Package pdftex.def Info: ../diagrams/bdd_initial.png  used on input line 19.
+Package pdftex.def Info: ../diagrams/bdd_initial.png  used on input line 54.
 (pdftex.def)             Requested size: 360.29568pt x 319.2032pt.
-) [2 <../diagrams/bdd_initial.png>] (proposal.aux)
+[2]) [3 <../diagrams/bdd_initial.png>] (proposal.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
@@ -921,17 +930,17 @@ Package logreq Info: Writing requests to 'proposal.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 56646 strings out of 474486
- 1495214 string characters out of 5743754
- 2592847 words of memory out of 5000000
- 78379 multiletter control sequences out of 15000+600000
- 562516 words of font info for 51 fonts, out of 8000000 for 9000
+ 56651 strings out of 474486
+ 1495338 string characters out of 5743754
+ 2594847 words of memory out of 5000000
+ 78383 multiletter control sequences out of 15000+600000
+ 563158 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  117i,8n,121p,773b,1732s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on proposal.pdf (2 pages, 173227 bytes).
+ <C:\Users\alext\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on proposal.pdf (3 pages, 176260 bytes).
 PDF statistics:
- 42 PDF objects out of 1000 (max. 8388607)
+ 50 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  23 words of extra memory for PDF output out of 10000 (max. 10000000)
 

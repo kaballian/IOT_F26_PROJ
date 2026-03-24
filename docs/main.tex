@@ -1,21 +1,63 @@
-\section{proposal}
-The group would like to propose a mini-project that mixes elements from proprosal: project 1 \textit{Extended Node-RED data flow} and 
-project 6 \textit{Web-of-things}.\\
-In project 6, the project revolves around creating a RESTful IoT application with a sensor device, with continuous time-series data reports
-and the use of Message oriented middleware to handle the data. In project 1, our main take away is support for sensor data, and data analytics 
-on a smaller hardware target an \textit{Arduino} is proposed. It is assumed that any MCU will work in this case. 
-The project will revolve around a device that both group members wants to create, which is a smart air filter \text{HEPA}, and an integrated IOT device
-with controls \textit{actuates} fans to improve circulation, read data from an onboard temperature\_ humidity and air quality sensor, and then boardcasts
-them in a IoT sense, like the weather station.\\
+% \section{proposal}
+% The group would like to propose a mini-project that mixes elements from proprosal: project 1 \textit{Extended Node-RED data flow} and 
+% project 6 \textit{Web-of-things}.\\
+% In project 6, the project revolves around creating a RESTful IoT application with a sensor device, with continuous time-series data reports
+% and the use of Message oriented middleware to handle the data. In project 1, our main take away is support for sensor data, and data analytics 
+% on a smaller hardware target an \textit{Arduino} is proposed. It is assumed that any MCU will work in this case. 
+% The project will revolve around a device that both group members wants to create, which is a smart air filter \text{HEPA}, and an integrated IOT device
+% with controls \textit{actuates} fans to improve circulation, read data from an onboard temperature\_ humidity and air quality sensor, and then boardcasts
+% them in a IoT sense, like the weather station.\\
+% The focus is therefore \textbf{not} to be on any challenges that are outside of the scope of the course, ie. Power-conversion, specific sensor 
+% implementation or any related issues. But only those challenges that relates to the course itself. 
+
+% To keep it inline with a requirement from project 6: \textit{For the sensor devices, two variants exists, 
+% with different hardware configurations for the IOT device}, Two different, smaller, sensor systems will be constructed.
+
+
+
+\section{Project 6: Web-of-things ish}
+This projects aim to combine the main topics of project 6 \textit{Web-of-things} with some
+elements of project 1 \textit{Extended Node-RED dataflow} 
+The project revolves around creation of a RESTful Iot application with a smart 
+object, which provides continuous time-series data, in this case a smart air filter
+incorporating air filters, for home use. The IoT device will in this case be an arduino 
+esque MCU will which actuate hardware and take measurements and generally acts as the sensor.
+This will be communicated to a Raspberry PI, which will implement a message-oriented middelware.\\
+
+The rest of the project will then follow the pivot points of project 6,  such as:\\
+
+\begin{itemize}
+    \item time series data flow for subscribers
+    \item a data model for IoT data
+    \item Design and specification of a REST API front end
+    \item A complete GIT repo
+\end{itemize}
+
+
+Hardware requirements:
+
+\begin{itemize}
+    \item 12V powersupply
+    \item 5V linear regulator board for IOT device
+    \item Raspberry PI
+    \item \textit{Arduino} like breakout board 
+    \item 12V PWM fans
+    \item various other minor hardware
+\end{itemize} 
+
 The focus is therefore \textbf{not} to be on any challenges that are outside of the scope of the course, ie. Power-conversion, specific sensor 
 implementation or any related issues. But only those challenges that relates to the course itself. 
-
-To keep it inline with a requirement from project 6: \textit{For the sensor devices, two variants exists, 
-with different hardware configurations for the IOT device}, Two different, smaller, sensor systems will be constructed.
-
+Therefore any hardware implementation, that is not related or in spirit of the scope of project 6, is secondary to completion.
 
 \section{System}
 \begin{center}
     \includegraphics[width=0.7\textwidth]{../diagrams/bdd_initial.png}
-    \label{}
+    \label{Simple, early model of the system}
 \end{center}
+
+\subsection{Hardware System description}
+Power is supply by a wall adapter and is set to 12V, to avoid any switch mode powersupplies to 
+increase potential, as this voltage is required by PWM fans. The main controller of the whole system
+is the Raspberry PI (RPi), which will host the messaging service and expose the API interface.
+Communication between the \textit{sensor} and RPI is done with UART and communcation to all ancillary 
+components (air quality sensor, climate sensor) is done with I2C. 

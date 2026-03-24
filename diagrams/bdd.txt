@@ -1,0 +1,90 @@
+
+@startuml
+title Smart HEPA air filter - Initial Block diagram
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+
+package "Sensors" {
+    [Climate Sensor\n(Temp / Humidity)] as Climate
+    [Air Quality Sensor\n(PM2.5 / PM10)] as AiqQ
+}
+
+
+package "Control" {
+  [Microcontroller\n(Control Logic)] as MCU
+}
+
+package "Power" {
+  [Input Power\n(e.g. 12V DC)] as Vin
+  [Power Conversion - Linear Regulator] as PowerConv
+}
+
+
+package "Actuation" {
+  [Fan Driver\n(PWM / MOSFET / Driver Board)] as Driver
+  [Fans] as Fans
+}
+
+
+package "Air Path" {
+  [HEPA Filter] as HEPA
+}
+
+package "User Access" {
+  [PC Browser] as Client
+}
+
+
+Vin --> PowerConv
+PowerConv --> MCU : 5V
+PowerConv --> Driver : Fan supply
+PowerConv --> RPi : 5V
+
+Climate --> MCU : I2C 
+AiqQ --> MCU : I2C
+PM --> MCU : I2C
+
+MCU --> Driver : PWM / Enable
+Driver --> Fans : Power control
+Fans --> HEPA : Airflow through filter
+
+
+
+MCU <--> RPi : UART
+RPi --> API
+RPi --> WebApp
+
+
+Client --> WebApp : HTTP
+Client --> API : REST requests
+
+API --> MCU : Read status / set fan mode
+MCU --> API : Sensor data / alarms
+
+note right of MCU
+Fast control loop
+- Read sensors
+- Fan regulation
+- Alarm handling
+- Safe fallback operation
+end note
+
+
+note right of RPi
+Higher-level functions
+- Web dashboard
+- RESTful IoT interface
+- Data logging
+- Configuration
+- Remote/local access
+end note
+
+note bottom of PM
+PM2.5 / PM10 sensor
+to monitor HEPA filter
+end note
+
+
+@enduml
+
