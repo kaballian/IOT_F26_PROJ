@@ -1,0 +1,4 @@
+C:/Users/alext/Documents/AU/IOT_F26_PROJ/FW/IOT_DEV_SENSOR.X/_build/IOT_DEV_SENSOR/default/CMakeFiles/IOT_DEV_SENSOR_default_default_XC8_compile.dir
+C:/Users/alext/Documents/AU/IOT_F26_PROJ/FW/IOT_DEV_SENSOR.X/_build/IOT_DEV_SENSOR/default/CMakeFiles/IOT_DEV_SENSOR_default_image_V6VrMKlC.dir
+C:/Users/alext/Documents/AU/IOT_F26_PROJ/FW/IOT_DEV_SENSOR.X/_build/IOT_DEV_SENSOR/default/CMakeFiles/edit_cache.dir
+C:/Users/alext/Documents/AU/IOT_F26_PROJ/FW/IOT_DEV_SENSOR.X/_build/IOT_DEV_SENSOR/default/CMakeFiles/rebuild_cache.dir

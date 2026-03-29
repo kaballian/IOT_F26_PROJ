@@ -1,0 +1,26 @@
+{
+  "version": 4,
+  "configurations": [
+    {
+      "name": "XC8",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "C:/Program Files/Microchip/xc8/v3.10/pic/include",
+        "C:/Program Files/Microchip/xc8/v3.10/pic/include/c99",
+        "C:/Users/alext/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8/pic/include",
+        "C:/Users/alext/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8/pic/include/proc"
+      ],
+      "defines": [
+        "__XC8=1",
+        "__16F18124__"
+      ],
+      "compilerPath": "C:/Program Files/Microchip/xc8/v3.10/bin/xc8-cc.exe",
+      "compilerArgs": ["-mcpu=16F18124"],
+      "cStandard": "c99",
+      "intelliSenseMode": "gcc-x64"
+    }
+  ]
+}
+
+
+      
