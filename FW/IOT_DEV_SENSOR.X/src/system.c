@@ -1,6 +1,7 @@
 #include "../include/system.h"
 
 
+
 /*
 main driver for IOT sensor firmware
 statemachine is expanded here
@@ -10,8 +11,9 @@ statemachine is expanded here
 void SYSTEM_init(void)
 {
     //clock manager
-
+    CLOCK_init();
     //pin manager
+    PIN_MANAGER_init();
 }
 
 /*flag helpers*/

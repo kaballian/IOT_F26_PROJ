@@ -2,8 +2,14 @@
 #define SYSTEM_H
 #include <xc.h>
 #include "utils.h"
+#include "include/clock.h"
+#include "include/pins.h"
+
+
+
 #include "FAN.h"
 #include "EXT_SENSOR.h"
+
 
 /*
 IOT PROJECT:
@@ -77,6 +83,9 @@ typedef struct{
     uint16_t AQI; //air quality indicator 
 }ENS160_meas;
 
+typedef struct{
+    uint8_t switch_chl;
+}switch_t;
 
 //shared data
 typedef struct {
@@ -87,7 +96,7 @@ typedef struct {
     uint16_t    F2_meas[FAN_BUF_LEN];
     BME280_meas room_meas[BME280_BUF_LEN];
     ENS160_meas AQI_meas[ENS160_BUF_LEN];
-
+    switch_t    FAN_selector;
     uint8_t     meas_head;
     uint8_t     meas_count;
 
