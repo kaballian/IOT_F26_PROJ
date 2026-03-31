@@ -14,6 +14,7 @@ void SYSTEM_init(void)
     CLOCK_init();
     //pin manager
     PIN_MANAGER_init();
+    
 }
 
 /*flag helpers*/
