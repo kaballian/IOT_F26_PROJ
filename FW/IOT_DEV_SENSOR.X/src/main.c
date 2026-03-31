@@ -15,10 +15,15 @@ defined inm system.h
 
 
 
+#include "include/system.h"
 #include <xc.h>
 #include <pic16f18124.h>
 
 int main(void) {
-    TRISAbits.TRISA0 = 0;
+    
+    /*set clocks and pins*/
+    SYSTEM_init(); 
+    
+
     return 1;
 }
