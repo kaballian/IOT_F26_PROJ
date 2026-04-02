@@ -23,7 +23,28 @@ int main(void) {
     
     /*set clocks and pins*/
     SYSTEM_init(); 
-    
+
 
     return 1;
 }
+
+
+/*
+
+TODO:
+
+FAN driver
+    - PWM setup
+    - PWM abstraction
+        - store setting
+Tach reader / converter logic
+    - TMR1 counter reader
+    - TMRn reading period
+    - (2 poles on fan) -> divide by 2
+    - store reading
+import I2C library for sensors
+
+
+UART ISR RX/TX
+
+*/

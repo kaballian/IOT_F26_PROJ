@@ -128,7 +128,11 @@
                 "include/utils.h",
                 "src/system.c",
                 "include/FAN.h",
-                "include/EXT_SENSOR.h"
+                "include/EXT_SENSOR.h",
+                "include/eusart1.h",
+                "include/PWM.h",
+                "src/FAN.c",
+                "src/PWM.c"
             ]
         }
     ]
