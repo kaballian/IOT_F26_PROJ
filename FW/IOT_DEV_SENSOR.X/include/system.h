@@ -15,10 +15,8 @@
 IOT PROJECT:
 AIR PARTICLE SENSOR FIRMWARE
 SYSTEM.h
-
 */
-/*
-simple statemachine*/
+/*simple statemachine*/
 
 void SYSTEM_init(void);
 

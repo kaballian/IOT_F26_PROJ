@@ -132,7 +132,9 @@
                 "include/eusart1.h",
                 "include/PWM.h",
                 "src/FAN.c",
-                "src/PWM.c"
+                "src/PWM.c",
+                "src/I2C.c",
+                "include/ENS_160.h"
             ]
         }
     ]

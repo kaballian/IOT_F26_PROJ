@@ -24,6 +24,6 @@ void FAN_init(fan_t *fan,
             uint16_t min_duty,
             uint16_t max_duty);
 
-void FAN_set_duty(fan_t fan, uint16_t duty);
+void FAN_set_duty(fan_t *fan, uint16_t duty);
 
 #endif

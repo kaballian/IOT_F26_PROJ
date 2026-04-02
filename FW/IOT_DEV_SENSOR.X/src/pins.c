@@ -132,9 +132,11 @@ void PIN_MANAGER_init(void)
     /*          0b00 |[010:PORTC]|[000:PORTxPin0] */
     T1CKIPPS    = 0b00010000;
     /*          0b00 |[010:PORTC]|[011:PORTxPin3] */
-    SSP1DATPPS  = 0b00010011;
+    // SSP1DATPPS  = 0b00010011;
+    SSP2DATPPS  = 0b00010011;
     /*          0b00 |[010:PORTC]|[100:PORTxPin4] */
-    SSP1CLKPPS  = 0b00010100;
+    // SSP1CLKPPS  = 0b00010100;
+    SSP2CLKPPS  = 0b00010100;
 
     /*
     PPS OUTPUS [table 18-2]
@@ -150,8 +152,10 @@ void PIN_MANAGER_init(void)
     RA5PPS  = 0x13; //UART TX
     RC1PPS  = 0x0B; //PWM11
     RC2PPS  = 0x0C; //PWM12
-    RC3PPS  = 0x1C; //SCA
-    RC4PPS  = 0x1B; //SCL
+    // RC3PPS  = 0x1C; //SCA
+    RC3PPS  = 0x1E; //SCA
+    // RC4PPS  = 0x1B; //SCL
+    RC4PPS  = 0x1D; //SCL
     RC5PPS  = 0x01; // CLC1_out / status LED
 
     /*lock sequence*/

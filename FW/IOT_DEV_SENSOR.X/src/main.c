@@ -17,13 +17,29 @@ defined inm system.h
 
 #include "include/system.h"
 #include <xc.h>
-#include <pic16f18124.h>
+
+#include "include/FAN.h"
+#include "include/PWM.h"
+
+
+
+
+/* HARDWARE INSTANTIATIONS*/
+static fan_t fan1; 
+static fan_t fan2; 
 
 int main(void) {
     
     /*set clocks and pins*/
     SYSTEM_init(); 
 
+    /*PWM INIT*/
+    PWM_init();
+    /*FANS*/
+    FAN_init(&fan1, PWM_set_duty, &PWM_FAN1_CH, 0, 499);    
+    FAN_init(&fan2, PWM_set_duty, &PWM_FAN2_CH, 0, 499);    
+
+    
 
     return 1;
 }

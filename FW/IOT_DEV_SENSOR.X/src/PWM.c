@@ -45,7 +45,7 @@ void PWM_init(void)
     PWM1S1P2 = 120; //24%
 
 }
-void PWM_set_duty_P1(void *CTX, uint16_t duty)
+void PWM_set_duty(void *CTX, uint16_t duty)
 {
     pwm_chan_t *chan = (pwm_chan_t *)CTX;
     
@@ -53,7 +53,7 @@ void PWM_set_duty_P1(void *CTX, uint16_t duty)
     {
         return;
     }
-    if(duty >= 100) //check if 100 or above.
+    if((duty >= 100) && (duty < 0)) //check if above 100 or below 0above.
     {
         return;
     }
