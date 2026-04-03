@@ -135,7 +135,8 @@
                 "src/PWM.c",
                 "src/I2C.c",
                 "include/ENS_160.h",
-                "src/ENS_160.c"
+                "src/ENS_160.c",
+                "src/ARG419BR.c"
             ]
         }
     ]

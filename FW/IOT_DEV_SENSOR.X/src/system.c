@@ -1,5 +1,7 @@
 #include "../include/system.h"
+#include "include/ENS_160.h"
 #include "include/PWM.h"
+#include "include/eusart1.h"
 
 
 
@@ -15,13 +17,30 @@ void SYSTEM_init(void)
     CLOCK_init();
     //pin manager
     PIN_MANAGER_init();
+    /*PWM INIT*/
+    PWM_init();
+    /*I2C INIT*/
+    I2C2_init();
+    /*UART*/
+    EUSART1_init();
+    /*TMR1*/
     
+
+
+
 }
 
 /*flag helpers*/
 
 
-static void st_init_entry(context_t *CTX){}
+static void st_init_entry(context_t *CTX)
+{
+    FAN_set_duty(&CTX->FAN1, 10);
+    FAN_set_duty(&CTX->FAN2, 10);
+    ENS160_set_opmode(&CTX->ENS160, ENS160_OPMODE_STANDARD);
+
+    
+}
 static transition_t st_init_handle(context_t *CTX, event_t ev){}
 static void st_idle_entry(context_t *CTX){}
 static transition_t st_idle_handle(context_t *CTX, event_t ev){}
@@ -74,6 +93,11 @@ void FSM_init(FSM_t *sm)
     sm->CTX.meas_head   = 0;
     sm->CTX.meas_count  = 0;
 
+
+ 
+    
+
+    
 
     /*FANS*/
     FAN_init(&sm->CTX.FAN1, PWM_set_duty, &PWM_FAN1_CH, 0, 499);    

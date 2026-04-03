@@ -18,8 +18,8 @@ defined inm system.h
 #include "include/system.h"
 #include <xc.h>
 
-#include "include/FAN.h"
-#include "include/PWM.h"
+
+
 
 
 
@@ -36,10 +36,7 @@ int main(void) {
     static FSM_t sm;
 
 
-    /*PWM INIT*/
-    PWM_init();
-    /*I2C INIT*/
-    I2C2_init();
+    
 
     FSM_init(&sm);
     
@@ -54,15 +51,21 @@ int main(void) {
 TODO:
 
 FAN driver
-    - PWM setup
-    - PWM abstraction
-        - store setting
+    - PWM setup (check)
+    - PWM abstraction (check)
+        - store setting (check)
+
+Analog switch
+    - HW abstraction
+    
 Tach reader / converter logic
     - TMR1 counter reader
     - TMRn reading period
     - (2 poles on fan) -> divide by 2
     - store reading
-import I2C library for sensors
+import I2C library for sensors 
+    - ENS160 (made from scratch, check)
+    - BME280 (coming)
 
 
 UART ISR RX/TX
