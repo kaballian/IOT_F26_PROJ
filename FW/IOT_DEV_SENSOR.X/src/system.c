@@ -1,4 +1,5 @@
 #include "../include/system.h"
+#include "include/PWM.h"
 
 
 
@@ -72,6 +73,14 @@ void FSM_init(FSM_t *sm)
     sm->CTX.init_flags  = 0;
     sm->CTX.meas_head   = 0;
     sm->CTX.meas_count  = 0;
+
+
+    /*FANS*/
+    FAN_init(&sm->CTX.FAN1, PWM_set_duty, &PWM_FAN1_CH, 0, 499);    
+    FAN_init(&sm->CTX.FAN2, PWM_set_duty, &PWM_FAN2_CH, 0, 499);    
+
+    /*I2C ENS160*/
+    ENS160_init(&sm->CTX.ENS160, ENS_160_ADDR0);
 
 }
 

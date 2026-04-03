@@ -134,7 +134,8 @@
                 "src/FAN.c",
                 "src/PWM.c",
                 "src/I2C.c",
-                "include/ENS_160.h"
+                "include/ENS_160.h",
+                "src/ENS_160.c"
             ]
         }
     ]

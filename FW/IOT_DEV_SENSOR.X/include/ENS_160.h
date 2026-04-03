@@ -22,7 +22,21 @@ in rapid success (single transaction)
 // (*) = only if not self explanatory
 /*registers Page 25 |NAME| ADDR| Size (*)|DESCP(*) */ 
 #define ENS160_REG_PART_ID      0x00
+#define ENS160_PART_ID_EXPECTED 0x0160
+/*OPMODE: 
+0x00:DEEP SLEEP
+0x01:IDLE MODE
+0x02:STANDARD GAS SENSING MODE
+0xF0:RESET*/
 #define ENS160_REG_OPMODE       0x10
+#define ENS160_OPMODE_DEEP_S    0x00
+#define ENS160_OPMODE_IDLE      0x01    
+#define ENS160_OPMODE_STANDARD  0x02
+#define ENS160_OPMODE_RESET     0xF0
+
+
+
+
 #define ENS160_REG_CONFIG       0x11
 #define ENS160_REG_COMMAND      0x12
 #define ENS160_REG_TEMP_IN      0x13    //2
@@ -39,27 +53,31 @@ in rapid success (single transaction)
 
 
 
-#define ENS160_OPMODE_IDLE      0x01    
-#define ENS160_OPMODE_STANDARD  0x02
-
 
 
 typedef struct 
 {
-    uint8_t     addr;
+    uint8_t     dev_addr;
     uint16_t    part_id;
-    uint8_t     status;
-    uint8_t     aqi;
-    uint16_t    tvoc_ppb;
-    uint16_t    eco2_ppm;
+    
+    uint8_t     dev_status;
+    uint8_t     validity_flag;
     uint8_t     present;
     uint8_t     initialized;
+    uint8_t     data_valid;
+
+
+    uint8_t     aqi;   
+    uint16_t    tvoc_ppb;
+    uint16_t    eco2_ppm;
 }ENS160_t;
 
 bool ENS160_probe(uint8_t addr, uint16_t *part_id);
 bool ENS160_init(ENS160_t *dev, uint8_t addr);
 bool ENS160_read_status(ENS160_t *dev);
 bool ENS160_read_data(ENS160_t *dev);
+bool ENS160_set_opmode(ENS160_t *dev, uint8_t mode);
+bool ENS160_write_env(ENS160_t *dev, int16_t temp_c_x100, uint16_t rh_x100);
 
 
 #endif

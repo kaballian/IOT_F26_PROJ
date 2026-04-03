@@ -9,6 +9,9 @@
 
 #include "FAN.h"
 #include "EXT_SENSOR.h"
+#include "include/ENS_160.h"
+#include "include/I2C.h"
+#include "include/FAN.h"
 
 
 /*
@@ -94,9 +97,17 @@ typedef struct {
     uint16_t    F2_meas[FAN_BUF_LEN];
     BME280_meas room_meas[BME280_BUF_LEN];
     ENS160_meas AQI_meas[ENS160_BUF_LEN];
-    switch_t    FAN_selector;
+    
     uint8_t     meas_head;
     uint8_t     meas_count;
+
+
+
+    //hardware
+    ENS160_t    ENS160;
+    fan_t       FAN1;
+    fan_t       FAN2;
+    switch_t    FAN_selector;
 
 }context_t;
 

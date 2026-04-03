@@ -25,21 +25,25 @@ defined inm system.h
 
 
 /* HARDWARE INSTANTIATIONS*/
-static fan_t fan1; 
-static fan_t fan2; 
 
 int main(void) {
     
     /*set clocks and pins*/
     SYSTEM_init(); 
 
+    // static fan_t fan1; 
+    // static fan_t fan2; 
+    static FSM_t sm;
+
+
     /*PWM INIT*/
     PWM_init();
-    /*FANS*/
-    FAN_init(&fan1, PWM_set_duty, &PWM_FAN1_CH, 0, 499);    
-    FAN_init(&fan2, PWM_set_duty, &PWM_FAN2_CH, 0, 499);    
+    /*I2C INIT*/
+    I2C2_init();
 
+    FSM_init(&sm);
     
+
 
     return 1;
 }
