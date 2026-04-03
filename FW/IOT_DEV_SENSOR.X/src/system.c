@@ -1,9 +1,4 @@
 #include "../include/system.h"
-#include "include/ENS_160.h"
-#include "include/PWM.h"
-#include "include/eusart1.h"
-
-
 
 /*
 main driver for IOT sensor firmware
@@ -24,7 +19,7 @@ void SYSTEM_init(void)
     /*UART*/
     EUSART1_init();
     /*TMR1*/
-    
+
 
 
 
@@ -38,10 +33,22 @@ static void st_init_entry(context_t *CTX)
     FAN_set_duty(&CTX->FAN1, 10);
     FAN_set_duty(&CTX->FAN2, 10);
     ENS160_set_opmode(&CTX->ENS160, ENS160_OPMODE_STANDARD);
+    ADG419_init();
 
-    
+    CTX->init_flags |= (INIT_PWM1 | INIT_PWM2 | INIT_ENS160);
 }
-static transition_t st_init_handle(context_t *CTX, event_t ev){}
+static transition_t st_init_handle(context_t *CTX, event_t ev)
+{
+    switch (ev)
+    {
+    case INIT_COMP:
+        return to(ST_MEAS);
+        
+    
+    default:
+        return stay();
+    }
+}
 static void st_idle_entry(context_t *CTX){}
 static transition_t st_idle_handle(context_t *CTX, event_t ev){}
 static void st_meas_entry(context_t *CTX){}

@@ -12,6 +12,15 @@
 #include "include/ENS_160.h"
 #include "include/I2C.h"
 #include "include/FAN.h"
+#include "include/PWM.h"
+#include "include/eusart1.h"
+#include "include/ADG419BR.h"
+
+
+
+
+
+
 
 
 /*
@@ -84,9 +93,7 @@ typedef struct{
     uint16_t AQI; //air quality indicator 
 }ENS160_meas;
 
-typedef struct{
-    uint8_t switch_chl;
-}switch_t;
+
 
 //shared data
 typedef struct {
@@ -104,11 +111,11 @@ typedef struct {
 
 
     //hardware
-    ENS160_t    ENS160;
-    fan_t       FAN1;
-    fan_t       FAN2;
-    switch_t    FAN_selector;
-
+    ENS160_t        ENS160;
+    fan_t           FAN1;
+    fan_t           FAN2;
+    switch_chl_t    FAN_selector;
+    
 }context_t;
 
 //state transition

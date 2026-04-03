@@ -40,7 +40,10 @@ int main(void) {
 
     FSM_init(&sm);
     
-
+    if(sm.CTX.init_flags == (INIT_PWM1 | INIT_PWM2 | INIT_ENS160))
+    {
+        FSM_dispatch(&sm, INIT_COMP);
+    }
 
     return 1;
 }
@@ -57,7 +60,7 @@ FAN driver
 
 Analog switch
     - HW abstraction
-    
+
 Tach reader / converter logic
     - TMR1 counter reader
     - TMRn reading period
