@@ -15,6 +15,7 @@
 #include "include/PWM.h"
 #include "include/eusart1.h"
 #include "include/ADG419BR.h"
+#include "include/TMR1.h"
 
 
 

@@ -136,7 +136,9 @@
                 "src/I2C.c",
                 "include/ENS_160.h",
                 "src/ENS_160.c",
-                "src/ARG419BR.c"
+                "src/ARG419BR.c",
+                "include/TMR1.h",
+                "src/TMR1.c"
             ]
         }
     ]

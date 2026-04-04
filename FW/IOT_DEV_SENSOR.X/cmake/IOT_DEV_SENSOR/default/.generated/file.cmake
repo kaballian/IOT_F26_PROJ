@@ -21,6 +21,7 @@ set(IOT_DEV_SENSOR_default_default_XC8_FILE_TYPE_compile
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/FAN.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/I2C.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/PWM.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/TMR1.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/main.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/system.c")
 set_source_files_properties(${IOT_DEV_SENSOR_default_default_XC8_FILE_TYPE_compile} PROPERTIES LANGUAGE C)

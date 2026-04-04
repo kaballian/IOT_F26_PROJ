@@ -19,6 +19,7 @@ void SYSTEM_init(void)
     /*UART*/
     EUSART1_init();
     /*TMR1*/
+    TMR1_CNT_init();
 
 
 
@@ -30,10 +31,21 @@ void SYSTEM_init(void)
 
 static void st_init_entry(context_t *CTX)
 {
+     /*FANS*/
+    FAN_init(&CTX->FAN1, PWM_set_duty, &PWM_FAN1_CH, 0, 499);    
+    FAN_init(&CTX->FAN2, PWM_set_duty, &PWM_FAN2_CH, 0, 499);    
+
+    /*I2C ENS160*/
+    ENS160_init(&CTX->ENS160, ENS_160_ADDR0);
+
+
+    /*ADG419*/
+    ADG419_init();
+
     FAN_set_duty(&CTX->FAN1, 10);
     FAN_set_duty(&CTX->FAN2, 10);
     ENS160_set_opmode(&CTX->ENS160, ENS160_OPMODE_STANDARD);
-    ADG419_init();
+    
 
     CTX->init_flags |= (INIT_PWM1 | INIT_PWM2 | INIT_ENS160);
 }
@@ -125,12 +137,7 @@ void FSM_init(FSM_t *sm)
     sm->CTX.meas_count  = 0;
 
 
-    /*FANS*/
-    FAN_init(&sm->CTX.FAN1, PWM_set_duty, &PWM_FAN1_CH, 0, 499);    
-    FAN_init(&sm->CTX.FAN2, PWM_set_duty, &PWM_FAN2_CH, 0, 499);    
-
-    /*I2C ENS160*/
-    ENS160_init(&sm->CTX.ENS160, ENS_160_ADDR0);
+   
 
     if(OPS[sm->state].entry)
     {
