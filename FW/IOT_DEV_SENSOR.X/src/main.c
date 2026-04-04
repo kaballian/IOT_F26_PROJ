@@ -19,8 +19,14 @@ defined in system.h
 #include <xc.h>
 
 
+#define EVENT_Q_SIZE 8
 
-
+typedef struct {
+    event_t buf[EVENT_Q_SIZE];
+    uint8_t head;
+    uint8_t tail;
+    uint8_t count;
+}event_q_t;
 
 
 
@@ -34,7 +40,7 @@ int main(void) {
     // static fan_t fan1; 
     // static fan_t fan2; 
     static FSM_t sm;
-
+    static event_q_t ev_q;
 
     
 
@@ -62,10 +68,10 @@ Analog switch
     - HW abstraction (check)
 
 Tach reader / converter logic
-    - TMR1 counter reader
-    - TMRn reading period
-    - (2 poles on fan) -> divide by 2
-    - store reading
+    - TMR1 counter reader (check)
+    - TMRn reading period (check)
+    - (2 poles on fan) -> divide by 2 (check)
+    - store reading 
 import I2C library for sensors 
     - ENS160 (made from scratch, check)
     - BME280 (coming)

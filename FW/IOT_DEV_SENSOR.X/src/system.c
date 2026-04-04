@@ -1,4 +1,6 @@
 #include "../include/system.h"
+#include "include/ENS_160.h"
+
 
 
 /*
@@ -23,7 +25,8 @@ void SYSTEM_init(void)
     EUSART1_init();
     /*TMR1*/
     TMR1_CNT_init();
-    
+    /*TMR0*/
+    TMR0_init();
 
 
 
@@ -116,8 +119,27 @@ static transition_t st_meas_handle(context_t *CTX, event_t ev,state_t current)
             FAN_CNT_stop(&CTX->FAN2);
             return stay(current);
         } 
+        case MEAS_ENS160:{
 
-        
+            if(!CTX->ENS160.initialized)
+            {
+                return stay(current);
+            }
+            if(!ENS160_read_status(&CTX->ENS160))
+            {
+                CTX->fault_flags |= FAULT_ENS160; //AMBIGUOUS FAULT FLAGS
+                return stay(current);
+            }
+            if(CTX->ENS160.dev_status & 0x02)
+            {
+                if(!ENS160_read_data(&CTX->ENS160))
+                {
+                    CTX->fault_flags |= FAULT_ENS160;  //AMBIGUOUS FAULT FLAGS
+                }
+            }
+            
+            return stay(current);
+        }
 
         default:
             return stay(current);
@@ -126,11 +148,6 @@ static transition_t st_meas_handle(context_t *CTX, event_t ev,state_t current)
 }
 static void st_comm_entry(context_t *CTX){}
 static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current){}
-
-
-
-
-
 
 
 

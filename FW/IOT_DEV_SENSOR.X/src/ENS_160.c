@@ -1,6 +1,6 @@
 #include "include/ENS_160.h"
 #include "include/I2C.h"
-#include <pic16f18124.h>
+
 
 
 
@@ -85,6 +85,16 @@ bool ENS160_read_status(ENS160_t *dev)
     {
         return false;
     }
+    /*
+    bits: (page 30 in datasheet)
+    7 - STATAS - indicates OPMODE running
+    6 - STATER - indicates an error has been detected, invalid operating mode selected
+    5 - reserved
+    4 - reserved
+    2-3 - validity flag
+    1 - NEWDAT - indicates new data is available in DATA_x, auto cleared at DATA_x read
+    0 - NEWGPR - indicates new data is available in GPR_READx regs
+    */
     dev->dev_status = status; //write status to memory
     /*extract validity flags (bits [2:3] in register)
     shift status twice and & wit 11 to extract 
