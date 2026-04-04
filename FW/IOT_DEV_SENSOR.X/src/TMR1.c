@@ -15,7 +15,7 @@ void TMR1_CNT_init(void)
     TMR1H = 0;  
     TMR1L = 0;
 
-    T1CONbits.ON    = 1;        // start the timer.
+    // T1CONbits.ON    = 1;        // start the timer.
 
 
 }
@@ -39,4 +39,22 @@ static uint16_t TMR1_read16(void)
     uint8_t low     = TMR1L;
     uint8_t high    = TMR1H;
     return ((uint16_t)high << 8) | low;
+}
+
+void TMR1_CNT_start(void)
+{
+    T1CONbits.ON = 1; //start the timer
+}
+void TMR1_CNT_stop(void)
+{
+    T1CONbits.ON = 0; //stop the timer
+}
+void TMR1_CNT_reset(void)
+{
+    T1CONbits.ON = 0;
+    
+    TMR1H = 0;
+    TMR1L = 0;
+
+    PIR1bits.TMR1IF = 0; //optional, clear overflow flag
 }

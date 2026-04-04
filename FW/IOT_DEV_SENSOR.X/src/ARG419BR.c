@@ -1,38 +1,41 @@
 #include "include/ADG419BR.h"
-#include "include/utils.h"
 
 
-#define PIN_RA2     ((pin_t){.lat=&LATA, .tris=&TRISA, .bitmask=(1u<<2)})
 
+// typedef struct{
+//     pin_t               channelSelector;
+//     switch_chl_t        status;
+// }ADG419_t;
 
-typedef struct{
-    pin_t               channelSelector;
-    switch_chl_t        status;
-}ADG419_t;
+// static ADG419_t AnalogSwitch = {
+//     .channelSelector        = PIN_RA2,
+//     .status                 = CHL_1,
+// };
 
-static ADG419_t AnalogSwitch = {
-    .channelSelector        = PIN_RA2,
-    .status                 = CHL_1,
-};
-
-void ADG419_init()
+void ADG419_init(ADG419_t *dev, const pin_t select_pin)
 {
-    pin_output(&AnalogSwitch.channelSelector);
-    ADG419_CHL_SELECT(CHL_1);
+    if(dev == 0)
+    {
+        return;
+    }
+
+    dev->channelSelector    = select_pin;
+    dev->status             = CHL_1;
+
+    pin_output(&dev->channelSelector);
+    ADG419_CHL_SELECT(dev, CHL_1);
 }
 
-void ADG419_CHL_SELECT(switch_chl_t chl)
+void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl)
 {
     switch (chl)
     {
     case CHL_1:
-        pin_clear(&AnalogSwitch.channelSelector);
-        AnalogSwitch.status = CHL_1;
+        pin_clear(&dev->channelSelector);
         break;
     
     case CHL_2:
-        pin_set(&AnalogSwitch.channelSelector);
-        AnalogSwitch.status = CHL_2;
+        pin_set(&dev->channelSelector);
         break;
 
     default:
@@ -41,7 +44,3 @@ void ADG419_CHL_SELECT(switch_chl_t chl)
 
 }
 
-switch_chl_t ADG419_get_chl()
-{
-    return AnalogSwitch.status;
-}

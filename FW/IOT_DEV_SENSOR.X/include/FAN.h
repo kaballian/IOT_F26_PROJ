@@ -15,8 +15,7 @@ typedef struct
 {
     fan_set_duty_fn_t set_duty;
     void *CTX;
-    uint16_t min_duty;
-    uint16_t max_duty;
+    uint8_t  duty;
     uint16_t tach_count;
     uint16_t pulses_pr_rev;
     uint16_t RPM;
@@ -25,12 +24,15 @@ typedef struct
 void FAN_init(fan_t *fan,
             fan_set_duty_fn_t set_duty,
             void *CTX, 
-            uint16_t min_duty,
-            uint16_t max_duty);
+            uint8_t duty);
 
 void FAN_set_duty(fan_t *fan, uint16_t duty);
 
 void FAN_CNT(fan_t *fan);
 uint16_t FAN_RPM_CONV(uint16_t pulses);
+
+void FAN_CNT_start(fan_t *fan);
+void FAN_CNT_stop(fan_t *fan);
+
 
 #endif

@@ -1,5 +1,5 @@
 #include "include/PWM.h"
-#include <pic16f18124.h>
+
 
 pwm_chan_t PWM_FAN1_CH = {
     .pR         = &PWM1S1P1,
@@ -53,16 +53,21 @@ void PWM_set_duty(void *CTX, uint16_t duty)
     {
         return;
     }
-    if((duty >= 100) && (duty < 0)) //check if above 100 or below 0above.
+    if(duty > 100)
     {
-        return;
+        duty = 100;
     }
+    if(duty < 1)
+    {
+        duty = 1;
+    }
+   
     /* 
     MAP:
     [a:b] -> [c:d]   assuming a!=b
     f(t) = c + ((d-c) / (b-a)) * (t-a)
     */
-    *(chan->pR) = (uint16_t)(499/100)*(duty); //this could be precomputed
-
+    // *(chan->pR) = (uint16_t)(499/100)*(duty); //this could be precomputed
+    *(chan->pR) = (uint16_t)(((uint32_t)chan->period * duty) / 100u);
     *(chan->con) |= chan->ld_mask;
 }

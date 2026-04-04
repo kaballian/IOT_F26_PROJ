@@ -1,5 +1,6 @@
 #include "../include/system.h"
 
+
 /*
 main driver for IOT sensor firmware
 statemachine is expanded here
@@ -12,6 +13,8 @@ void SYSTEM_init(void)
     CLOCK_init();
     //pin manager
     PIN_MANAGER_init();
+    /*interrupts*/
+    ISR_init();
     /*PWM INIT*/
     PWM_init();
     /*I2C INIT*/
@@ -20,7 +23,7 @@ void SYSTEM_init(void)
     EUSART1_init();
     /*TMR1*/
     TMR1_CNT_init();
-
+    
 
 
 
@@ -32,18 +35,20 @@ void SYSTEM_init(void)
 static void st_init_entry(context_t *CTX)
 {
      /*FANS*/
-    FAN_init(&CTX->FAN1, PWM_set_duty, &PWM_FAN1_CH, 0, 499);    
-    FAN_init(&CTX->FAN2, PWM_set_duty, &PWM_FAN2_CH, 0, 499);    
+    FAN_init(&CTX->FAN1, PWM_set_duty, &PWM_FAN1_CH, 20);    
+    FAN_init(&CTX->FAN2, PWM_set_duty, &PWM_FAN2_CH, 25);    
 
     /*I2C ENS160*/
     ENS160_init(&CTX->ENS160, ENS_160_ADDR0);
 
 
     /*ADG419*/
-    ADG419_init();
-
+    ADG419_init(&CTX->FAN_selector, PIN_RA2);
+    
+    /*set initial duty cycle*/
     FAN_set_duty(&CTX->FAN1, 10);
-    FAN_set_duty(&CTX->FAN2, 10);
+    FAN_set_duty(&CTX->FAN2, 15);
+    /*set opmode for ENS160*/
     ENS160_set_opmode(&CTX->ENS160, ENS160_OPMODE_STANDARD);
     
 
@@ -68,7 +73,7 @@ static transition_t st_idle_handle(context_t *CTX, event_t ev,state_t current)
     /*once the idle time is over dispatch to next state*/
 }
 static void st_meas_entry(context_t *CTX)
-{
+{   
     /*FAN1 
     check switch position
     check duty cycle
@@ -87,7 +92,37 @@ static void st_meas_entry(context_t *CTX)
 }
 static transition_t st_meas_handle(context_t *CTX, event_t ev,state_t current)
 {
+    switch(ev)
+    {
+        case MEAS_FAN1_START:
+        {
+            /*check switch position*/
+            ADG419_CHL_SELECT(&CTX->FAN_selector, CHL_1);    
+            /*measure RPM*/
+            FAN_CNT_start(&CTX->FAN1);
+            /*return and wait for timing window to be done*/
+            return stay(current);
+        }
+        case MEAS_FAN1_DONE:{
+            FAN_CNT_stop(&CTX->FAN1);
+            return stay(current);
+        }
+        case MEAS_FAN2_START:{
+            ADG419_CHL_SELECT(&CTX->FAN_selector, CHL_2);
+            FAN_CNT_start(&CTX->FAN2);
+            return stay(current);
+        }
+        case MEAS_FAN2_DONE:{
+            FAN_CNT_stop(&CTX->FAN2);
+            return stay(current);
+        } 
 
+        
+
+        default:
+            return stay(current);
+
+    }
 }
 static void st_comm_entry(context_t *CTX){}
 static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current){}

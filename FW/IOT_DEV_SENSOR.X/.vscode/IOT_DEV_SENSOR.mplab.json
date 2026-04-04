@@ -138,7 +138,11 @@
                 "src/ENS_160.c",
                 "src/ARG419BR.c",
                 "include/TMR1.h",
-                "src/TMR1.c"
+                "src/TMR1.c",
+                "include/TMR0.h",
+                "src/TMR0.c",
+                "include/interrupt.h",
+                "src/interrupt.c"
             ]
         }
     ]

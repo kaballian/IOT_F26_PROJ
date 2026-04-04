@@ -45,9 +45,6 @@ PWM_cnt = Fosc / (prscaler * Fpwm)  - 1
 
 typedef struct 
 {
-    // volatile uint8_t *pL;
-    // volatile uint8_t *pH;
-    // volatile uint8_t *con;
     volatile unsigned short *pR;    //pointer to parameter register
     volatile uint8_t        *con;   //control register
     uint8_t         ld_mask;

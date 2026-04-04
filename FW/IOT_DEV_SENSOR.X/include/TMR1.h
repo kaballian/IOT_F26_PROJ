@@ -6,7 +6,9 @@
 
 void TMR1_CNT_init(void);
 uint16_t TMR1_CNT_meas(void);
-
+void TMR1_CNT_start(void);
+void TMR1_CNT_stop(void);
+void TMR1_CNT_reset(void);
 static uint16_t TMR1_read16(void);
 
 #endif

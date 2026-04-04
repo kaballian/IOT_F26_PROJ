@@ -16,7 +16,7 @@
 #include "include/eusart1.h"
 #include "include/ADG419BR.h"
 #include "include/TMR1.h"
-
+#include "include/interrupt.h"
 
 
 
@@ -40,8 +40,10 @@ typedef enum{
     TMRTick,
     UARTTIMEOUT,
     UART,
-    MEAS_FAN1,
-    MEAS_FAN2,
+    MEAS_FAN1_START,
+    MEAS_FAN2_START,
+    MEAS_FAN1_DONE,
+    MEAS_FAN2_DONE,
     MEAS_ENS160,
     MEAS_BME280,
     I2C_ERR,
@@ -98,7 +100,10 @@ typedef struct{
 
 //shared data
 typedef struct {
-    uint16_t    ms;
+    uint32_t    ms;
+    uint32_t    fsm_tick;
+    uint16_t    fan_gate_div;
+
     flag8_t     init_flags;
     flag8_t     fault_flags;
     uint16_t    F1_meas[FAN_BUF_LEN];
@@ -115,8 +120,8 @@ typedef struct {
     ENS160_t        ENS160;
     fan_t           FAN1;
     fan_t           FAN2;
-    switch_chl_t    FAN_selector;
-    
+    // switch_chl_t    FAN_selector;
+    ADG419_t        FAN_selector;    
 }context_t;
 
 //state transition
