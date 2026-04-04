@@ -13,6 +13,11 @@ pin#  purpose
 
 logic 0 -> IN1
 logic 1 -> IN2
+
+it is important to note:
+that once this file is included and the accompanying .c file is compiled
+to the processor. The device then assumes a ADG419BR is physically connected
+to the device, as the .c file owns the singular(Static) instance.
 */
 
 #define ADG419_CHLS 2

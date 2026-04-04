@@ -8,7 +8,7 @@
 
 /*
 Builds on taillight GOF style state machine
-defined inm system.h
+defined in system.h
 
 
 */
@@ -59,7 +59,7 @@ FAN driver
         - store setting (check)
 
 Analog switch
-    - HW abstraction
+    - HW abstraction (check)
 
 Tach reader / converter logic
     - TMR1 counter reader
@@ -69,6 +69,8 @@ Tach reader / converter logic
 import I2C library for sensors 
     - ENS160 (made from scratch, check)
     - BME280 (coming)
+
+
 
 
 UART ISR RX/TX

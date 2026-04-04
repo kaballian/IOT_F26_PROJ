@@ -124,14 +124,14 @@ typedef struct {
     state_t next;
 }transition_t;
 
-static inline transition_t stay(void){
+static inline transition_t stay(state_t current){
     // transition_t t = {
     //     .changed    = false,
     //     .next       = 0
     // };
     transition_t t;
     t.changed = false;
-    t.next = 0;
+    t.next = current;
     return t;
 }
 static inline transition_t to(state_t s)
@@ -146,7 +146,7 @@ static inline transition_t to(state_t s)
 
 typedef void        (*state_entry_fn)(context_t *CTX);
 typedef void        (*state_exit_fn)(context_t *CTX);
-typedef transition_t(*state_handle_fn)(context_t *CTX, event_t e);
+typedef transition_t(*state_handle_fn)(context_t *CTX, event_t e, state_t current);
 
 typedef struct {
     state_entry_fn  entry;

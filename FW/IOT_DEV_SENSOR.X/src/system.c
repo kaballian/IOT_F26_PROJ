@@ -37,24 +37,48 @@ static void st_init_entry(context_t *CTX)
 
     CTX->init_flags |= (INIT_PWM1 | INIT_PWM2 | INIT_ENS160);
 }
-static transition_t st_init_handle(context_t *CTX, event_t ev)
+static transition_t st_init_handle(context_t *CTX, event_t ev, state_t current)
 {
     switch (ev)
     {
     case INIT_COMP:
-        return to(ST_MEAS);
-        
-    
+        return to(ST_MEAS);    
     default:
-        return stay();
+        return stay(current);
     }
 }
-static void st_idle_entry(context_t *CTX){}
-static transition_t st_idle_handle(context_t *CTX, event_t ev){}
-static void st_meas_entry(context_t *CTX){}
-static transition_t st_meas_handle(context_t *CTX, event_t ev){}
+static void st_idle_entry(context_t *CTX)
+{
+    /*manipulate a timer here to wait for a few seconds*/
+}
+static transition_t st_idle_handle(context_t *CTX, event_t ev,state_t current)
+{
+    /*once the idle time is over dispatch to next state*/
+}
+static void st_meas_entry(context_t *CTX)
+{
+    /*FAN1 
+    check switch position
+    check duty cycle
+    measure RPM
+    write necessary data
+    */
+
+    /*repeat for FAN2*/
+
+    /*acquire data from ENS160
+    do calculations 
+    write to memory*/
+
+
+    /*indicate */
+}
+static transition_t st_meas_handle(context_t *CTX, event_t ev,state_t current)
+{
+
+}
 static void st_comm_entry(context_t *CTX){}
-static transition_t st_comm_handle(context_t *CTX, event_t ev){}
+static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current){}
 
 
 
@@ -101,11 +125,6 @@ void FSM_init(FSM_t *sm)
     sm->CTX.meas_count  = 0;
 
 
- 
-    
-
-    
-
     /*FANS*/
     FAN_init(&sm->CTX.FAN1, PWM_set_duty, &PWM_FAN1_CH, 0, 499);    
     FAN_init(&sm->CTX.FAN2, PWM_set_duty, &PWM_FAN2_CH, 0, 499);    
@@ -113,17 +132,30 @@ void FSM_init(FSM_t *sm)
     /*I2C ENS160*/
     ENS160_init(&sm->CTX.ENS160, ENS_160_ADDR0);
 
+    if(OPS[sm->state].entry)
+    {
+        OPS[sm->state].entry(&sm->CTX);
+    }
+
+
 }
 
 void FSM_dispatch(FSM_t *sm, event_t ev)    
 {
-    const state_ops_t *s = &OPS[sm->state];
-    transition_t tr = stay();
+    // const state_ops_t *s = &OPS[sm->state];
+    // transition_t tr = stay();
 
-    if(s->handle)
-    {
-        tr = s->handle(&sm->CTX, ev);
-    }
+    // if(s->handle)
+    // {
+    //     tr = s->handle(&sm->CTX, ev);
+    // }
+    // if(tr.changed)
+    // {
+    //     FSM_transition(sm, tr.next);
+    // }
+
+    transition_t tr = OPS[sm->state].handle(&sm->CTX, ev, sm->state);
+
     if(tr.changed)
     {
         FSM_transition(sm, tr.next);
