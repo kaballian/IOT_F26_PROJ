@@ -41,6 +41,7 @@ typedef enum{
     TMRTick,
     UARTTIMEOUT,
     UART,
+    MEAS_START,
     MEAS_FAN1_START,
     MEAS_FAN2_START,
     MEAS_FAN1_DONE,
@@ -74,6 +75,7 @@ typedef enum{
     INIT_BME280     =(1u<<3),
     INIT_STAT_LED   =(1u<<4),
     INIT_UART       =(1u<<5),
+    INIT_I2C        =(1u<<6),
 }init_f_t;
 
 //faults flags

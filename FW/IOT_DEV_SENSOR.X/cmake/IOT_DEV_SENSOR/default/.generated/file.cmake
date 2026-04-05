@@ -23,6 +23,7 @@ set(IOT_DEV_SENSOR_default_default_XC8_FILE_TYPE_compile
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/PWM.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/TMR0.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/TMR1.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/event_queue.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/interrupt.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/main.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/system.c")

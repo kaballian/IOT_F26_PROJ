@@ -142,7 +142,9 @@
                 "include/TMR0.h",
                 "src/TMR0.c",
                 "include/interrupt.h",
-                "src/interrupt.c"
+                "src/interrupt.c",
+                "include/event_queue.h",
+                "src/event_queue.c"
             ]
         }
     ]

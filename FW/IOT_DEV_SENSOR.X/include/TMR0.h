@@ -13,7 +13,7 @@ for timer 1's counting sequence*/
 
 volatile uint8_t g_tmr0_1ms_flag;
 volatile uint32_t g_sys_ms;
-volatile uint16_t g_fan_flag;
+volatile uint8_t g_fan_f;
 
 void TMR0_init(void);
 void TMR0_ISR(void);

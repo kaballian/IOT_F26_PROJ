@@ -55,14 +55,14 @@ static void st_init_entry(context_t *CTX)
     ENS160_set_opmode(&CTX->ENS160, ENS160_OPMODE_STANDARD);
     
 
-    CTX->init_flags |= (INIT_PWM1 | INIT_PWM2 | INIT_ENS160);
+    CTX->init_flags |= (INIT_PWM1 | INIT_PWM2 | INIT_ENS160 | INIT_I2C);
 }
 static transition_t st_init_handle(context_t *CTX, event_t ev, state_t current)
 {
     switch (ev)
     {
     case INIT_COMP:
-        return to(ST_MEAS);    
+        return to(ST_IDLE);    
     default:
         return stay(current);
     }
@@ -70,10 +70,22 @@ static transition_t st_init_handle(context_t *CTX, event_t ev, state_t current)
 static void st_idle_entry(context_t *CTX)
 {
     /*manipulate a timer here to wait for a few seconds*/
+    (void)CTX;
 }
 static transition_t st_idle_handle(context_t *CTX, event_t ev,state_t current)
 {
     /*once the idle time is over dispatch to next state*/
+    switch (ev)
+    {
+    case MEAS_START:
+        return to(ST_MEAS);
+
+    case CONV_START:
+        return to(ST_COMM);
+        
+    default:
+        return stay(current);
+    }
 }
 static void st_meas_entry(context_t *CTX)
 {   

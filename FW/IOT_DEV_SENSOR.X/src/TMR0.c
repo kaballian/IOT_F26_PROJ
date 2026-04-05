@@ -38,6 +38,6 @@ void TMR0_ISR(void)
     /*indicate that a millisecond has elapsed*/
     g_tmr0_1ms_flag = 1;
     g_sys_ms++;
-    g_fan_flag++;
+    g_fan_f++;
 
 }
