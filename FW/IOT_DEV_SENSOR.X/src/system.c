@@ -75,18 +75,24 @@ static void st_idle_entry(context_t *CTX)
 static transition_t st_idle_handle(context_t *CTX, event_t ev,state_t current)
 {
     /*once the idle time is over dispatch to next state*/
-    switch (ev)
-    {
-    case MEAS_START:
-        return to(ST_MEAS);
+    /*This is where the system is left after ST_INIT, if nothing is in use
+    the program automatically start from here after a timer0 tick 
+    dispatched from the application layer*/
 
-    case CONV_START:
-        return to(ST_COMM);
-        
-    default:
-        return stay(current);
+    switch(ev)
+    {
+        case TMRTick:{
+            if(CTX->gate_active == 0) //if no resources are in use, lets do something
+            {
+                return to(ST_MEAS_F1);
+            }
+            return stay(current); //if resources are in use, stay here, (non blocking)
+        }
+        default:
+            return stay(current);
     }
 }
+/*ignore this state for now*/
 static void st_meas_entry(context_t *CTX)
 {   
     /*FAN1 
@@ -104,36 +110,88 @@ static void st_meas_entry(context_t *CTX)
 
 
     /*indicate */
+
+    (void)CTX;
 }
+/*ignore this state for now*/
 static transition_t st_meas_handle(context_t *CTX, event_t ev,state_t current)
 {
     switch(ev)
     {
         case MEAS_FAN1_START:
         {
-            /*check switch position*/
-            ADG419_CHL_SELECT(&CTX->FAN_selector, CHL_1);    
-            /*measure RPM*/
-            FAN_CNT_start(&CTX->FAN1);
-            /*return and wait for timing window to be done*/
-            return stay(current);
+            return to(ST_MEAS_F1);
         }
-        case MEAS_FAN1_DONE:{
-            FAN_CNT_stop(&CTX->FAN1);
-            return stay(current);
+        case MEAS_FAN2_START:
+        {
+            return to(ST_MEAS_F2);
         }
-        case MEAS_FAN2_START:{
-            ADG419_CHL_SELECT(&CTX->FAN_selector, CHL_2);
-            FAN_CNT_start(&CTX->FAN2);
-            return stay(current);
-        }
-        case MEAS_FAN2_DONE:{
-            FAN_CNT_stop(&CTX->FAN2);
-            return stay(current);
-        } 
-        case MEAS_ENS160:{
+        // case MEAS_ENS160_START:
+        // {
+        //     return to(ST_MEAS_ENS160);
+        // }
 
-            if(!CTX->ENS160.initialized)
+        default:
+            return stay(current);
+    }
+}
+
+static void st_meas_f1_entry(context_t *CTX)
+{
+    /*check switch position*/
+    ADG419_CHL_SELECT(&CTX->FAN_selector, CHL_1);    
+    /*measure RPM*/
+    FAN_CNT_start(&CTX->FAN1);
+    /*indicate ownership of resource*/
+    CTX->gate_owner = GATE_F1;
+    CTX->gate_active = 1;
+    CTX->gate_deadline = g_sys_ms + 500;
+
+}
+static transition_t st_meas_f1_handle(context_t *CTX, event_t ev, state_t current)
+{
+    switch (ev)
+    {
+    case MEAS_FAN1_DONE:
+        FAN_CNT_stop(&CTX->FAN1);
+        return to(ST_IDLE);
+    default:
+        return stay(current);
+    }
+}
+static void st_meas_f2_entry(context_t *CTX)
+{
+    /*check switch position*/
+    ADG419_CHL_SELECT(&CTX->FAN_selector, CHL_2);    
+    /*measure RPM*/
+    FAN_CNT_start(&CTX->FAN2);
+    CTX->gate_owner = GATE_F2;
+    CTX->gate_active = 1;
+    CTX->gate_deadline = g_sys_ms + 500;
+    
+}
+static transition_t st_meas_f2_handle(context_t *CTX, event_t ev, state_t current)
+{
+    switch (ev)
+    {
+    case MEAS_FAN2_DONE:
+        FAN_CNT_stop(&CTX->FAN2);
+        return to(ST_IDLE);
+    default:
+        return stay(current);
+    }
+}
+
+
+
+
+static void st_meas_ens160_entry(context_t *CTX)
+{
+
+}
+static transition_t st_meas_ens160_handle(context_t *CTX, event_t ev, state_t current)
+{
+     if(!CTX->ENS160.initialized)
             {
                 return stay(current);
             }
@@ -149,17 +207,21 @@ static transition_t st_meas_handle(context_t *CTX, event_t ev,state_t current)
                     CTX->fault_flags |= FAULT_ENS160;  //AMBIGUOUS FAULT FLAGS
                 }
             }
-            
-            return stay(current);
-        }
-
-        default:
-            return stay(current);
-
-    }
 }
+
+
+
+
+
+
 static void st_comm_entry(context_t *CTX){}
 static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current){}
+
+
+
+
+
+
 
 
 
@@ -168,6 +230,9 @@ static const state_ops_t OPS[ST_COUNT] =
     [ST_INIT] = {st_init_entry,0,st_init_handle},
     [ST_IDLE] = {st_idle_entry,0,st_idle_handle},
     [ST_MEAS] = {st_meas_entry,0,st_meas_handle},
+    [ST_MEAS_F1] = {st_meas_f1_entry, 0, st_meas_f1_handle}, 
+    [ST_MEAS_F2] = {st_meas_f2_entry, 0, st_meas_f2_handle},
+    [ST_MEAS_ENS160] = {st_meas_ens160_entry, 0 , st_meas_ens160_handle},
     [ST_COMM] = {st_comm_entry,0,st_comm_handle},
 };
 
@@ -194,7 +259,7 @@ void FSM_transition(FSM_t *sm, state_t next)
 void FSM_init(FSM_t *sm)
 {
     sm->state           = ST_INIT;
-    sm->CTX.ms          = 0;
+    sm->CTX.sys_ms      = 0;
     sm->CTX.fault_flags = 0;
     sm->CTX.init_flags  = 0;
     sm->CTX.meas_head   = 0;
@@ -224,6 +289,8 @@ void FSM_dispatch(FSM_t *sm, event_t ev)
     // {
     //     FSM_transition(sm, tr.next);
     // }
+
+    
 
     transition_t tr = OPS[sm->state].handle(&sm->CTX, ev, sm->state);
 

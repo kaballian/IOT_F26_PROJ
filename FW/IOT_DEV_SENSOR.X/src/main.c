@@ -30,7 +30,8 @@ volatile uint8_t g_fsm_tick_f   = 0;    //HARDWARE FLAG
 volatile uint8_t g_uart_rx_f    = 0;    //HARDWARE FLAG
 volatile uint8_t g_fan_f        = 0;    //SOFTWARE FLAG
 volatile uint8_t g_ENS160_f     = 0;    //SOFTWARE FLAG
-
+volatile uint32_t g_sys_ms      = 0;    //sys tick counter
+volatile uint32_t g_fan_deadline   = 0; //fan deadline check
     
 
 
@@ -48,30 +49,49 @@ void APP_init(void)
 
 void APP_service(void)
 {
+    
     if(g_fsm_tick_f)
     {
-        /*timer tick advances, clear the flag*/
         g_fsm_tick_f = 0;
-        APP_post_event(TMRTick);
+        g_sys_ms++;
+        sm.CTX.sys_ms++;
+
+        APP_post_event(TMRTick); // this is where we kick the rock
+        
+        if(sm.CTX.gate_active && (g_sys_ms >= sm.CTX.gate_deadline))
+        {
+            sm.CTX.gate_active = 0;
+
+            switch (sm.CTX.gate_owner)
+            {
+            case GATE_F1:{
+                sm.CTX.gate_owner = GATE_NONE;
+                APP_post_event(MEAS_FAN1_DONE);
+                break;
+            }
+            case GATE_F2:{
+                sm.CTX.gate_owner = GATE_NONE;
+                APP_post_event(MEAS_FAN2_DONE);
+                break;
+            }
+            case GATE_ENS160:{
+                sm.CTX.gate_owner = GATE_NONE;
+                APP_post_event(MEAS_ENS160_DONE);
+                break;
+            }
+            
+            default:
+                sm.CTX.gate_owner = GATE_NONE;
+                break;
+            }
+        }
     }
+    
     if(g_uart_rx_f)
     {
         /*UART receive interrupt flag*/
         g_uart_rx_f = 0;
         APP_post_event(UART);
-    }
-    if(g_fan_f)
-    {
-        /*this needs reordering*/
-        /*if were counting fan revs and 500ms has passed*/
-        g_fan_f = 0;
-        APP_post_event(MEAS_FAN1_START);
-    }
-    if(g_ENS160_f)
-    {
-        /*measure ENS160*/
-        g_ENS160_f = 0;
-        APP_post_event(MEAS_ENS160);
     }
 }
 
@@ -139,7 +159,13 @@ import I2C library for sensors
 
 
 UART ISR RX/TX
-    - still missing
+    - still missing 
+
+context_t scheduling step - next_step, decide what comes after a given measurement
+right now, the measurement sequence is buried inside the FSM, more specifically
+inside the fn_handle when a measurement is complete, the only way to set
+a new gate_owner is in a state_entry, which is not ideal.
+
 
 
 

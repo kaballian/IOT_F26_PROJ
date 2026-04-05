@@ -46,7 +46,8 @@ typedef enum{
     MEAS_FAN2_START,
     MEAS_FAN1_DONE,
     MEAS_FAN2_DONE,
-    MEAS_ENS160,
+    MEAS_ENS160_START,
+    MEAS_ENS160_DONE,
     MEAS_BME280,
     I2C_ERR,
     INIT_COMP,
@@ -60,6 +61,9 @@ typedef enum{
     ST_INIT = 0,
     ST_IDLE,
     ST_MEAS,
+    ST_MEAS_F1,
+    ST_MEAS_F2,
+    ST_MEAS_ENS160,
     ST_COMM,
     ST_COUNT
 }state_t;
@@ -99,13 +103,20 @@ typedef struct{
     uint16_t AQI; //air quality indicator 
 }ENS160_meas;
 
-
+typedef enum {
+    GATE_NONE = 0,
+    GATE_F1,
+    GATE_F2,
+    GATE_ENS160
+}gate_owner_t;
 
 //shared data
 typedef struct {
-    uint32_t    ms;
+    uint32_t    sys_ms;
     uint32_t    fsm_tick;
     uint16_t    fan_gate_div;
+    uint32_t    gate_deadline;
+    uint8_t     gate_active;
 
     flag8_t     init_flags;
     flag8_t     fault_flags;
@@ -118,7 +129,9 @@ typedef struct {
     uint8_t     meas_count;
 
 
-
+    //timer ownership
+    gate_owner_t    gate_owner;
+    
     //hardware
     ENS160_t        ENS160;
     fan_t           FAN1;
