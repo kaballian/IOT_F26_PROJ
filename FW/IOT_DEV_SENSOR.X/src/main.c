@@ -96,11 +96,11 @@ void APP_service(void)
                         APP_post_event(MEAS_FAN2_DONE);
                         break;
                     }
-                    case GATE_ENS160:{ //not sure if ENS160 needs deadline
-                        sm.CTX.gate_owner = GATE_NONE;
-                        APP_post_event(MEAS_ENS160_DONE);
-                        break;
-                    }
+                    // case GATE_ENS160:{ //not sure if ENS160 needs deadline
+                    //     sm.CTX.gate_owner = GATE_NONE;
+                    //     APP_post_event(MEAS_ENS160_DONE);
+                    //     break;
+                    // }
                     
                     
                     default:
@@ -108,9 +108,26 @@ void APP_service(void)
                         break;
                 }
             }
+
+            /*communication*/
+            /*if work is active and the gate owner is ENS160*/
+            if(sm.CTX.gate_active && sm.CTX.gate_owner == GATE_ENS160)
+            {
+                if((sm.CTX.comm_i2c_flags & COMM_INIT) == COMM_INIT)
+                {   
+                    APP_post_event(MEAS_ENS160_STAT);
+                }
+
+                if(sm.CTX.comm_i2c_flags &)
+            }
+            
+
+
         }
         else if(sm.state == ST_IDLE)
         {
+            /*Step index is set ahead of time, this indicates
+            that the scheduler knows what is coming after*/
             switch(step_index)
             {
                 case STEP_F1:{

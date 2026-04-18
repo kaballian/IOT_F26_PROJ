@@ -41,8 +41,7 @@ static void st_init_entry(context_t *CTX)
     FAN_init(&CTX->FAN1, PWM_set_duty, &PWM_FAN1_CH, 20);    
     FAN_init(&CTX->FAN2, PWM_set_duty, &PWM_FAN2_CH, 25);    
 
-    /*I2C ENS160*/
-    ENS160_init(&CTX->ENS160, ENS_160_ADDR0);
+    
 
 
     /*ADG419*/
@@ -51,11 +50,17 @@ static void st_init_entry(context_t *CTX)
     /*set initial duty cycle*/
     FAN_set_duty(&CTX->FAN1, 10);
     FAN_set_duty(&CTX->FAN2, 15);
+
+
+    /*I2C ENS160*/
+    ENS160_init(&CTX->ENS160, ENS_160_ADDR0);
+
     /*set opmode for ENS160*/
     ENS160_set_opmode(&CTX->ENS160, ENS160_OPMODE_STANDARD);
     
 
     CTX->init_flags |= (INIT_PWM1 | INIT_PWM2 | INIT_ENS160 | INIT_I2C);
+    CTX->comm_i2c_flags = NO_COMM;
 }
 static transition_t st_init_handle(context_t *CTX, event_t ev, state_t current)
 {
@@ -79,18 +84,6 @@ static transition_t st_idle_handle(context_t *CTX, event_t ev,state_t current)
     the program automatically start from here after a timer0 tick 
     dispatched from the application layer*/
 
-    // switch(ev)
-    // {
-    //     case TMRTick:{
-    //         if(CTX->gate_active == 0) //if no resources are in use, lets do something
-    //         {
-    //             return to(ST_MEAS_F1);
-    //         }
-    //         return stay(current); //if resources are in use, stay here, (non blocking)
-    //     }
-    //     default:
-    //         return stay(current);
-    // }
 
     switch(ev)
     {
@@ -159,10 +152,36 @@ static void st_meas_ens160_entry(context_t *CTX)
 {
     CTX->gate_owner = GATE_ENS160;
     CTX->gate_active = 1;
-    CTX->gate_deadline = CTX->sys_ms + 1000; //give it a full second
+    CTX->comm_i2c_flags |= COMM_INIT;
+    
+    // CTX->gate_deadline = CTX->sys_ms + 1000; //give it a full second
+    /* ens160 communcation should not have a deadline*/
+
 }
 static transition_t st_meas_ens160_handle(context_t *CTX, event_t ev, state_t current)
 {
+    /*
+    probe dev
+    read status
+    read data
+     */
+    switch(ev)
+    {
+        case MEAS_ENS160_STAT:
+        {
+            /*ask for status*/
+            if(!ENS160_read_status(&CTX->ENS160))
+            {   
+                /*if the read status returns false, set the flags*/    
+                CTX->fault_flags |= FAULT_ENS160;
+                return stay(current);
+            }
+            /*indicate the status is received*/
+            CTX->comm_i2c_flags |= STAT_RECV;
+            return stay(current);
+        }
+    }
+
     switch(ev)
     {
         case MEAS_ENS160_DONE:{

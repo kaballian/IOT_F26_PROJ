@@ -47,6 +47,9 @@ typedef enum{
     MEAS_FAN1_DONE,
     MEAS_FAN2_DONE,
     MEAS_ENS160_START,
+    MEAS_ENS160_PROBE,
+    MEAS_ENS160_STAT,
+    MEAS_ENS160_READ,
     MEAS_ENS160_DONE,
     MEAS_BME280,
     I2C_ERR,
@@ -91,8 +94,17 @@ typedef enum {
     FAULT_BME280    =(1u<<3),
     FAULT_UART      =(1u<<4)
 }fault_f_t;
-//pwr flags
 
+
+//I2C comm flags
+typedef enum{
+    NO_COMM         = 0,
+    COMM_INIT       =(1u<<0),
+    MEAS_RECV       =(2u<<0),
+    STAT_RECV       =(3u<<0),
+    READING_DAT     =(4u<<0),
+    CYCLE_COMP      =(5u<<0)
+}I2C_COMM_f_t;
 
 typedef struct {
     uint16_t humidity;
@@ -128,10 +140,12 @@ typedef struct {
     uint8_t     meas_head;
     uint8_t     meas_count;
 
-
+    
     //timer ownership
     gate_owner_t    gate_owner;
     
+    //i2c comm flags
+    I2C_COMM_f_t    comm_i2c_flags;
     //hardware
     ENS160_t        ENS160;
     fan_t           FAN1;
