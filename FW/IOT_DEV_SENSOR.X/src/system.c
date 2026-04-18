@@ -79,62 +79,32 @@ static transition_t st_idle_handle(context_t *CTX, event_t ev,state_t current)
     the program automatically start from here after a timer0 tick 
     dispatched from the application layer*/
 
-    switch(ev)
-    {
-        case TMRTick:{
-            if(CTX->gate_active == 0) //if no resources are in use, lets do something
-            {
-                return to(ST_MEAS_F1);
-            }
-            return stay(current); //if resources are in use, stay here, (non blocking)
-        }
-        default:
-            return stay(current);
-    }
-}
-/*ignore this state for now*/
-static void st_meas_entry(context_t *CTX)
-{   
-    /*FAN1 
-    check switch position
-    check duty cycle
-    measure RPM
-    write necessary data
-    */
+    // switch(ev)
+    // {
+    //     case TMRTick:{
+    //         if(CTX->gate_active == 0) //if no resources are in use, lets do something
+    //         {
+    //             return to(ST_MEAS_F1);
+    //         }
+    //         return stay(current); //if resources are in use, stay here, (non blocking)
+    //     }
+    //     default:
+    //         return stay(current);
+    // }
 
-    /*repeat for FAN2*/
-
-    /*acquire data from ENS160
-    do calculations 
-    write to memory*/
-
-
-    /*indicate */
-
-    (void)CTX;
-}
-/*ignore this state for now*/
-static transition_t st_meas_handle(context_t *CTX, event_t ev,state_t current)
-{
     switch(ev)
     {
         case MEAS_FAN1_START:
-        {
-            return to(ST_MEAS_F1);
-        }
+            return to(ST_MEAS_F1);        
         case MEAS_FAN2_START:
-        {
             return to(ST_MEAS_F2);
-        }
-        // case MEAS_ENS160_START:
-        // {
-        //     return to(ST_MEAS_ENS160);
-        // }
-
+        case MEAS_ENS160_START:
+            return to(ST_MEAS_ENS160);
         default:
             return stay(current);
     }
 }
+
 
 static void st_meas_f1_entry(context_t *CTX)
 {
@@ -187,26 +157,41 @@ static transition_t st_meas_f2_handle(context_t *CTX, event_t ev, state_t curren
 
 static void st_meas_ens160_entry(context_t *CTX)
 {
-
+    CTX->gate_owner = GATE_ENS160;
+    CTX->gate_active = 1;
+    CTX->gate_deadline = CTX->sys_ms + 1000; //give it a full second
 }
 static transition_t st_meas_ens160_handle(context_t *CTX, event_t ev, state_t current)
 {
-     if(!CTX->ENS160.initialized)
+    switch(ev)
+    {
+        case MEAS_ENS160_DONE:{
+            if(!CTX->ENS160.initialized)
             {
                 return stay(current);
             }
+
+
             if(!ENS160_read_status(&CTX->ENS160))
             {
-                CTX->fault_flags |= FAULT_ENS160; //AMBIGUOUS FAULT FLAGS
-                return stay(current);
+                CTX->fault_flags |= FAULT_ENS160;
+                return to(ST_IDLE);
             }
+            
             if(CTX->ENS160.dev_status & 0x02)
             {
                 if(!ENS160_read_data(&CTX->ENS160))
                 {
-                    CTX->fault_flags |= FAULT_ENS160;  //AMBIGUOUS FAULT FLAGS
+                    CTX->fault_flags |= FAULT_ENS160;
                 }
             }
+            
+            return to(ST_IDLE);
+            }
+        
+        default:
+            return stay(current);
+    }
 }
 
 
@@ -214,7 +199,8 @@ static transition_t st_meas_ens160_handle(context_t *CTX, event_t ev, state_t cu
 
 
 
-static void st_comm_entry(context_t *CTX){}
+static void st_comm_entry(context_t *CTX)
+{}
 static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current){}
 
 
@@ -229,7 +215,6 @@ static const state_ops_t OPS[ST_COUNT] =
 {
     [ST_INIT] = {st_init_entry,0,st_init_handle},
     [ST_IDLE] = {st_idle_entry,0,st_idle_handle},
-    [ST_MEAS] = {st_meas_entry,0,st_meas_handle},
     [ST_MEAS_F1] = {st_meas_f1_entry, 0, st_meas_f1_handle}, 
     [ST_MEAS_F2] = {st_meas_f2_entry, 0, st_meas_f2_handle},
     [ST_MEAS_ENS160] = {st_meas_ens160_entry, 0 , st_meas_ens160_handle},

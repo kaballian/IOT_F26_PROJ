@@ -1,6 +1,31 @@
 #include "include/eusart1.h"
-#include <pic16f18124.h>
 
+
+#define UART_RX_BUF_SIZE 64u
+#define UART_TX_BUF_SIZE 64u
+
+
+
+
+extern volatile uint8_t g_uart_rx_f; //set in the ISR and consumed in the APP layer
+
+
+static volatile uint8_t rx_buf[UART_RX_BUF_SIZE];
+static volatile uint8_t rx_head = 0;
+static volatile uint8_t rx_tail = 0;
+static volatile uint8_t tx_buf[UART_TX_BUF_SIZE];
+static volatile uint8_t tx_head = 0;
+static volatile uint8_t tx_tail = 0;
+static uint8_t next_index(uint8_t index, uint8_t size)
+{
+    /*helper for ring buffer*/
+    index++; //advances the index (rx or tx)
+    if(index >= size)
+    {
+        index = 0;
+    }
+    return index;
+}
 
 void EUSART1_init(void)
 {
@@ -32,6 +57,108 @@ void EUSART1_init(void)
     SP1BRGH = 0x01;
     SP1BRGL = 0xA0; //~416
 
+    rx_head = 0;
+    rx_tail = 0;
+    tx_head = 0;
+    tx_tail = 0;
+}
 
+
+
+void EUSART1_ISR(void)
+{
+    
+
+    /*RX error recovery*/
+    if(RC1STAbits.OERR) //overrun error, cleared by clearing SPEN or CREN
+    {
+        RC1STAbits.CREN = 0;
+        RC1STAbits.CREN = 1;
+    }
+
+    /*RX*/
+    if(PIR4bits.RC1IF)
+    {
+        uint8_t byte = RC1REG; //receive data
+        uint8_t next = next_index(rx_head, UART_RX_BUF_SIZE);
+        if(next != rx_tail)
+        {
+            rx_buf[rx_head] = byte;
+            rx_head = next;
+        }
+
+        g_uart_rx_f = 1;
+
+    }
+
+    /*TX*/
+    if(PIE)
+
+}
+
+bool EUSART1_rx_available(void)
+{   /*if the head is not at the same place at the fail, there is free space*/
+    return (rx_head != rx_tail);
+}
+
+bool EUSART1_read_byte(uint8_t *byte)
+{
+    if(byte == 0)
+    {
+        return false;
+    }
+
+    if(rx_head == rx_tail)
+    {   //check for room
+        return false;
+    }
+
+    byte = rx_buf[rx_tail];
+    rx_tail = next_index(rx_tail, UART_RX_BUF_SIZE);
+    return true;
+
+}
+
+bool EUSART1_tx_has_room(void)
+{
+    uint8_t next = next_index(tx_head, UART_TX_BUF_SIZE);
+    return (next != tx_tail);
+}
+
+bool EUSART1_write_byte(uint8_t byte)
+{
+    uint8_t next = next_index(tx_head, UART_TX_BUF_SIZE);
+
+    if(next == tx_tail)
+    {
+        return false; //buffer is full
+    }
+    tx_buf[tx_head] = byte;
+    tx_head = next;
+
+    /*activate TX interrupt*/
+    PIE4bits.TX1IE = 1;
+
+    return true;
+}
+uint8_t EUSART1_write_buf(const uint8_t *data, uint8_t len)
+{
+    uint8_t i;
+    uint8_t written = 0;
+
+    if(data == 0)
+    {
+        return 0;
+    }
+
+    for(i = 0; i < len; i++)
+    {
+        if(!EUSART1_write_byte(data[i]))
+        {
+            break;
+        }
+        written++;
+    }
+    return written;
 
 }
