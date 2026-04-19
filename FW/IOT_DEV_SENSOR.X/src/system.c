@@ -106,9 +106,10 @@ static void st_meas_f1_entry(context_t *CTX)
     /*measure RPM*/
     FAN_CNT_start(&CTX->FAN1);
     /*indicate ownership of resource*/
-    CTX->gate_owner = GATE_F1;
-    CTX->gate_active = 1;
-    CTX->gate_deadline = g_sys_ms + 500;
+    CTX->gate_owner     = GATE_F1;
+    CTX->gate_active    = 1;
+    CTX->gate_deadline  = g_sys_ms + 500;
+    CTX->has_deadline   = 1;
 
 }
 static transition_t st_meas_f1_handle(context_t *CTX, event_t ev, state_t current)
@@ -117,6 +118,8 @@ static transition_t st_meas_f1_handle(context_t *CTX, event_t ev, state_t curren
     {
     case MEAS_FAN1_DONE:
         FAN_CNT_stop(&CTX->FAN1);
+        CTX->gate_active = 0;
+        CTX->has_deadline = 0;
         return to(ST_IDLE);
     default:
         return stay(current);
@@ -128,9 +131,10 @@ static void st_meas_f2_entry(context_t *CTX)
     ADG419_CHL_SELECT(&CTX->FAN_selector, CHL_2);    
     /*measure RPM*/
     FAN_CNT_start(&CTX->FAN2);
-    CTX->gate_owner = GATE_F2;
-    CTX->gate_active = 1;
-    CTX->gate_deadline = g_sys_ms + 500;
+    CTX->gate_owner     = GATE_F2;
+    CTX->gate_active    = 1;
+    CTX->gate_deadline  = g_sys_ms + 500;
+    CTX->has_deadline   = 1;
     
 }
 static transition_t st_meas_f2_handle(context_t *CTX, event_t ev, state_t current)
@@ -139,6 +143,8 @@ static transition_t st_meas_f2_handle(context_t *CTX, event_t ev, state_t curren
     {
     case MEAS_FAN2_DONE:
         FAN_CNT_stop(&CTX->FAN2);
+        CTX->gate_active = 0;
+        CTX->has_deadline = 0;
         return to(ST_IDLE);
     default:
         return stay(current);
@@ -150,9 +156,10 @@ static transition_t st_meas_f2_handle(context_t *CTX, event_t ev, state_t curren
 
 static void st_meas_ens160_entry(context_t *CTX)
 {
-    CTX->gate_owner = GATE_ENS160;
-    CTX->gate_active = 1;
-    CTX->comm_i2c_flags |= COMM_INIT;
+    CTX->gate_owner         = GATE_ENS160;
+    CTX->gate_active        = 1;
+    CTX->comm_i2c_flags     = COMM_INIT;
+    CTX->has_deadline       = 0;
     
     // CTX->gate_deadline = CTX->sys_ms + 1000; //give it a full second
     /* ens160 communcation should not have a deadline*/
@@ -167,36 +174,17 @@ static transition_t st_meas_ens160_handle(context_t *CTX, event_t ev, state_t cu
      */
     switch(ev)
     {
-        case MEAS_ENS160_STAT:
+        case MEAS_ENS160_READ:
         {
-            /*ask for status*/
-            if(!ENS160_read_status(&CTX->ENS160))
-            {   
-                /*if the read status returns false, set the flags*/    
-                CTX->fault_flags |= FAULT_ENS160;
-                return stay(current);
-            }
-            /*indicate the status is received*/
-            CTX->comm_i2c_flags |= STAT_RECV;
-            return stay(current);
-        }
-    }
-
-    switch(ev)
-    {
-        case MEAS_ENS160_DONE:{
             if(!CTX->ENS160.initialized)
             {
                 return stay(current);
             }
-
-
             if(!ENS160_read_status(&CTX->ENS160))
             {
                 CTX->fault_flags |= FAULT_ENS160;
                 return to(ST_IDLE);
             }
-            
             if(CTX->ENS160.dev_status & 0x02)
             {
                 if(!ENS160_read_data(&CTX->ENS160))
@@ -204,10 +192,18 @@ static transition_t st_meas_ens160_handle(context_t *CTX, event_t ev, state_t cu
                     CTX->fault_flags |= FAULT_ENS160;
                 }
             }
-            
+            /*keep the state at let the app layer dispatch again*/   
+            CTX->comm_i2c_flags = COMM_COMP;
+            return stay(current); 
+        }   
+        case MEAS_ENS160_DONE:
+        {   
+            /*indicate the communication with the device is done
+            and return FSM to idle mode, let the app queue decide what comes next*/
+            CTX->comm_i2c_flags = NO_COMM;
             return to(ST_IDLE);
-            }
-        
+        } 
+
         default:
             return stay(current);
     }

@@ -98,12 +98,16 @@ typedef enum {
 
 //I2C comm flags
 typedef enum{
-    NO_COMM         = 0,
-    COMM_INIT       =(1u<<0),
-    MEAS_RECV       =(2u<<0),
-    STAT_RECV       =(3u<<0),
-    READING_DAT     =(4u<<0),
-    CYCLE_COMP      =(5u<<0)
+    // NO_COMM         = 0,
+    // COMM_INIT       =(1u<<0),
+    // MEAS_RECV       =(2u<<0),
+    // STAT_RECV       =(3u<<0),
+    // READING_DAT     =(4u<<0),
+    // CYCLE_COMP      =(5u<<0)
+    NO_COMM = 0,
+    COMM_INIT, 
+    READ_DATA,
+    COMM_COMP
 }I2C_COMM_f_t;
 
 typedef struct {
@@ -129,6 +133,7 @@ typedef struct {
     uint16_t    fan_gate_div;
     uint32_t    gate_deadline;
     uint8_t     gate_active;
+    uint8_t     has_deadline;
 
     flag8_t     init_flags;
     flag8_t     fault_flags;

@@ -78,8 +78,10 @@ void EUSART1_ISR(void)
 
     /*RX*/
     if(PIR4bits.RC1IF)
-    {
-        uint8_t byte = RC1REG; //receive data
+    {   
+        /*read data from receive buffer
+        this also clears RC1IF flag automatically sec 12.10.13*/
+        uint8_t byte = RC1REG; 
         uint8_t next = next_index(rx_head, UART_RX_BUF_SIZE);
         if(next != rx_tail)
         {
@@ -92,7 +94,11 @@ void EUSART1_ISR(void)
     }
 
     /*TX*/
-    if(PIE)
+    /*sec 12.10.13*/ 
+    if(PIR4bits.TX1IF)
+    {
+        
+    }
 
 }
 

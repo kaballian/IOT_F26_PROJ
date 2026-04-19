@@ -72,58 +72,94 @@ void APP_service(void)
         g_sys_ms++;       //increment flag 
         sm.CTX.sys_ms++;
 
-       /*check if work is ongoing*/
+        /*check if work is ongoing*/
         if(sm.CTX.gate_active) 
         {
-            /*check if ongoing work has exceeded the deadline*/
-            if(sm.CTX.sys_ms >= sm.CTX.gate_deadline) 
+            /*if an action that has a deadline is active*/
+            if(sm.CTX.has_deadline && (sm.CTX.gate_owner == GATE_F1 || sm.CTX.gate_owner == GATE_F2))
             {
-                /*reset work flag*/
-                sm.CTX.gate_active = 0;
-                /*check whos doing work*/
-                switch(sm.CTX.gate_owner)
-                {   
-                    /*it assumed that work is done, 
-                    so that no gate owner exists. clear flag
-                    and post the app event*/
-                    case GATE_F1:{
-                        sm.CTX.gate_owner = GATE_NONE;
-                        APP_post_event(MEAS_FAN1_DONE);
-                        break;
+                /*check if ongoing work has exceeded the deadline*/
+                if(sm.CTX.sys_ms >= sm.CTX.gate_deadline) 
+                {
+                    /*reset work flag*/
+                    sm.CTX.gate_active = 0;
+                    /*check whos doing work*/
+                    switch(sm.CTX.gate_owner)
+                    {   
+                        /*it assumed that work is done, 
+                        so that no gate owner exists. clear flag
+                        and post the app event*/
+                        case GATE_F1:{
+                            sm.CTX.gate_owner = GATE_NONE;
+                            APP_post_event(MEAS_FAN1_DONE);
+                            break;
+                        }
+                        case GATE_F2:{
+                            sm.CTX.gate_owner = GATE_NONE;
+                            APP_post_event(MEAS_FAN2_DONE);
+                            break;
+                        }
+                        // case GATE_ENS160:{ //not sure if ENS160 needs deadline
+                        //     sm.CTX.gate_owner = GATE_NONE;
+                        //     APP_post_event(MEAS_ENS160_DONE);
+                        //     break;
+                        // }
+                        
+                        
+                        default:
+                            sm.CTX.gate_owner = GATE_NONE;
+                            break;
                     }
-                    case GATE_F2:{
-                        sm.CTX.gate_owner = GATE_NONE;
-                        APP_post_event(MEAS_FAN2_DONE);
-                        break;
-                    }
-                    // case GATE_ENS160:{ //not sure if ENS160 needs deadline
-                    //     sm.CTX.gate_owner = GATE_NONE;
-                    //     APP_post_event(MEAS_ENS160_DONE);
-                    //     break;
-                    // }
-                    
-                    
-                    default:
-                        sm.CTX.gate_owner = GATE_NONE;
-                        break;
                 }
             }
-
-            /*communication*/
-            /*if work is active and the gate owner is ENS160*/
-            if(sm.CTX.gate_active && sm.CTX.gate_owner == GATE_ENS160)
+            else /*if the work does not have a deadline*/
             {
-                if((sm.CTX.comm_i2c_flags & COMM_INIT) == COMM_INIT)
-                {   
-                    APP_post_event(MEAS_ENS160_STAT);
+                /*nothing for now*/
+            }
+        }
+        /*communication*/
+        /*if work is active and the gate owner is ENS160*/
+        else if(sm.CTX.gate_active && sm.CTX.gate_owner == GATE_ENS160)
+        {
+                // if((sm.CTX.comm_i2c_flags & COMM_INIT) == COMM_INIT)
+                // {   
+                //     APP_post_event(MEAS_ENS160_STAT);
+                // }
+
+                // if(sm.CTX.comm_i2c_flags &)
+
+            /*for now, get full status and measurements*/
+
+            switch(sm.CTX.comm_i2c_flags)
+            {
+                /*comm init essentially invokes the handler
+                doing the measurement, thus READ_DATA case
+                is unnecessary*/
+                case COMM_INIT:
+                {
+                    APP_post_event(MEAS_ENS160_READ);
+                    break;
+                }
+                case READ_DATA:
+                {
+                    break;
+                }
+                case COMM_COMP:
+                {
+                    APP_post_event(MEAS_ENS160_DONE);
                 }
 
-                if(sm.CTX.comm_i2c_flags &)
-            }
-            
+                case NO_COMM: /*rollover to default case*/
+                default:
+                    break;
 
+            }
 
         }
+            
+        
+
+        
         else if(sm.state == ST_IDLE)
         {
             /*Step index is set ahead of time, this indicates
