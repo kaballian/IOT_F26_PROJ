@@ -1,5 +1,6 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
+#include <stdint.h>
 #include <xc.h>
 #include "utils.h"
 #include "include/clock.h"
@@ -18,7 +19,7 @@
 #include "include/TMR0.h"
 #include "include/TMR1.h"
 #include "include/interrupt.h"
-
+#include "include/parse.h"
 
 
 
@@ -57,7 +58,8 @@ typedef enum{
     TMR_START,
     CONV_START,
     CONV_DONE,
-    PWM_SET
+    PWM_SET,
+    UART_PARSE_RX
 }event_t;
 //states
 typedef enum{
@@ -112,6 +114,7 @@ typedef enum{
     COMM_COMP
 }I2C_COMM_f_t;
 
+
 typedef struct {
     uint16_t humidity;
     uint16_t pressure;
@@ -151,6 +154,9 @@ typedef struct {
     //timer ownership
     gate_owner_t    gate_owner;
     
+    //UART comm
+    UART_comm_t     UART_CMD;
+
     //i2c comm flags
     I2C_COMM_f_t    comm_i2c_flags;
     //hardware

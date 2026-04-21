@@ -40,6 +40,7 @@ static app_step_t step_index;
 
 
 volatile uint8_t g_fsm_tick_f   = 0;    //HARDWARE FLAG
+
 // volatile uint8_t g_uart_rx_f    = 0;    //HARDWARE FLAG
 volatile uint8_t g_fan_f        = 0;    //SOFTWARE FLAG
 volatile uint8_t g_ENS160_f     = 0;    //SOFTWARE FLAG
@@ -192,11 +193,32 @@ void APP_service(void)
         }
     }
     
+    /*this might be faulty, this event
+    can only ever be served if the application logic
+    lands here without a system tick.
+    All of the above code could essentially execute and take up
+    so much time this never gets served.
+    This is a scheduling issue and needs to be checked if its
+    a reality. 
+
+    either by checker execution time/probability of 
+    all of the above code or by issuing a uart checker 
+    every N amount of system ticks. 
+    */
     if(g_uart_rx_f)
     {
-        /*UART receive interrupt flag*/
+        /*UART receive interrupt flag
+        this locks the state to COMM until 
+        the transaction is complete*/
         g_uart_rx_f = 0;
         APP_post_event(UART);
+    }
+
+    if(g_uart_rx_msg_r)
+    {   
+        /*UART RX message is ready for parsing, consume flag*/
+        g_uart_rx_msg_r = 0;
+        APP_post_event(UART_PARSE_RX);
     }
 }
 
@@ -273,6 +295,9 @@ inside the fn_handle when a measurement is complete, the only way to set
 a new gate_owner is in a state_entry, which is not ideal.
 
 
+
+IMPORTANT!
+check app_service g_uart_rx_f condition
 
 
 

@@ -26,6 +26,7 @@ set(IOT_DEV_SENSOR_default_default_XC8_FILE_TYPE_compile
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/event_queue.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/interrupt.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/main.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/parse.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/system.c")
 set_source_files_properties(${IOT_DEV_SENSOR_default_default_XC8_FILE_TYPE_compile} PROPERTIES LANGUAGE C)
 set(IOT_DEV_SENSOR_default_default_XC8_FILE_TYPE_link)

@@ -215,9 +215,23 @@ static transition_t st_meas_ens160_handle(context_t *CTX, event_t ev, state_t cu
 
 
 static void st_comm_entry(context_t *CTX)
-{}
+{
+    CTX->gate_owner     = GATE_NONE;
+    CTX->gate_active    = 0;
+
+    /*entering this state assumes that there is something in the RX
+    buffer, thus the entry should check if the RX buffer has enought 
+    data to parse*/
+
+
+
+
+}
 static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
-{}
+{
+
+    /*case: UART_PARSE_RX*/
+}
 
 
 static void st_set_f1_entry(context_t *CTX){}

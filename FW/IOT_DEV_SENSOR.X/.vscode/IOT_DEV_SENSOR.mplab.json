@@ -144,7 +144,9 @@
                 "include/interrupt.h",
                 "src/interrupt.c",
                 "include/event_queue.h",
-                "src/event_queue.c"
+                "src/event_queue.c",
+                "include/parse.h",
+                "src/parse.c"
             ]
         }
     ]
