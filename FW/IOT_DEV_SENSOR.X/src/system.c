@@ -216,8 +216,14 @@ static transition_t st_meas_ens160_handle(context_t *CTX, event_t ev, state_t cu
 
 static void st_comm_entry(context_t *CTX)
 {}
-static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current){}
+static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
+{}
 
+
+static void st_set_f1_entry(context_t *CTX){}
+static transition_t st_set_f1_handle(context_t *CTX, event_t ev, state_t current){}
+static void st_set_f2_entry(context_t *CTX){}
+static transition_t st_set_f2_handle(context_t *CTX, event_t ev, state_t current){}
 
 
 
@@ -234,7 +240,12 @@ static const state_ops_t OPS[ST_COUNT] =
     [ST_MEAS_F2] = {st_meas_f2_entry, 0, st_meas_f2_handle},
     [ST_MEAS_ENS160] = {st_meas_ens160_entry, 0 , st_meas_ens160_handle},
     [ST_COMM] = {st_comm_entry,0,st_comm_handle},
+    [ST_SET_F1] = {st_set_f1_entry, 0, st_set_f1_handle},
+    [ST_SET_F2] = {st_set_f2_entry, 0, st_set_f2_handle}
 };
+
+/*states for setting fan speeds should be added here*/
+
 
 void FSM_transition(FSM_t *sm, state_t next)
 {

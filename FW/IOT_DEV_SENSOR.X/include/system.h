@@ -66,6 +66,8 @@ typedef enum{
     ST_MEAS,
     ST_MEAS_F1,
     ST_MEAS_F2,
+    ST_SET_F1,
+    ST_SET_F2,
     ST_MEAS_ENS160,
     ST_COMM,
     ST_COUNT
