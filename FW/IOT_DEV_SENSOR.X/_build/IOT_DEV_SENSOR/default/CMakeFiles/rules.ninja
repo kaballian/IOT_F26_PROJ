@@ -25,7 +25,7 @@ rule C_COMPILER__IOT_DEV_SENSOR_default_default_XC8_compile_unscanned_
 # Rule for linking C executable.
 
 rule C_EXECUTABLE_LINKER__IOT_DEV_SENSOR_default_image_V6VrMKlC_
-  command = cmd.exe /C "$PRE_LINK && c:\PROGRA~1\MICROC~1\xc8\v3.10\bin\xc8-cc.exe $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
+  command = C:\WINDOWS\system32\cmd.exe /C "$PRE_LINK && c:\PROGRA~1\MICROC~1\xc8\v3.10\bin\xc8-cc.exe $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
   description = Linking C executable $TARGET_FILE
   restat = $RESTAT
 

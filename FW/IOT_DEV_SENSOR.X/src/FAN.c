@@ -28,6 +28,7 @@ void FAN_set_duty(fan_t *fan, uint16_t duty)
     fan->set_duty(fan->CTX, duty);
 }
 
+
 void FAN_CNT(fan_t *fan)
 {
     fan->tach_count = TMR1_CNT_meas();

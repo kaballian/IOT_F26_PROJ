@@ -26,6 +26,8 @@
 
 
 
+
+
 /*
 IOT PROJECT:
 AIR PARTICLE SENSOR FIRMWARE
@@ -59,7 +61,10 @@ typedef enum{
     CONV_START,
     CONV_DONE,
     PWM_SET,
-    UART_PARSE_RX
+    UART_PARSE_RX,
+    SET_F1,
+    SET_F2,
+    SET_DONE,
 }event_t;
 //states
 typedef enum{
@@ -128,7 +133,9 @@ typedef enum {
     GATE_NONE = 0,
     GATE_F1,
     GATE_F2,
-    GATE_ENS160
+    GATE_ENS160,
+    GATE_F1_SET,
+    GATE_F2_SET
 }gate_owner_t;
 
 //shared data

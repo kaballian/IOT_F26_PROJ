@@ -1,0 +1,130 @@
+{
+	"inputs" : 
+	[
+		{
+			"path" : "CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "C:/Users/alext/Documents/AU/IOT_F26_PROJ/FW/IOT_DEV_SENSOR.X/_build/IOT_DEV_SENSOR/default/CMakeFiles/3.29.2/CMakeSystem.cmake"
+		},
+		{
+			"path" : ".generated/toolchain.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "C:/Users/alext/Documents/AU/IOT_F26_PROJ/FW/IOT_DEV_SENSOR.X/_build/IOT_DEV_SENSOR/default/CMakeFiles/3.29.2/CMakeCCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/CMakeDetermineASMCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/CMakeDetermineCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/CMakeDetermineCompilerId.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/CMakeCompilerIdDetection.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/CMakeFindBinUtils.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/CMakeASMCompiler.cmake.in"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/CMakeGenericSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/Platform/Generic.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/CMakeCInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/Platform/Generic.cmake"
+		},
+		{
+			"path" : ".generated/overrides.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/CMakeASMInformation.cmake"
+		},
+		{
+			"path" : ".generated/overrides.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Strawberry/c/share/cmake-3.29/Modules/CMakeTestASMCompiler.cmake"
+		},
+		{
+			"path" : ".generated/main.cmake"
+		},
+		{
+			"path" : ".generated/rule.cmake"
+		},
+		{
+			"path" : ".generated/file.cmake"
+		}
+	],
+	"kind" : "cmakeFiles",
+	"paths" : 
+	{
+		"build" : "C:/Users/alext/Documents/AU/IOT_F26_PROJ/FW/IOT_DEV_SENSOR.X/_build/IOT_DEV_SENSOR/default",
+		"source" : "C:/Users/alext/Documents/AU/IOT_F26_PROJ/FW/IOT_DEV_SENSOR.X/cmake/IOT_DEV_SENSOR/default"
+	},
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}

@@ -17,6 +17,7 @@ defined in system.h
 
 
 #include "include/event_queue.h"
+#include "include/parse.h"
 #include "include/system.h"
 #include <xc.h>
 
@@ -48,7 +49,9 @@ volatile uint32_t g_sys_ms      = 0;    //sys tick counter
 volatile uint32_t g_fan_deadline   = 0; //fan deadline check
     
 
-
+/*helper proto*/
+static void APP_handleUART(context_t *CTX);
+void APP_dispatch_events(void);
 
 /*handling wrapper*/
 static inline void APP_post_event(event_t ev)
@@ -120,7 +123,8 @@ void APP_service(void)
         }
         /*communication*/
         /*if work is active and the gate owner is ENS160*/
-        else if(sm.CTX.gate_active && sm.CTX.gate_owner == GATE_ENS160)
+        // else if(sm.CTX.gate_active && sm.CTX.gate_owner == GATE_ENS160)
+        else if(sm.CTX.gate_owner == GATE_ENS160)
         {
                 // if((sm.CTX.comm_i2c_flags & COMM_INIT) == COMM_INIT)
                 // {   
@@ -156,6 +160,15 @@ void APP_service(void)
 
             }
 
+        }
+
+        else if(sm.CTX.gate_owner == GATE_F1_SET)
+        {
+            APP_post_event(SET_DONE);
+        }
+        else if(sm.CTX.gate_owner == GATE_F2_SET)
+        {
+            APP_post_event(SET_DONE);
         }
             
         
@@ -205,26 +218,52 @@ void APP_service(void)
     all of the above code or by issuing a uart checker 
     every N amount of system ticks. 
     */
-    if(g_uart_rx_f)
+    
+    /*UART with parser*/
+    if(UART_parser_MsgAvailable())
     {
-        /*UART receive interrupt flag
-        this locks the state to COMM until 
-        the transaction is complete*/
-        g_uart_rx_f = 0;
-        APP_post_event(UART);
+        APP_handleUART(&sm.CTX);
     }
 
-    if(g_uart_rx_msg_r)
-    {   
-        /*UART RX message is ready for parsing, consume flag*/
-        g_uart_rx_msg_r = 0;
-        APP_post_event(UART_PARSE_RX);
+}
+/*design visibility, only app_service should be
+able to call this function*/
+static void APP_handleUART(context_t *CTX)
+{
+    UART_msg_t msg;
+
+    if(!UART_parser_GetMsg(&msg))
+    {
+        return;
+    }
+
+    switch(msg.cmd)
+    {
+        case CMD_PING: {break;}
+        case CMD_STAT: {
+            
+            break;
+        }
+        case CMD_SET_F1: {
+            CTX->FAN1.duty = msg.payload[0];
+            APP_post_event(SET_F1);            
+            break;
+        }
+        case CMD_SET_F2: {
+            CTX->FAN2.duty = msg.payload[0];
+            APP_post_event(SET_F2);
+            break;
+        }
+        case CMD_GET_F1: {break;}
+        case CMD_GET_F2: {break;}
+        case CMD_GET_SENSOR: {break;}
+        
+        
     }
 }
 
+
 /*dispatch APP events into FSM*/
-
-
 void APP_dispatch_events(void)
 {
     event_t ev;

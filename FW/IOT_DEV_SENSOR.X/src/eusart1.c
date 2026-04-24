@@ -1,4 +1,5 @@
 #include "include/eusart1.h"
+#include "include/parse.h"
 
 
 #define UART_RX_BUF_SIZE    64u
@@ -21,7 +22,7 @@ static volatile uint8_t tx_buf[UART_TX_BUF_SIZE];
 static volatile uint8_t tx_head = 0;
 static volatile uint8_t tx_tail = 0;
 
-static UART_rx_parser_t rx_parser;
+
 
 static uint8_t next_index(uint8_t index, uint8_t size)
 {
@@ -68,6 +69,9 @@ void EUSART1_init(void)
     rx_tail = 0;
     tx_head = 0;
     tx_tail = 0;
+
+
+    UART_RX_ParserReset();
 }
 
 
@@ -89,26 +93,9 @@ void EUSART1_ISR(void)
         /*read data from receive buffer
         this also clears RC1IF flag automatically sec 12.10.13*/
         uint8_t byte = RC1REG; 
-        // uint8_t next = next_index(rx_head, UART_RX_BUF_SIZE);
-        // if(next != rx_tail)
-        // {
-        //     rx_buf[rx_head] = byte;
-        //     rx_head = next;
-        // }
-        
-        // /*check if sequence of END1 and 2 is seen*/
-        // if(byte == END1)
-        // {
-        //     END_REG = 1;
-        // }else if((byte == END2) && (END_REG == 1))
-        // {
-        //     END_REG = 0;
-        //     g_uart_rx_msg_r = 1;
-        // }else{
-        //     END_REG = 0;
-        // }
+       
 
-        UART_RX_ParserFeed(&rx_parser,byte);
+        UART_RX_ParserFeed(byte);
     }
 
     /*TX*/

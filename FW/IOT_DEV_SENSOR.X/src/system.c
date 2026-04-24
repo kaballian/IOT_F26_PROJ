@@ -93,6 +93,11 @@ static transition_t st_idle_handle(context_t *CTX, event_t ev,state_t current)
             return to(ST_MEAS_F2);
         case MEAS_ENS160_START:
             return to(ST_MEAS_ENS160);
+        case SET_F1:
+            return to(ST_SET_F1);
+        case SET_F2:
+            return to(ST_SET_F2);
+
         default:
             return stay(current);
     }
@@ -234,10 +239,37 @@ static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
 }
 
 
-static void st_set_f1_entry(context_t *CTX){}
-static transition_t st_set_f1_handle(context_t *CTX, event_t ev, state_t current){}
-static void st_set_f2_entry(context_t *CTX){}
-static transition_t st_set_f2_handle(context_t *CTX, event_t ev, state_t current){}
+static void st_set_f1_entry(context_t *CTX)
+{
+    CTX->gate_owner     = GATE_F1_SET;
+    CTX->gate_active    = 1;
+    FAN_set_duty(&CTX->FAN1, CTX->FAN1.duty);
+    CTX->gate_active    = 0;
+
+}
+static transition_t st_set_f1_handle(context_t *CTX, event_t ev, state_t current)
+{
+    /*setting fan is assume done instantly, thus it can return to 
+    */
+    if(ev == SET_DONE)
+    {
+        return to(ST_IDLE);
+    }
+}
+static void st_set_f2_entry(context_t *CTX)
+{
+    CTX->gate_owner     = GATE_F2_SET;
+    CTX->gate_active    = 1;
+    FAN_set_duty(&CTX->FAN2, CTX->FAN2.duty);
+    CTX->gate_active    = 0;
+}
+static transition_t st_set_f2_handle(context_t *CTX, event_t ev, state_t current)
+{
+    if(ev == SET_DONE)
+    {
+        return to(ST_IDLE);
+    }
+}
 
 
 
