@@ -173,3 +173,22 @@ uint8_t EUSART1_write_buf(const uint8_t *data, uint8_t len)
     return written;
 
 }
+
+void COMM_assemble_frame(UART_tx_msg_t *tx)
+{
+    uint8_t i = 0;
+    tx->frame[i++] = SOF; /*start of frame*/
+    tx->frame[i++] = tx->cmd;
+    tx->frame[i++] = tx->len;
+
+    for(uint8_t j = 0; j < tx->len; j++)
+    {
+        tx->frame[i++] = tx->payload[j];
+    }
+
+    tx->frame[i++] = UART_CHKSUM(tx->cmd, tx->len, tx->payload);
+    tx->frame[i++] = END1;
+    tx->frame[i++] = END2;
+    tx->frame_len = i;
+}
+void COMM_TX_start(UART_tx_msg_t *tx);

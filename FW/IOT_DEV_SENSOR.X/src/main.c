@@ -237,11 +237,21 @@ static void APP_handleUART(context_t *CTX)
         return;
     }
 
+    /*cases marked with TX, are UART cases that 
+    require a TX response to the sender, meaning that the
+    FSM should be send to COMM state and then handled there*/
     switch(msg.cmd)
     {
-        case CMD_PING: {break;}
+        /*TX*/
+        case CMD_PING: {
+            CTX->comm_req.type = COMM_RESP_PING;
+            APP_post_event(UART_RESP);
+            break;
+        }
+        /*TX*/
         case CMD_STAT: {
-            
+            CTX->comm_req.type = COMM_RESP_STAT;
+            APP_post_event(UART_RESP);
             break;
         }
         case CMD_SET_F1: {
@@ -254,11 +264,24 @@ static void APP_handleUART(context_t *CTX)
             APP_post_event(SET_F2);
             break;
         }
-        case CMD_GET_F1: {break;}
-        case CMD_GET_F2: {break;}
-        case CMD_GET_SENSOR: {break;}
-        
-        
+        /*TX*/
+        case CMD_GET_F1: {
+            CTX->comm_req.type = COMM_RESP_F1;
+            APP_post_event(UART_RESP);
+            break;
+        }
+        /*TX*/
+        case CMD_GET_F2: {
+            CTX->comm_req.type = COMM_RESP_F2;
+            APP_post_event(UART_RESP);    
+            break;
+        }
+        /*TX*/
+        case CMD_GET_SENSOR: {
+            CTX->comm_req.type = COMM_RESP_SENSOR;
+            APP_post_event(UART_RESP);
+            break;
+        }
     }
 }
 

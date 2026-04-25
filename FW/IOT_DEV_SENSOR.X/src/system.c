@@ -98,6 +98,10 @@ static transition_t st_idle_handle(context_t *CTX, event_t ev,state_t current)
         case SET_F2:
             return to(ST_SET_F2);
 
+        /*UART TX CASES*/
+        case UART_RESP:
+            return to(ST_COMM);
+
         default:
             return stay(current);
     }
@@ -218,24 +222,75 @@ static transition_t st_meas_ens160_handle(context_t *CTX, event_t ev, state_t cu
 
 
 
-
 static void st_comm_entry(context_t *CTX)
 {
-    CTX->gate_owner     = GATE_NONE;
-    CTX->gate_active    = 0;
+    CTX->gate_owner     = GATE_COMM;
+    CTX->gate_active    = 1;
+
+
 
     /*entering this state assumes that there is something in the RX
     buffer, thus the entry should check if the RX buffer has enought 
     data to parse*/
+    
+    /*should maybe clear the TX payload buffer*/
+
+    switch(CTX->comm_req.type)
+    {
+        case COMM_RESP_PING:{
+            
+            break;
+        }
+        case COMM_RESP_STAT:{
+
+            break;
+        }
+        case COMM_RESP_F1:{
+            CTX->tx_msg.cmd = CMD_GET_F1;
+            CTX->tx_msg.len = 3; // (uint8_t) -> 1 * uint8_t + 1 * uint16_t
+            CTX->tx_msg.payload[0] = CTX->FAN1.duty; 
+            CTX->tx_msg.payload[1] = (uint8_t)(CTX->FAN1.RPM >> 8);
+            CTX->tx_msg.payload[2] = (uint8_t)(CTX->FAN1.RPM);
+            break;
+        }
+        case COMM_RESP_F2:{
+            CTX->tx_msg.cmd = CMD_GET_F2;
+            CTX->tx_msg.len = 3; /*same as fan 1*/
+            CTX->tx_msg.payload[0] = CTX->FAN2.duty; 
+            CTX->tx_msg.payload[1] = (uint8_t)(CTX->FAN2.RPM >> 8);
+            CTX->tx_msg.payload[2] = (uint8_t)(CTX->FAN2.RPM );
+            break;
+        }
+        case COMM_RESP_SENSOR:{
+            CTX->tx_msg.cmd = CMD_GET_SENSOR;
+            CTX->tx_msg.len = 6; /* dev addr(8) + aqi(8) + tvoc_ppb(16) + eco2_ppm(16)*/
+            CTX->tx_msg.payload[0] = CTX->ENS160.dev_addr;
+            CTX->tx_msg.payload[1] = CTX->ENS160.aqi;
+            CTX->tx_msg.payload[2] = (uint8_t)(CTX->ENS160.tvoc_ppb>>8);
+            CTX->tx_msg.payload[3] = (uint8_t)(CTX->ENS160.tvoc_ppb);
+            CTX->tx_msg.payload[4] = (uint8_t)(CTX->ENS160.eco2_ppm>>8);
+            CTX->tx_msg.payload[5] = (uint8_t)(CTX->ENS160.eco2_ppm);
+            break;
+        }
 
 
+        case COMM_RESP_NONE:
+        default:
+            break;
+    }
+
+    /*assemble frame - add SOF, CMD, checksum, END1,END2 and so on*/
+
+    /*start TX*/
 
 
 }
 static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
-{
-
+{   
     /*case: UART_PARSE_RX*/
+
+
+
 }
 
 

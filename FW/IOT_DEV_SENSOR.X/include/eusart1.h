@@ -16,7 +16,7 @@ this should be plenty of time to complete a parsing gauntlet
 #include <xc.h>
 #include "utils.h"
 
-#define END1                0xAA /*RX mesg end sequence*/
+#define END1                0xAA /*RX/TX mesg end sequence*/
 #define END2                0x55 
 #define UART_MAX_PAYLOAD    8
 volatile uint8_t g_uart_rx_f;
@@ -40,7 +40,13 @@ typedef enum{
 }UART_comm_t;
 
 
-
+typedef struct{
+    uint8_t cmd;
+    uint8_t len;
+    uint8_t payload[8];
+    uint8_t frame[16];
+    uint8_t frame_len;
+}UART_tx_msg_t;
 
 /*
 7   6   5   4   3   2   1       0
@@ -58,5 +64,7 @@ bool EUSART1_write_byte(uint8_t byte);
 uint8_t EUSART1_write_buf(const uint8_t *data, uint8_t len);
 
 
+void COMM_assemble_frame(UART_tx_msg_t *tx);
+void COMM_TX_start(UART_tx_msg_t *tx);
 
 #endif  

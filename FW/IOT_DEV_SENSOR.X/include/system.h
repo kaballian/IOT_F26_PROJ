@@ -44,6 +44,7 @@ typedef enum{
     TMRTick,
     UARTTIMEOUT,
     UART,
+    UART_RESP,
     MEAS_START,
     MEAS_FAN1_START,
     MEAS_FAN2_START,
@@ -135,9 +136,27 @@ typedef enum {
     GATE_F2,
     GATE_ENS160,
     GATE_F1_SET,
-    GATE_F2_SET
+    GATE_F2_SET,
+    GATE_COMM,
 }gate_owner_t;
 
+/*UART response type*/
+
+typedef enum{
+    COMM_RESP_NONE = 0,
+    COMM_RESP_PING,
+    COMM_RESP_STAT,
+    COMM_RESP_F1,
+    COMM_RESP_F2,
+    COMM_RESP_SENSOR,
+    COMM_RESP_ERROR
+}UART_COMM_resp_t;
+
+/*application service response type*/
+typedef struct{
+    UART_COMM_resp_t    type;
+    uint8_t             arg;
+}app_comm_req_t;
 //shared data
 typedef struct {
     uint32_t    sys_ms;
@@ -163,6 +182,8 @@ typedef struct {
     
     //UART comm
     UART_comm_t     UART_CMD;
+    app_comm_req_t  comm_req;
+    UART_tx_msg_t   tx_msg;
 
     //i2c comm flags
     I2C_COMM_f_t    comm_i2c_flags;

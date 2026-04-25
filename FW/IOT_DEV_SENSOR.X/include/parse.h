@@ -32,7 +32,7 @@ typedef struct {
 
 /*
 PROTOCOL:
-[SOF] [TYPE] [LEN] [PAYLOAD] [CRC8] [END1] [END2]
+[SOF] [CMD] [LEN] [PAYLOAD] [CRC8] [END1] [END2]
 BYTE# | descp 
 
 
