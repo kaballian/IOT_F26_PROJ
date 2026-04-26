@@ -66,6 +66,7 @@ typedef enum{
     SET_F1,
     SET_F2,
     SET_DONE,
+    COMM_TX_DONE,
 }event_t;
 //states
 typedef enum{

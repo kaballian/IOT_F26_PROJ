@@ -280,14 +280,30 @@ static void st_comm_entry(context_t *CTX)
     }
 
     /*assemble frame - add SOF, CMD, checksum, END1,END2 and so on*/
-
+    COMM_assemble_frame(&CTX->tx_msg);
     /*start TX*/
-
-
+    COMM_TX_start(&CTX->tx_msg);
 }
 static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
 {   
-    /*case: UART_PARSE_RX*/
+    
+    switch(ev)
+    {
+        case COMM_TX_DONE: {
+            CTX->comm_req.type      = COMM_RESP_NONE;
+            CTX->tx_msg.frame_len   = 0;
+            CTX->tx_msg.len         = 0;
+
+            return to(ST_IDLE);
+
+            break;
+        }
+
+        default:
+            return stay(current);
+            break;
+        
+    }
 
 
 
@@ -310,6 +326,8 @@ static transition_t st_set_f1_handle(context_t *CTX, event_t ev, state_t current
     {
         return to(ST_IDLE);
     }
+
+    return stay(current);
 }
 static void st_set_f2_entry(context_t *CTX)
 {
@@ -324,6 +342,7 @@ static transition_t st_set_f2_handle(context_t *CTX, event_t ev, state_t current
     {
         return to(ST_IDLE);
     }
+    return stay(current);
 }
 
 

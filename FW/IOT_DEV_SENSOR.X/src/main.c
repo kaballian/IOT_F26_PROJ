@@ -17,7 +17,8 @@ defined in system.h
 
 
 #include "include/event_queue.h"
-#include "include/parse.h"
+// #include "include/parse.h"
+#include "include/eusart1.h"
 #include "include/system.h"
 #include <xc.h>
 
@@ -48,6 +49,7 @@ volatile uint8_t g_ENS160_f     = 0;    //SOFTWARE FLAG
 volatile uint32_t g_sys_ms      = 0;    //sys tick counter
 volatile uint32_t g_fan_deadline   = 0; //fan deadline check
     
+extern volatile uint8_t g_comm_tx_done_f; //ISR flag
 
 /*helper proto*/
 static void APP_handleUART(context_t *CTX);
@@ -103,13 +105,6 @@ void APP_service(void)
                             APP_post_event(MEAS_FAN2_DONE);
                             break;
                         }
-                        // case GATE_ENS160:{ //not sure if ENS160 needs deadline
-                        //     sm.CTX.gate_owner = GATE_NONE;
-                        //     APP_post_event(MEAS_ENS160_DONE);
-                        //     break;
-                        // }
-                        
-                        
                         default:
                             sm.CTX.gate_owner = GATE_NONE;
                             break;
@@ -126,15 +121,8 @@ void APP_service(void)
         // else if(sm.CTX.gate_active && sm.CTX.gate_owner == GATE_ENS160)
         else if(sm.CTX.gate_owner == GATE_ENS160)
         {
-                // if((sm.CTX.comm_i2c_flags & COMM_INIT) == COMM_INIT)
-                // {   
-                //     APP_post_event(MEAS_ENS160_STAT);
-                // }
-
-                // if(sm.CTX.comm_i2c_flags &)
-
+            
             /*for now, get full status and measurements*/
-
             switch(sm.CTX.comm_i2c_flags)
             {
                 /*comm init essentially invokes the handler
@@ -157,11 +145,8 @@ void APP_service(void)
                 case NO_COMM: /*rollover to default case*/
                 default:
                     break;
-
             }
-
         }
-
         else if(sm.CTX.gate_owner == GATE_F1_SET)
         {
             APP_post_event(SET_DONE);
@@ -224,6 +209,14 @@ void APP_service(void)
     {
         APP_handleUART(&sm.CTX);
     }
+
+    /*TX check*/
+    if(g_comm_tx_done_f)
+    {
+        g_comm_tx_done_f = 0; /*clear the TX done flag*/
+        APP_post_event(COMM_TX_DONE);
+    }
+    
 
 }
 /*design visibility, only app_service should be

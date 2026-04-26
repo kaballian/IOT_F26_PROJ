@@ -1,5 +1,6 @@
 #include "include/eusart1.h"
 #include "include/parse.h"
+#include <pic16f18124.h>
 
 
 #define UART_RX_BUF_SIZE    64u
@@ -22,7 +23,10 @@ static volatile uint8_t tx_buf[UART_TX_BUF_SIZE];
 static volatile uint8_t tx_head = 0;
 static volatile uint8_t tx_tail = 0;
 
+static const UART_tx_msg_t *g_tx_msg = 0;
+static uint8_t g_tx_idx = 0;
 
+volatile uint8_t g_comm_tx_done_f = 0;
 
 static uint8_t next_index(uint8_t index, uint8_t size)
 {
@@ -102,9 +106,17 @@ void EUSART1_ISR(void)
     /*sec 12.10.13*/ 
     if(PIR4bits.TX1IF)
     {
-
+        if(g_tx_msg && (g_tx_idx < g_tx_msg->frame_len))
+        {
+            TX1REG = g_tx_msg->frame[g_tx_idx++]; 
+        }else{ /*when transmission is complete or pointer is null*/
+            PIE4bits.TX1IE = 0; /*stop the TX interrupts*/
+            g_tx_msg = 0; /*reset message*/
+            g_tx_idx = 0; /*reset index counter for payload*/
+        
+            g_comm_tx_done_f = 1; /*indicate that transmission is done*/
+        }
     }
-
 }
 
 bool EUSART1_rx_available(void)
@@ -191,4 +203,9 @@ void COMM_assemble_frame(UART_tx_msg_t *tx)
     tx->frame[i++] = END2;
     tx->frame_len = i;
 }
-void COMM_TX_start(UART_tx_msg_t *tx);
+void COMM_TX_start(UART_tx_msg_t *tx)
+{
+    g_tx_msg = tx;
+    g_tx_idx = 0;
+    PIE4bits.TX1IE = 1; /*kick the ISR into action*/ 
+}
