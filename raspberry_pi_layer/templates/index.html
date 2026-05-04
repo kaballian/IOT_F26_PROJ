@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PIC UART Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 40px auto;
+            background: #111;
+            color: #eee;
+        }
+
+        .card {
+            background: #1d1d1d;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+        }
+
+        button {
+            padding: 10px 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        pre {
+            background: #000;
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>PIC UART Dashboard</h1>
+
+    <div class="card">
+        <h2>System</h2>
+        <button onclick="ping()">Ping</button>
+        <button onclick="getStatus()">Get Status</button>
+    </div>
+
+    <div class="card">
+        <h2>Fan 1</h2>
+        <input id="fan1Duty" type="range" min="0" max="100" value="50"
+               oninput="fan1Value.innerText = this.value">
+        <p>Duty: <span id="fan1Value">50</span>%</p>
+        <button onclick="setFanDuty(1)">Set Fan 1 Duty</button>
+        <button onclick="getFan(1)">Get Fan 1</button>
+    </div>
+
+    <div class="card">
+        <h2>Fan 2</h2>
+        <input id="fan2Duty" type="range" min="0" max="100" value="50"
+               oninput="fan2Value.innerText = this.value">
+        <p>Duty: <span id="fan2Value">50</span>%</p>
+        <button onclick="setFanDuty(2)">Set Fan 2 Duty</button>
+        <button onclick="getFan(2)">Get Fan 2</button>
+    </div>
+
+    <div class="card">
+        <h2>Sensor</h2>
+        <button onclick="getSensor(1)">Get Sensor 1</button>
+    </div>
+
+    <div class="card">
+        <h2>Response</h2>
+        <pre id="output">Waiting...</pre>
+    </div>
+
+    <script>
+        function show(data) {
+            document.getElementById("output").textContent =
+                JSON.stringify(data, null, 2);
+        }
+
+        async function ping() {
+            const res = await fetch("/ping");
+            show(await res.json());
+        }
+
+        async function getStatus() {
+            const res = await fetch("/status");
+            show(await res.json());
+        }
+
+        async function getFan(id) {
+            const res = await fetch(`/fans/${id}`);
+            show(await res.json());
+        }
+
+        async function setFanDuty(id) {
+            const slider = document.getElementById(`fan${id}Duty`);
+            const duty = Number(slider.value);
+
+            const res = await fetch(`/fans/${id}/duty`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ value: duty })
+            });
+
+            show(await res.json());
+        }
+
+        async function getSensor(id) {
+            const res = await fetch(`/sensors/${id}`);
+            show(await res.json());
+        }
+    </script>
+</body>
+</html>
