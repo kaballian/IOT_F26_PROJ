@@ -10,6 +10,9 @@ bool I2C2_init(void)
     SSP2CON2 = 0x00;
     SSP2CON3 = 0x00;
 
+    PIR5bits.BCL2IF = 0;
+    PIR5bits.SSP2IF = 0;
+
     /*slew rate control*/
     SSP2STAT = 0x80; //SMP=1 -> standard mode (100KHz)
 
@@ -18,6 +21,8 @@ bool I2C2_init(void)
     /*enable host mode */
     SSP2CON1bits.SSPM = 0b1000;
     SSP2CON1bits.SSPEN = 1;
+
+    return true;
 }
 static bool I2C2_start(void)
 {

@@ -53,7 +53,9 @@ typedef struct
 
 
 void PWM_init(void);
-void PWM_set_duty(void *CTX, uint16_t val);
+void PWM_set_raw(pwm_chan_t *chan, uint16_t counts);
+void PWM_set_percent(pwm_chan_t *chan, uint8_t percent);
+// void PWM_set_duty(pwm_chan_t *chan, uint8_t percent);
 // void PWM_set_period(pwm_chan_t *chan, uint16_t period);
 
 extern pwm_chan_t PWM_FAN1_CH;

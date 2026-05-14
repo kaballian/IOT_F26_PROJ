@@ -1,0 +1,21 @@
+build/default/production/src/system.p1:  \
+src/system.c  \
+src/../include/system.h  \
+src/../include/utils.h  \
+include/clock.h  \
+include/pins.h  \
+src/../include/FAN.h  \
+src/../include/TMR1.h  \
+src/../include/PWM.h  \
+src/../include/EXT_SENSOR.h  \
+include/ENS_160.h  \
+include/utils.h  \
+include/I2C.h  \
+include/FAN.h  \
+include/PWM.h  \
+include/eusart1.h  \
+include/ADG419BR.h  \
+include/TMR0.h  \
+include/TMR1.h  \
+include/interrupt.h  \
+include/parse.h 

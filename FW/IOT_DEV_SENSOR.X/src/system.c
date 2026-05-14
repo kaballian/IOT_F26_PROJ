@@ -38,8 +38,8 @@ void SYSTEM_init(void)
 static void st_init_entry(context_t *CTX)
 {
      /*FANS*/
-    FAN_init(&CTX->FAN1, PWM_set_duty, &PWM_FAN1_CH, 20);    
-    FAN_init(&CTX->FAN2, PWM_set_duty, &PWM_FAN2_CH, 25);    
+    // FAN_init(&CTX->FAN1, PWM_set_duty, &PWM_FAN1_CH, 20);    
+    // FAN_init(&CTX->FAN2, PWM_set_duty, &PWM_FAN2_CH, 25);    
 
     
 
@@ -248,7 +248,7 @@ static void st_comm_entry(context_t *CTX)
         case COMM_RESP_F1:{
             CTX->tx_msg.cmd = CMD_GET_F1;
             CTX->tx_msg.len = 3; // (uint8_t) -> 1 * uint8_t + 1 * uint16_t
-            CTX->tx_msg.payload[0] = CTX->FAN1.duty; 
+            CTX->tx_msg.payload[0] = CTX->FAN1.duty_percent; 
             CTX->tx_msg.payload[1] = (uint8_t)(CTX->FAN1.RPM >> 8);
             CTX->tx_msg.payload[2] = (uint8_t)(CTX->FAN1.RPM);
             break;
@@ -256,7 +256,7 @@ static void st_comm_entry(context_t *CTX)
         case COMM_RESP_F2:{
             CTX->tx_msg.cmd = CMD_GET_F2;
             CTX->tx_msg.len = 3; /*same as fan 1*/
-            CTX->tx_msg.payload[0] = CTX->FAN2.duty; 
+            CTX->tx_msg.payload[0] = CTX->FAN2.duty_percent; 
             CTX->tx_msg.payload[1] = (uint8_t)(CTX->FAN2.RPM >> 8);
             CTX->tx_msg.payload[2] = (uint8_t)(CTX->FAN2.RPM );
             break;
@@ -314,7 +314,7 @@ static void st_set_f1_entry(context_t *CTX)
 {
     CTX->gate_owner     = GATE_F1_SET;
     CTX->gate_active    = 1;
-    FAN_set_duty(&CTX->FAN1, CTX->FAN1.duty);
+    FAN_set_duty(&CTX->FAN1, CTX->FAN1.duty_percent);
     CTX->gate_active    = 0;
 
 }
@@ -333,7 +333,7 @@ static void st_set_f2_entry(context_t *CTX)
 {
     CTX->gate_owner     = GATE_F2_SET;
     CTX->gate_active    = 1;
-    FAN_set_duty(&CTX->FAN2, CTX->FAN2.duty);
+    FAN_set_duty(&CTX->FAN2, CTX->FAN2.duty_percent);
     CTX->gate_active    = 0;
 }
 static transition_t st_set_f2_handle(context_t *CTX, event_t ev, state_t current)

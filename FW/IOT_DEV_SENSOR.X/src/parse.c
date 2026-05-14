@@ -29,7 +29,7 @@ typedef struct{
 
 static UART_rx_parser_t rx_parser;
 static volatile uint8_t msg_ready = 0;
-static UART_msg_t rx_msg;
+static volatile UART_msg_t rx_msg;
 
 void UART_RX_ParserReset()
 {
@@ -48,6 +48,7 @@ void UART_RX_ParserReset()
 
 void UART_RX_ParserFeed(uint8_t byte)
 {
+    
     switch(rx_parser.state)
     {
         case RX_WAIT_SOF:{

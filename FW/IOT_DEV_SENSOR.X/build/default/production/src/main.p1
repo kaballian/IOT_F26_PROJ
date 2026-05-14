@@ -1,5 +1,165 @@
 Version 4.0 HI-TECH Software Intermediate Code
+"9 ./include/utils.h
+[; ;./include/utils.h: 9: typedef struct {
+[s S1154 `*Vuc 1 `*Vuc 1 `uc 1 ]
+[n S1154 . lat tris bitmask ]
+"205 ./include/system.h
+[; ;./include/system.h: 205: static __attribute__((inline)) transition_t stay(state_t current){
+[c E8258 0 1 2 3 4 5 6 7 8 9 .. ]
+[n E8258 . ST_INIT ST_IDLE ST_MEAS ST_MEAS_F1 ST_MEAS_F2 ST_SET_F1 ST_SET_F2 ST_MEAS_ENS160 ST_COMM ST_COUNT  ]
+"200
+[; ;./include/system.h: 200: typedef struct {
+[s S1168 `a 1 `E8258 1 ]
+[n S1168 . changed next ]
+"125
+[; ;./include/system.h: 125: typedef struct {
+[s S1164 `us 1 `us 1 ]
+[n S1164 . humidity pressure ]
+"130
+[; ;./include/system.h: 130: typedef struct{
+[s S1165 `us 1 ]
+[n S1165 . AQI ]
+"107 src/main.c
+[; ;src/main.c: 107: static FSM_t sm;
+[c E8302 0 1 2 3 4 5 6 .. ]
+[n E8302 . GATE_NONE GATE_F1 GATE_F2 GATE_ENS160 GATE_F1_SET GATE_F2_SET GATE_COMM  ]
+[c E8159 1 2 3 4 5 6 7 240 241 .. ]
+[n E8159 . CMD_PING CMD_STAT CMD_SET_F1 CMD_SET_F2 CMD_GET_F1 CMD_GET_F2 CMD_GET_SENSOR UART_CMD_ACK UART_CMD_NACK  ]
+[c E8311 0 1 2 3 4 5 6 .. ]
+[n E8311 . COMM_RESP_NONE COMM_RESP_PING COMM_RESP_STAT COMM_RESP_F1 COMM_RESP_F2 COMM_RESP_SENSOR COMM_RESP_ERROR  ]
+"157 ./include/system.h
+[; ;./include/system.h: 157: typedef struct{
+[s S1166 `E8311 1 `uc 1 ]
+[n S1166 . type arg ]
+"43 ./include/eusart1.h
+[; ;./include/eusart1.h: 43: typedef struct{
+[s S1161 `uc 1 `uc 1 `uc -> 8 `i `uc -> 16 `i `uc 1 ]
+[n S1161 . cmd len payload frame frame_len ]
+"107 src/main.c
+[; ;src/main.c: 107: static FSM_t sm;
+[c E8289 0 1 2 3 .. ]
+[n E8289 . NO_COMM COMM_INIT READ_DATA COMM_COMP  ]
+"59 ./include/ENS_160.h
+[; ;./include/ENS_160.h: 59: {
+[s S1158 `uc 1 `us 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `us 1 `us 1 ]
+[n S1158 . dev_addr part_id dev_status validity_flag present initialized data_valid aqi tvoc_ppb eco2_ppm ]
+"47 ./include/PWM.h
+[; ;./include/PWM.h: 47: {
+[s S1159 `*Vus 1 `*Vuc 1 `uc 1 `us 1 ]
+[n S1159 . pR con ld_mask period ]
+"16 ./include/FAN.h
+[; ;./include/FAN.h: 16: {
+[s S1160 `*S1159 1 `uc 1 `us 1 `uc 1 `us 1 ]
+[n S1160 . pwm duty_percent tach_count pulses_pr_rev RPM ]
+"107 src/main.c
+[; ;src/main.c: 107: static FSM_t sm;
+[c E8192 0 1 .. ]
+[n E8192 . CHL_1 CHL_2  ]
+"33 ./include/ADG419BR.h
+[; ;./include/ADG419BR.h: 33: typedef struct{
+[s S1162 `S1154 1 `E8192 1 ]
+[n S1162 . channelSelector status ]
+"162 ./include/system.h
+[; ;./include/system.h: 162: typedef struct {
+[s S1167 `ul 1 `ul 1 `us 1 `ul 1 `uc 1 `uc 1 `uc 1 `uc 1 `us -> 8 `i `us -> 8 `i `S1164 -> 8 `i `S1165 -> 8 `i `uc 1 `uc 1 `E8302 1 `E8159 1 `S1166 1 `S1161 1 `E8289 1 `S1158 1 `S1160 1 `S1160 1 `S1162 1 ]
+[n S1167 . sys_ms fsm_tick fan_gate_div gate_deadline gate_active has_deadline init_flags fault_flags F1_meas F2_meas room_meas AQI_meas meas_head meas_count gate_owner UART_CMD comm_req tx_msg comm_i2c_flags ENS160 FAN1 FAN2 FAN_selector ]
+"235
+[; ;./include/system.h: 235: typedef struct{
+[s S1172 `S1167 1 `E8258 1 ]
+[n S1172 . CTX state ]
+"108 src/main.c
+[; ;src/main.c: 108: static event_q_t ev_q;
+[c E8229 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 .. ]
+[n E8229 . None TMRTick UARTTIMEOUT UART UART_RESP MEAS_START MEAS_FAN1_START MEAS_FAN2_START MEAS_FAN1_DONE MEAS_FAN2_DONE MEAS_ENS160_START MEAS_ENS160_PROBE MEAS_ENS160_STAT MEAS_ENS160_READ MEAS_ENS160_DONE MEAS_BME280 I2C_ERR INIT_COMP TMR_START CONV_START CONV_DONE PWM_SET UART_PARSE_RX SET_F1 SET_F2 SET_DONE COMM_TX_DONE  ]
+"11 ./include/event_queue.h
+[; ;./include/event_queue.h: 11: typedef struct {
+[s S1173 `E8229 -> 8 `i `uc 1 `uc 1 `uc 1 ]
+[n S1173 . buf head tail count ]
+"109 src/main.c
+[; ;src/main.c: 109: static app_step_t step_index;
+[c E8421 0 1 2 3 4 .. ]
+[n E8421 . STEP_F1 STEP_F2 STEP_ENS160 STEP_COMM STEP_COUNT  ]
+[v F8408 `(a ~T0 @X0 1 tf2`*S1173`E8229 ]
+"19 ./include/event_queue.h
+[; ;./include/event_queue.h: 19: __attribute__((inline)) _Bool EVENT_Q_push(event_q_t *q, event_t ev);
+[v _EVENT_Q_push `TF8408 ~T0 @X0 0 e ]
+[v F8405 `(v ~T0 @X0 1 tf1`*S1173 ]
+"18
+[; ;./include/event_queue.h: 18: __attribute__((inline)) void EVENT_Q_init(event_q_t *q);
+[v _EVENT_Q_init `TF8405 ~T0 @X0 0 e ]
+"241 ./include/system.h
+[; ;./include/system.h: 241: void FSM_init(FSM_t *sm);
+[v _FSM_init `(v ~T0 @X0 0 ef1`*S1172 ]
+"48 ./include/parse.h
+[; ;./include/parse.h: 48: _Bool UART_parser_MsgAvailable(void);
+[v _UART_parser_MsgAvailable `(a ~T0 @X0 0 ef ]
+"122 src/main.c
+[; ;src/main.c: 122: static void APP_handleUART(context_t *CTX);
+[v _APP_handleUART `(v ~T0 @X0 0 sf1`*S1167 ]
+"119
+[; ;src/main.c: 119: extern volatile uint8_t g_comm_tx_done_f;
+[v _g_comm_tx_done_f `Vuc ~T0 @X0 0 e ]
+"12 ./include/parse.h
+[; ;./include/parse.h: 12: typedef struct {
+[s S1163 `uc 1 `uc 1 `uc -> 8 `i ]
+[n S1163 . cmd len payload ]
+"49
+[; ;./include/parse.h: 49: _Bool UART_parser_GetMsg(UART_msg_t *msg);
+[v _UART_parser_GetMsg `(a ~T0 @X0 0 ef1`*S1163 ]
+"243 ./include/system.h
+[; ;./include/system.h: 243: void FSM_dispatch(FSM_t *sm, event_t ev);
+[v _FSM_dispatch `(v ~T0 @X0 0 ef2`*S1172`E8229 ]
+[v F8412 `(a ~T0 @X0 1 tf2`*S1173`*E8229 ]
+"20 ./include/event_queue.h
+[; ;./include/event_queue.h: 20: __attribute__((inline)) _Bool EVENT_Q_pop(event_q_t *q, event_t *ev);
+[v _EVENT_Q_pop `TF8412 ~T0 @X0 0 e ]
+"35 ./include/FAN.h
+[; ;./include/FAN.h: 35: void FAN_CNT_start(fan_t *fan);
+[v _FAN_CNT_start `(v ~T0 @X0 0 ef1`*S1160 ]
 [p mainexit ]
+"11 ./include/clock.h
+[; ;./include/clock.h: 11: void CLOCK_init(void);
+[v _CLOCK_init `(v ~T0 @X0 0 ef ]
+"6 ./include/pins.h
+[; ;./include/pins.h: 6: void PIN_MANAGER_init(void);
+[v _PIN_MANAGER_init `(v ~T0 @X0 0 ef ]
+"13 ./include/interrupt.h
+[; ;./include/interrupt.h: 13: void ISR_init();
+[v _ISR_init `(v ~T0 @X0 0 e? ]
+"57 ./include/eusart1.h
+[; ;./include/eusart1.h: 57: void EUSART1_init(void);
+[v _EUSART1_init `(v ~T0 @X0 0 ef ]
+"18 ./include/TMR0.h
+[; ;./include/TMR0.h: 18: void TMR0_init(void);
+[v _TMR0_init `(v ~T0 @X0 0 ef ]
+"6 ./include/I2C.h
+[; ;./include/I2C.h: 6: _Bool I2C2_init(void);
+[v _I2C2_init `(a ~T0 @X0 0 ef ]
+"76 ./include/ENS_160.h
+[; ;./include/ENS_160.h: 76: _Bool ENS160_init(ENS160_t *dev, uint8_t addr);
+[v _ENS160_init `(a ~T0 @X0 0 ef2`*S1158`uc ]
+[v F202 `(v ~T0 @X0 1 tf1`ul ]
+"20 C:\Program Files\Microchip\xc8\v3.10\pic\include/builtins.h
+[v __delay `JF202 ~T0 @X0 0 e ]
+[p i __delay ]
+"75 ./include/ENS_160.h
+[; ;./include/ENS_160.h: 75: _Bool ENS160_probe(uint8_t addr, uint16_t *part_id);
+[v _ENS160_probe `(a ~T0 @X0 0 ef2`uc`*us ]
+"79
+[; ;./include/ENS_160.h: 79: _Bool ENS160_set_opmode(ENS160_t *dev, uint8_t mode);
+[v _ENS160_set_opmode `(a ~T0 @X0 0 ef2`*S1158`uc ]
+"77
+[; ;./include/ENS_160.h: 77: _Bool ENS160_read_status(ENS160_t *dev);
+[v _ENS160_read_status `(a ~T0 @X0 0 ef1`*S1158 ]
+"78
+[; ;./include/ENS_160.h: 78: _Bool ENS160_read_data(ENS160_t *dev);
+[v _ENS160_read_data `(a ~T0 @X0 0 ef1`*S1158 ]
+"67 ./include/eusart1.h
+[; ;./include/eusart1.h: 67: void COMM_assemble_frame(UART_tx_msg_t *tx);
+[v _COMM_assemble_frame `(v ~T0 @X0 0 ef1`*S1161 ]
+"68
+[; ;./include/eusart1.h: 68: void COMM_TX_start(UART_tx_msg_t *tx);
+[v _COMM_TX_start `(v ~T0 @X0 0 ef1`*S1161 ]
 "38 D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 38: __asm("INDF0 equ 00h");
 [; <" INDF0 equ 00h ;# ">
@@ -1203,17 +1363,1107 @@ Version 4.0 HI-TECH Software Intermediate Code
 "23281
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 23281: __asm("TOSH equ 01FEFh");
 [; <" TOSH equ 01FEFh ;# ">
+[v F8049 `(v ~T0 @X0 1 tf1`*CS1154 ]
+"23 ./include/utils.h
+[; ;./include/utils.h: 23: static __attribute__((inline)) void pin_set(const pin_t *p) {*p->lat |= p->bitmask;}
+[v _pin_set `TF8049 ~T0 @X0 1 s ]
+{
+[e :U _pin_set ]
+[v _p `*CS1154 ~T0 @X0 1 r1 ]
+[f ]
+[e =| *U . *U _p 0 -> . *U _p 2 `uc ]
+[e :UE 1155 ]
+}
+[v F8053 `(v ~T0 @X0 1 tf1`*CS1154 ]
+"25
+[; ;./include/utils.h: 25: static __attribute__((inline)) void pin_clear(const pin_t *p) {*p->lat &= (uint8_t)~p->bitmask;}
+[v _pin_clear `TF8053 ~T0 @X0 1 s ]
+{
+[e :U _pin_clear ]
+[v _p `*CS1154 ~T0 @X0 1 r1 ]
+[f ]
+[e =& *U . *U _p 0 -> -> ~ -> . *U _p 2 `i `uc `uc ]
+[e :UE 1156 ]
+}
+[v F8057 `(v ~T0 @X0 1 tf1`*CS1154 ]
+"28
+[; ;./include/utils.h: 28: static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uint8_t)~p->bitmask;}
+[v _pin_output `TF8057 ~T0 @X0 1 s ]
+{
+[e :U _pin_output ]
+[v _p `*CS1154 ~T0 @X0 1 r1 ]
+[f ]
+[e =& *U . *U _p 1 -> -> ~ -> . *U _p 2 `i `uc `uc ]
+[e :UE 1157 ]
+}
+"23 src/main.c
+[p x FEXTOSC  =  OFF     ]
+"24
+[p x RSTOSC  =  HFINTOSC_1MHz ]
+"25
+[p x CLKOUTEN  =  OFF    ]
+"26
+[p x CSWEN  =  ON        ]
+"27
+[p x VDDAR  =  HI        ]
+"28
+[p x FCMEN  =  ON        ]
+"31
+[p x MCLRE  =  EXTMCLR   ]
+"32
+[p x PWRTS  =  PWRT_OFF  ]
+"33
+[p x LPBOREN  =  OFF     ]
+"34
+[p x BOREN  =  ON        ]
+"35
+[p x DACAUTOEN  =  OFF   ]
+"36
+[p x BORV  =  LO         ]
+"37
+[p x ZCD  =  OFF         ]
+"38
+[p x PPS1WAY  =  ON      ]
+"39
+[p x STVREN  =  ON       ]
+"40
+[p x DEBUG  =  OFF       ]
+"43
+[p x WDTCPS  =  WDTCPS_31 ]
+"44
+[p x WDTE  =  OFF        ]
+"45
+[p x WDTCWS  =  WDTCWS_7 ]
+"46
+[p x WDTCCS  =  SC       ]
+"49
+[p x BBSIZE  =  BB512    ]
+"50
+[p x BBEN  =  OFF        ]
+"51
+[p x SAFEN  =  OFF       ]
+"52
+[p x WRTAPP  =  OFF      ]
+"53
+[p x WRTB  =  OFF        ]
+"54
+[p x WRTC  =  OFF        ]
+"55
+[p x WRTD  =  OFF        ]
+"56
+[p x WRTSAF  =  OFF      ]
+"57
+[p x LVP  =  ON          ]
+"60
+[p x CP  =  OFF          ]
+"61
+[p x CPD  =  OFF         ]
+"22 ./include/eusart1.h
+[; ;./include/eusart1.h: 22: volatile uint8_t g_uart_rx_f;
+[v _g_uart_rx_f `Vuc ~T0 @X0 1 e ]
+"23
+[; ;./include/eusart1.h: 23: volatile uint8_t g_uart_rx_msg_r;
+[v _g_uart_rx_msg_r `Vuc ~T0 @X0 1 e ]
+"26
+[; ;./include/eusart1.h: 26: volatile uint8_t END_REG;
+[v _END_REG `Vuc ~T0 @X0 1 e ]
+"14 ./include/TMR0.h
+[; ;./include/TMR0.h: 14: volatile uint8_t g_tmr0_1ms_flag;
+[v _g_tmr0_1ms_flag `Vuc ~T0 @X0 1 e ]
+"15
+[; ;./include/TMR0.h: 15: volatile uint32_t g_sys_ms;
+[v _g_sys_ms `Vul ~T0 @X0 1 e ]
+"16
+[; ;./include/TMR0.h: 16: volatile uint8_t g_fan_f;
+[v _g_fan_f `Vuc ~T0 @X0 1 e ]
+[v F8354 `(S1168 ~T0 @X0 1 tf1`E8258 ]
+"205 ./include/system.h
+[; ;./include/system.h: 205: static __attribute__((inline)) transition_t stay(state_t current){
+[v _stay `TF8354 ~T0 @X0 1 s ]
+{
+[e :U _stay ]
+[v _current `E8258 ~T0 @X0 1 r1 ]
+[f ]
+"210
+[; ;./include/system.h: 210:     transition_t t;
+[v _t `S1168 ~T0 @X0 1 a ]
+"211
+[; ;./include/system.h: 211:     t.changed = 0;
+[e = . _t 0 -> -> 0 `i `a ]
+"212
+[; ;./include/system.h: 212:     t.next = current;
+[e = . _t 1 _current ]
+"213
+[; ;./include/system.h: 213:     return t;
+[e ) _t ]
+[e $UE 1169  ]
+"214
+[; ;./include/system.h: 214: }
+[e :UE 1169 ]
+}
+[v F8358 `(S1168 ~T0 @X0 1 tf1`E8258 ]
+"215
+[; ;./include/system.h: 215: static __attribute__((inline)) transition_t to(state_t s)
+[v _to `TF8358 ~T0 @X0 1 s ]
+"216
+[; ;./include/system.h: 216: {
+{
+[e :U _to ]
+"215
+[; ;./include/system.h: 215: static __attribute__((inline)) transition_t to(state_t s)
+[v _s `E8258 ~T0 @X0 1 r1 ]
+"216
+[; ;./include/system.h: 216: {
+[f ]
+[v F8360 `S1168 ~T0 @X0 1 s ]
+[i F8360
+:U ..
+:U ..
+"217
+[; ;./include/system.h: 217:     transition_t t = {
+-> -> 0 `i `a
+-> -> 0 `i `E8258
+..
+..
+]
+[v _t `S1168 ~T0 @X0 1 a ]
+[e = _t F8360 ]
+[e ; = . _t 0 -> -> 1 `i `a = . _t 1 _s ]
+"221
+[; ;./include/system.h: 221:     return t;
+[e ) _t ]
+[e $UE 1170  ]
+"223
+[; ;./include/system.h: 223: }
+[e :UE 1170 ]
+}
+"107 src/main.c
+[; ;src/main.c: 107: static FSM_t sm;
+[v _sm `S1172 ~T0 @X0 1 s ]
+"108
+[; ;src/main.c: 108: static event_q_t ev_q;
+[v _ev_q `S1173 ~T0 @X0 1 s ]
+"109
+[; ;src/main.c: 109: static app_step_t step_index;
+[v _step_index `E8421 ~T0 @X0 1 s ]
+"112
+[; ;src/main.c: 112: volatile uint8_t g_fsm_tick_f = 0;
+[v _g_fsm_tick_f `Vuc ~T0 @X0 1 e ]
+[i _g_fsm_tick_f
+-> -> 0 `i `uc
+]
+"114
+[; ;src/main.c: 114: volatile uint8_t g_fan_f = 0;
+[v _g_fan_f `Vuc ~T0 @X0 1 e ]
+[i _g_fan_f
+-> -> 0 `i `uc
+]
+"115
+[; ;src/main.c: 115: volatile uint8_t g_ENS160_f = 0;
+[v _g_ENS160_f `Vuc ~T0 @X0 1 e ]
+[i _g_ENS160_f
+-> -> 0 `i `uc
+]
+"116
+[; ;src/main.c: 116: volatile uint32_t g_sys_ms = 0;
+[v _g_sys_ms `Vul ~T0 @X0 1 e ]
+[i _g_sys_ms
+-> -> -> 0 `i `l `ul
+]
+"117
+[; ;src/main.c: 117: volatile uint32_t g_fan_deadline = 0;
+[v _g_fan_deadline `Vul ~T0 @X0 1 e ]
+[i _g_fan_deadline
+-> -> -> 0 `i `l `ul
+]
+[v F8441 `(v ~T0 @X0 1 tf1`E8229 ]
+"126
+[; ;src/main.c: 126: static __attribute__((inline)) void APP_post_event(event_t ev)
+[v _APP_post_event `TF8441 ~T0 @X0 1 s ]
+"127
+[; ;src/main.c: 127: {
+{
+[e :U _APP_post_event ]
+"126
+[; ;src/main.c: 126: static __attribute__((inline)) void APP_post_event(event_t ev)
+[v _ev `E8229 ~T0 @X0 1 r1 ]
+"127
+[; ;src/main.c: 127: {
+[f ]
+"130
+[; ;src/main.c: 130:     (void)EVENT_Q_push(&ev_q, ev);
+[e ( _EVENT_Q_push (2 , &U _ev_q _ev ]
+"131
+[; ;src/main.c: 131: }
+[e :UE 1174 ]
+}
+"133
+[; ;src/main.c: 133: void APP_init(void)
+[v _APP_init `(v ~T0 @X0 1 ef ]
+"134
+[; ;src/main.c: 134: {
+{
+[e :U _APP_init ]
+[f ]
+"135
+[; ;src/main.c: 135:     EVENT_Q_init(&ev_q);
+[e ( _EVENT_Q_init (1 &U _ev_q ]
+"136
+[; ;src/main.c: 136:     FSM_init(&sm);
+[e ( _FSM_init (1 &U _sm ]
+"137
+[; ;src/main.c: 137: }
+[e :UE 1175 ]
+}
+"139
+[; ;src/main.c: 139: void APP_service(void)
+[v _APP_service `(v ~T0 @X0 1 ef ]
+"140
+[; ;src/main.c: 140: {
+{
+[e :U _APP_service ]
+[f ]
+"142
+[; ;src/main.c: 142:     if(g_fsm_tick_f)
+[e $ ! != -> _g_fsm_tick_f `i -> 0 `i 1177  ]
+"143
+[; ;src/main.c: 143:     {
+{
+"144
+[; ;src/main.c: 144:         g_fsm_tick_f = 0;
+[e = _g_fsm_tick_f -> -> 0 `i `uc ]
+"145
+[; ;src/main.c: 145:         g_sys_ms++;
+[e ++ _g_sys_ms -> -> 1 `i `Vul ]
+"146
+[; ;src/main.c: 146:         sm.CTX.sys_ms++;
+[e ++ . . _sm 0 0 -> -> -> 1 `i `l `ul ]
+"149
+[; ;src/main.c: 149:         if(sm.CTX.gate_active)
+[e $ ! != -> . . _sm 0 4 `i -> 0 `i 1178  ]
+"150
+[; ;src/main.c: 150:         {
+{
+"152
+[; ;src/main.c: 152:             if(sm.CTX.has_deadline && (sm.CTX.gate_owner == GATE_F1 || sm.CTX.gate_owner == GATE_F2))
+[e $ ! && != -> . . _sm 0 5 `i -> 0 `i || == -> . . _sm 0 14 `ui -> . `E8302 1 `ui == -> . . _sm 0 14 `ui -> . `E8302 2 `ui 1179  ]
+"153
+[; ;src/main.c: 153:             {
+{
+"155
+[; ;src/main.c: 155:                 if(sm.CTX.sys_ms >= sm.CTX.gate_deadline)
+[e $ ! >= . . _sm 0 0 . . _sm 0 3 1180  ]
+"156
+[; ;src/main.c: 156:                 {
+{
+"158
+[; ;src/main.c: 158:                     sm.CTX.gate_active = 0;
+[e = . . _sm 0 4 -> -> 0 `i `uc ]
+"160
+[; ;src/main.c: 160:                     switch(sm.CTX.gate_owner)
+[e $U 1182  ]
+"161
+[; ;src/main.c: 161:                     {
+{
+"165
+[; ;src/main.c: 165:                         case GATE_F1:{
+[e :U 1183 ]
+{
+"166
+[; ;src/main.c: 166:                             sm.CTX.gate_owner = GATE_NONE;
+[e = . . _sm 0 14 . `E8302 0 ]
+"167
+[; ;src/main.c: 167:                             APP_post_event(MEAS_FAN1_DONE);
+[e ( _APP_post_event (1 . `E8229 8 ]
+"168
+[; ;src/main.c: 168:                             break;
+[e $U 1181  ]
+"169
+[; ;src/main.c: 169:                         }
+}
+"170
+[; ;src/main.c: 170:                         case GATE_F2:{
+[e :U 1184 ]
+{
+"171
+[; ;src/main.c: 171:                             sm.CTX.gate_owner = GATE_NONE;
+[e = . . _sm 0 14 . `E8302 0 ]
+"172
+[; ;src/main.c: 172:                             APP_post_event(MEAS_FAN2_DONE);
+[e ( _APP_post_event (1 . `E8229 9 ]
+"173
+[; ;src/main.c: 173:                             break;
+[e $U 1181  ]
+"174
+[; ;src/main.c: 174:                         }
+}
+"175
+[; ;src/main.c: 175:                         default:
+[e :U 1185 ]
+"176
+[; ;src/main.c: 176:                             sm.CTX.gate_owner = GATE_NONE;
+[e = . . _sm 0 14 . `E8302 0 ]
+"177
+[; ;src/main.c: 177:                             break;
+[e $U 1181  ]
+"178
+[; ;src/main.c: 178:                     }
+}
+[e $U 1181  ]
+[e :U 1182 ]
+[e [\ -> . . _sm 0 14 `ui , $ -> . `E8302 1 `ui 1183
+ , $ -> . `E8302 2 `ui 1184
+ 1185 ]
+[e :U 1181 ]
+"179
+[; ;src/main.c: 179:                 }
+}
+[e :U 1180 ]
+"180
+[; ;src/main.c: 180:             }
+}
+[e $U 1186  ]
+"181
+[; ;src/main.c: 181:             else
+[e :U 1179 ]
+"182
+[; ;src/main.c: 182:             {
+{
+"184
+[; ;src/main.c: 184:             }
+}
+[e :U 1186 ]
+"185
+[; ;src/main.c: 185:         }
+}
+[e $U 1187  ]
+"189
+[; ;src/main.c: 189:         else if(sm.CTX.gate_owner == GATE_ENS160)
+[e :U 1178 ]
+[e $ ! == -> . . _sm 0 14 `ui -> . `E8302 3 `ui 1188  ]
+"190
+[; ;src/main.c: 190:         {
+{
+"193
+[; ;src/main.c: 193:             switch(sm.CTX.comm_i2c_flags)
+[e $U 1190  ]
+"194
+[; ;src/main.c: 194:             {
+{
+"198
+[; ;src/main.c: 198:                 case COMM_INIT:
+[e :U 1191 ]
+"199
+[; ;src/main.c: 199:                 {
+{
+"200
+[; ;src/main.c: 200:                     APP_post_event(MEAS_ENS160_READ);
+[e ( _APP_post_event (1 . `E8229 13 ]
+"201
+[; ;src/main.c: 201:                     break;
+[e $U 1189  ]
+"202
+[; ;src/main.c: 202:                 }
+}
+"203
+[; ;src/main.c: 203:                 case READ_DATA:
+[e :U 1192 ]
+"204
+[; ;src/main.c: 204:                 {
+{
+"205
+[; ;src/main.c: 205:                     break;
+[e $U 1189  ]
+"206
+[; ;src/main.c: 206:                 }
+}
+"207
+[; ;src/main.c: 207:                 case COMM_COMP:
+[e :U 1193 ]
+"208
+[; ;src/main.c: 208:                 {
+{
+"209
+[; ;src/main.c: 209:                     APP_post_event(MEAS_ENS160_DONE);
+[e ( _APP_post_event (1 . `E8229 14 ]
+"210
+[; ;src/main.c: 210:                 }
+}
+"212
+[; ;src/main.c: 212:                 case NO_COMM:
+[e :U 1194 ]
+"213
+[; ;src/main.c: 213:                 default:
+[e :U 1195 ]
+"214
+[; ;src/main.c: 214:                     break;
+[e $U 1189  ]
+"215
+[; ;src/main.c: 215:             }
+}
+[e $U 1189  ]
+[e :U 1190 ]
+[e [\ -> . . _sm 0 18 `ui , $ -> . `E8289 1 `ui 1191
+ , $ -> . `E8289 2 `ui 1192
+ , $ -> . `E8289 3 `ui 1193
+ , $ -> . `E8289 0 `ui 1194
+ 1195 ]
+[e :U 1189 ]
+"216
+[; ;src/main.c: 216:         }
+}
+[e $U 1196  ]
+"217
+[; ;src/main.c: 217:         else if(sm.CTX.gate_owner == GATE_F1_SET)
+[e :U 1188 ]
+[e $ ! == -> . . _sm 0 14 `ui -> . `E8302 4 `ui 1197  ]
+"218
+[; ;src/main.c: 218:         {
+{
+"219
+[; ;src/main.c: 219:             APP_post_event(SET_DONE);
+[e ( _APP_post_event (1 . `E8229 25 ]
+"220
+[; ;src/main.c: 220:         }
+}
+[e $U 1198  ]
+"221
+[; ;src/main.c: 221:         else if(sm.CTX.gate_owner == GATE_F2_SET)
+[e :U 1197 ]
+[e $ ! == -> . . _sm 0 14 `ui -> . `E8302 5 `ui 1199  ]
+"222
+[; ;src/main.c: 222:         {
+{
+"223
+[; ;src/main.c: 223:             APP_post_event(SET_DONE);
+[e ( _APP_post_event (1 . `E8229 25 ]
+"224
+[; ;src/main.c: 224:         }
+}
+[e $U 1200  ]
+"229
+[; ;src/main.c: 229:         else if(sm.state == ST_IDLE)
+[e :U 1199 ]
+[e $ ! == -> . _sm 1 `ui -> . `E8258 1 `ui 1201  ]
+"230
+[; ;src/main.c: 230:         {
+{
+"233
+[; ;src/main.c: 233:             switch(step_index)
+[e $U 1203  ]
+"234
+[; ;src/main.c: 234:             {
+{
+"235
+[; ;src/main.c: 235:                 case STEP_F1:{
+[e :U 1204 ]
+{
+"236
+[; ;src/main.c: 236:                     APP_post_event(MEAS_FAN1_START);
+[e ( _APP_post_event (1 . `E8229 6 ]
+"237
+[; ;src/main.c: 237:                     step_index = STEP_F2;
+[e = _step_index . `E8421 1 ]
+"238
+[; ;src/main.c: 238:                     break;
+[e $U 1202  ]
+"239
+[; ;src/main.c: 239:                 }
+}
+"240
+[; ;src/main.c: 240:                 case STEP_F2:{
+[e :U 1205 ]
+{
+"241
+[; ;src/main.c: 241:                     APP_post_event(MEAS_FAN2_START);
+[e ( _APP_post_event (1 . `E8229 7 ]
+"242
+[; ;src/main.c: 242:                     step_index = STEP_ENS160;
+[e = _step_index . `E8421 2 ]
+"243
+[; ;src/main.c: 243:                     break;
+[e $U 1202  ]
+"244
+[; ;src/main.c: 244:                 }
+}
+"245
+[; ;src/main.c: 245:                 case STEP_ENS160:{
+[e :U 1206 ]
+{
+"246
+[; ;src/main.c: 246:                     APP_post_event(MEAS_ENS160_START);
+[e ( _APP_post_event (1 . `E8229 10 ]
+"247
+[; ;src/main.c: 247:                     step_index = STEP_COMM;
+[e = _step_index . `E8421 3 ]
+"248
+[; ;src/main.c: 248:                     break;
+[e $U 1202  ]
+"249
+[; ;src/main.c: 249:                 }
+}
+"250
+[; ;src/main.c: 250:                 case STEP_COMM:{
+[e :U 1207 ]
+{
+"251
+[; ;src/main.c: 251:                     APP_post_event(UART);
+[e ( _APP_post_event (1 . `E8229 3 ]
+"252
+[; ;src/main.c: 252:                     break;
+[e $U 1202  ]
+"253
+[; ;src/main.c: 253:                 }
+}
+"254
+[; ;src/main.c: 254:                 default:
+[e :U 1208 ]
+"255
+[; ;src/main.c: 255:                     step_index = STEP_F1;
+[e = _step_index . `E8421 0 ]
+"256
+[; ;src/main.c: 256:                     break;
+[e $U 1202  ]
+"257
+[; ;src/main.c: 257:             }
+}
+[e $U 1202  ]
+[e :U 1203 ]
+[e [\ -> _step_index `ui , $ -> . `E8421 0 `ui 1204
+ , $ -> . `E8421 1 `ui 1205
+ , $ -> . `E8421 2 `ui 1206
+ , $ -> . `E8421 3 `ui 1207
+ 1208 ]
+[e :U 1202 ]
+"258
+[; ;src/main.c: 258:         }
+}
+[e :U 1201 ]
+[e :U 1200 ]
+[e :U 1198 ]
+[e :U 1196 ]
+[e :U 1187 ]
+"259
+[; ;src/main.c: 259:     }
+}
+[e :U 1177 ]
+"275
+[; ;src/main.c: 275:     if(UART_parser_MsgAvailable())
+[e $ ! != -> ( _UART_parser_MsgAvailable ..  `i -> 0 `i 1209  ]
+"276
+[; ;src/main.c: 276:     {
+{
+"277
+[; ;src/main.c: 277:         APP_handleUART(&sm.CTX);
+[e ( _APP_handleUART (1 &U . _sm 0 ]
+"278
+[; ;src/main.c: 278:     }
+}
+[e :U 1209 ]
+"281
+[; ;src/main.c: 281:     if(g_comm_tx_done_f)
+[e $ ! != -> _g_comm_tx_done_f `i -> 0 `i 1210  ]
+"282
+[; ;src/main.c: 282:     {
+{
+"283
+[; ;src/main.c: 283:         g_comm_tx_done_f = 0;
+[e = _g_comm_tx_done_f -> -> 0 `i `uc ]
+"284
+[; ;src/main.c: 284:         APP_post_event(COMM_TX_DONE);
+[e ( _APP_post_event (1 . `E8229 26 ]
+"285
+[; ;src/main.c: 285:     }
+}
+[e :U 1210 ]
+"288
+[; ;src/main.c: 288: }
+[e :UE 1176 ]
+}
+"291
+[; ;src/main.c: 291: static void APP_handleUART(context_t *CTX)
+[v _APP_handleUART `(v ~T0 @X0 1 sf1`*S1167 ]
+"292
+[; ;src/main.c: 292: {
+{
+[e :U _APP_handleUART ]
+"291
+[; ;src/main.c: 291: static void APP_handleUART(context_t *CTX)
+[v _CTX `*S1167 ~T0 @X0 1 r1 ]
+"292
+[; ;src/main.c: 292: {
+[f ]
+"293
+[; ;src/main.c: 293:     UART_msg_t msg;
+[v _msg `S1163 ~T0 @X0 1 a ]
+"295
+[; ;src/main.c: 295:     if(!UART_parser_GetMsg(&msg))
+[e $ ! ! != -> ( _UART_parser_GetMsg (1 &U _msg `i -> 0 `i 1212  ]
+"296
+[; ;src/main.c: 296:     {
+{
+"297
+[; ;src/main.c: 297:         return;
+[e $UE 1211  ]
+"298
+[; ;src/main.c: 298:     }
+}
+[e :U 1212 ]
+"303
+[; ;src/main.c: 303:     switch(msg.cmd)
+[e $U 1214  ]
+"304
+[; ;src/main.c: 304:     {
+{
+"306
+[; ;src/main.c: 306:         case CMD_PING: {
+[e :U 1215 ]
+{
+"307
+[; ;src/main.c: 307:             CTX->comm_req.type = COMM_RESP_PING;
+[e = . . *U _CTX 16 0 . `E8311 1 ]
+"308
+[; ;src/main.c: 308:             APP_post_event(UART_RESP);
+[e ( _APP_post_event (1 . `E8229 4 ]
+"309
+[; ;src/main.c: 309:             break;
+[e $U 1213  ]
+"310
+[; ;src/main.c: 310:         }
+}
+"312
+[; ;src/main.c: 312:         case CMD_STAT: {
+[e :U 1216 ]
+{
+"313
+[; ;src/main.c: 313:             CTX->comm_req.type = COMM_RESP_STAT;
+[e = . . *U _CTX 16 0 . `E8311 2 ]
+"314
+[; ;src/main.c: 314:             APP_post_event(UART_RESP);
+[e ( _APP_post_event (1 . `E8229 4 ]
+"315
+[; ;src/main.c: 315:             break;
+[e $U 1213  ]
+"316
+[; ;src/main.c: 316:         }
+}
+"317
+[; ;src/main.c: 317:         case CMD_SET_F1: {
+[e :U 1217 ]
+{
+"318
+[; ;src/main.c: 318:             CTX->FAN1.duty_percent = msg.payload[0];
+[e = . . *U _CTX 20 1 *U + &U . _msg 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _msg 2 `ui `ux ]
+"319
+[; ;src/main.c: 319:             APP_post_event(SET_F1);
+[e ( _APP_post_event (1 . `E8229 23 ]
+"320
+[; ;src/main.c: 320:             break;
+[e $U 1213  ]
+"321
+[; ;src/main.c: 321:         }
+}
+"322
+[; ;src/main.c: 322:         case CMD_SET_F2: {
+[e :U 1218 ]
+{
+"323
+[; ;src/main.c: 323:             CTX->FAN2.duty_percent = msg.payload[0];
+[e = . . *U _CTX 21 1 *U + &U . _msg 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _msg 2 `ui `ux ]
+"324
+[; ;src/main.c: 324:             APP_post_event(SET_F2);
+[e ( _APP_post_event (1 . `E8229 24 ]
+"325
+[; ;src/main.c: 325:             break;
+[e $U 1213  ]
+"326
+[; ;src/main.c: 326:         }
+}
+"328
+[; ;src/main.c: 328:         case CMD_GET_F1: {
+[e :U 1219 ]
+{
+"329
+[; ;src/main.c: 329:             CTX->comm_req.type = COMM_RESP_F1;
+[e = . . *U _CTX 16 0 . `E8311 3 ]
+"330
+[; ;src/main.c: 330:             APP_post_event(UART_RESP);
+[e ( _APP_post_event (1 . `E8229 4 ]
+"331
+[; ;src/main.c: 331:             break;
+[e $U 1213  ]
+"332
+[; ;src/main.c: 332:         }
+}
+"334
+[; ;src/main.c: 334:         case CMD_GET_F2: {
+[e :U 1220 ]
+{
+"335
+[; ;src/main.c: 335:             CTX->comm_req.type = COMM_RESP_F2;
+[e = . . *U _CTX 16 0 . `E8311 4 ]
+"336
+[; ;src/main.c: 336:             APP_post_event(UART_RESP);
+[e ( _APP_post_event (1 . `E8229 4 ]
+"337
+[; ;src/main.c: 337:             break;
+[e $U 1213  ]
+"338
+[; ;src/main.c: 338:         }
+}
+"340
+[; ;src/main.c: 340:         case CMD_GET_SENSOR: {
+[e :U 1221 ]
+{
+"341
+[; ;src/main.c: 341:             CTX->comm_req.type = COMM_RESP_SENSOR;
+[e = . . *U _CTX 16 0 . `E8311 5 ]
+"342
+[; ;src/main.c: 342:             APP_post_event(UART_RESP);
+[e ( _APP_post_event (1 . `E8229 4 ]
+"343
+[; ;src/main.c: 343:             break;
+[e $U 1213  ]
+"344
+[; ;src/main.c: 344:         }
+}
+"345
+[; ;src/main.c: 345:     }
+}
+[e $U 1213  ]
+[e :U 1214 ]
+[e [\ . _msg 0 , $ . `E8159 0 1215
+ , $ . `E8159 1 1216
+ , $ . `E8159 2 1217
+ , $ . `E8159 3 1218
+ , $ . `E8159 4 1219
+ , $ . `E8159 5 1220
+ , $ . `E8159 6 1221
+ 1213 ]
+[e :U 1213 ]
+"346
+[; ;src/main.c: 346: }
+[e :UE 1211 ]
+}
+"350
+[; ;src/main.c: 350: void APP_dispatch_events(void)
+[v _APP_dispatch_events `(v ~T0 @X0 1 ef ]
+"351
+[; ;src/main.c: 351: {
+{
+[e :U _APP_dispatch_events ]
+[f ]
+"352
+[; ;src/main.c: 352:     event_t ev;
+[v _ev `E8229 ~T0 @X0 1 a ]
+"353
+[; ;src/main.c: 353:     while(EVENT_Q_pop(&ev_q, &ev))
+[e $U 1223  ]
+[e :U 1224 ]
+"354
+[; ;src/main.c: 354:     {
+{
+"355
+[; ;src/main.c: 355:         FSM_dispatch(&sm, ev);
+[e ( _FSM_dispatch (2 , &U _sm _ev ]
+"356
+[; ;src/main.c: 356:     }
+}
+[e :U 1223 ]
+"353
+[; ;src/main.c: 353:     while(EVENT_Q_pop(&ev_q, &ev))
+[e $ != -> ( _EVENT_Q_pop (2 , &U _ev_q &U _ev `i -> 0 `i 1224  ]
+[e :U 1225 ]
+"357
+[; ;src/main.c: 357: }
+[e :UE 1222 ]
+}
+"383
+[; ;src/main.c: 383: static UART_tx_msg_t tx_msg;
+[v _tx_msg `S1161 ~T0 @X0 1 s ]
+"384
+[; ;src/main.c: 384: static UART_msg_t rx_msg;
+[v _rx_msg `S1163 ~T0 @X0 1 s ]
+"385
+[; ;src/main.c: 385: static _Bool fan_gate_active = 0;
+[v _fan_gate_active `a ~T0 @X0 1 s ]
+[i _fan_gate_active
+-> -> 0 `i `a
+]
+"386
+[; ;src/main.c: 386: static uint32_t fan_gate_deadline = 0;
+[v _fan_gate_deadline `ul ~T0 @X0 1 s ]
+[i _fan_gate_deadline
+-> -> -> 0 `i `l `ul
+]
+"387
+[; ;src/main.c: 387: static uint16_t fan_gate_ms = 500u;
+[v _fan_gate_ms `us ~T0 @X0 1 s ]
+[i _fan_gate_ms
+-> -> 500 `ui `us
+]
+[v F8456 `(a ~T0 @X0 1 tf2`ul`ul ]
+"390
+[; ;src/main.c: 390: static __attribute__((inline)) _Bool time_reached(uint32_t now, uint32_t deadline)
+[v _time_reached `TF8456 ~T0 @X0 1 s ]
+"391
+[; ;src/main.c: 391: {
+{
+[e :U _time_reached ]
+"390
+[; ;src/main.c: 390: static __attribute__((inline)) _Bool time_reached(uint32_t now, uint32_t deadline)
+[v _now `ul ~T0 @X0 1 r1 ]
+[v _deadline `ul ~T0 @X0 1 r2 ]
+"391
+[; ;src/main.c: 391: {
+[f ]
+"392
+[; ;src/main.c: 392:     return (int32_t)(now - deadline) >= 0;
+[e ) -> -> >= -> - _now _deadline `l -> -> 0 `i `l `i `a ]
+[e $UE 1226  ]
+"393
+[; ;src/main.c: 393: }
+[e :UE 1226 ]
+}
+"394
+[; ;src/main.c: 394: void FAN_measure_start(fan_t *fan)
+[v _FAN_measure_start `(v ~T0 @X0 1 ef1`*S1160 ]
+"395
+[; ;src/main.c: 395: {
+{
+[e :U _FAN_measure_start ]
+"394
+[; ;src/main.c: 394: void FAN_measure_start(fan_t *fan)
+[v _fan `*S1160 ~T0 @X0 1 r1 ]
+"395
+[; ;src/main.c: 395: {
+[f ]
+"396
+[; ;src/main.c: 396:     fan_gate_active = 1;
+[e = _fan_gate_active -> -> 1 `i `a ]
+"397
+[; ;src/main.c: 397:     fan_gate_deadline = g_sys_ms + fan_gate_ms;
+[e = _fan_gate_deadline + _g_sys_ms -> _fan_gate_ms `ul ]
+"399
+[; ;src/main.c: 399:     FAN_CNT_start(fan);
+[e ( _FAN_CNT_start (1 _fan ]
+"400
+[; ;src/main.c: 400: }
+[e :UE 1227 ]
+}
+"401
+[; ;src/main.c: 401: static void wait_ms_sys(uint32_t delay_ms)
+[v _wait_ms_sys `(v ~T0 @X0 1 sf1`ul ]
+"402
+[; ;src/main.c: 402: {
+{
+[e :U _wait_ms_sys ]
+"401
+[; ;src/main.c: 401: static void wait_ms_sys(uint32_t delay_ms)
+[v _delay_ms `ul ~T0 @X0 1 r1 ]
+"402
+[; ;src/main.c: 402: {
+[f ]
+"403
+[; ;src/main.c: 403:     uint32_t deadline = g_sys_ms + delay_ms;
+[v _deadline `ul ~T0 @X0 1 a ]
+[e = _deadline + _g_sys_ms _delay_ms ]
+"405
+[; ;src/main.c: 405:     while(!time_reached(g_sys_ms, deadline))
+[e $U 1229  ]
+[e :U 1230 ]
+"406
+[; ;src/main.c: 406:     {
+{
+"408
+[; ;src/main.c: 408:     }
+}
+[e :U 1229 ]
+"405
+[; ;src/main.c: 405:     while(!time_reached(g_sys_ms, deadline))
+[e $ ! != -> ( _time_reached (2 , _g_sys_ms _deadline `i -> 0 `i 1230  ]
+[e :U 1231 ]
+"409
+[; ;src/main.c: 409: }
+[e :UE 1228 ]
+}
+"412
+[; ;src/main.c: 412: void COMM_build_resp_f1(UART_tx_msg_t *tx, uint8_t duty, uint16_t rpm)
+[v _COMM_build_resp_f1 `(v ~T0 @X0 1 ef3`*S1161`uc`us ]
+"413
+[; ;src/main.c: 413: {
+{
+[e :U _COMM_build_resp_f1 ]
+"412
+[; ;src/main.c: 412: void COMM_build_resp_f1(UART_tx_msg_t *tx, uint8_t duty, uint16_t rpm)
+[v _tx `*S1161 ~T0 @X0 1 r1 ]
+[v _duty `uc ~T0 @X0 1 r2 ]
+[v _rpm `us ~T0 @X0 1 r3 ]
+"413
+[; ;src/main.c: 413: {
+[f ]
+"414
+[; ;src/main.c: 414:     tx->cmd = CMD_GET_F1;
+[e = . *U _tx 0 -> . `E8159 4 `uc ]
+"415
+[; ;src/main.c: 415:     tx->len = 3;
+[e = . *U _tx 1 -> -> 3 `i `uc ]
+"416
+[; ;src/main.c: 416:     tx->payload[0] = duty;
+[e = *U + &U . *U _tx 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . *U _tx 2 `ui `ux _duty ]
+"417
+[; ;src/main.c: 417:     tx->payload[1] = (uint8_t)(rpm & 0xFF);
+[e = *U + &U . *U _tx 2 * -> -> -> 1 `i `ui `ux -> -> # *U &U . *U _tx 2 `ui `ux -> & -> _rpm `ui -> -> 255 `i `ui `uc ]
+"418
+[; ;src/main.c: 418:     tx->payload[2] = (uint8_t)((rpm >> 8) & 0xFF);
+[e = *U + &U . *U _tx 2 * -> -> -> 2 `i `ui `ux -> -> # *U &U . *U _tx 2 `ui `ux -> & >> -> _rpm `ui -> 8 `i -> -> 255 `i `ui `uc ]
+"419
+[; ;src/main.c: 419: }
+[e :UE 1232 ]
+}
+"421
+[; ;src/main.c: 421: void COMM_build_resp_sensor(UART_tx_msg_t *tx, ENS160_t *dev)
+[v _COMM_build_resp_sensor `(v ~T0 @X0 1 ef2`*S1161`*S1158 ]
+"422
+[; ;src/main.c: 422: {
+{
+[e :U _COMM_build_resp_sensor ]
+"421
+[; ;src/main.c: 421: void COMM_build_resp_sensor(UART_tx_msg_t *tx, ENS160_t *dev)
+[v _tx `*S1161 ~T0 @X0 1 r1 ]
+[v _dev `*S1158 ~T0 @X0 1 r2 ]
+"422
+[; ;src/main.c: 422: {
+[f ]
+"423
+[; ;src/main.c: 423:     tx->cmd = CMD_GET_SENSOR;
+[e = . *U _tx 0 -> . `E8159 6 `uc ]
+"424
+[; ;src/main.c: 424:     tx->len = 6;
+[e = . *U _tx 1 -> -> 6 `i `uc ]
+"425
+[; ;src/main.c: 425:     tx->payload[0] = dev->aqi;
+[e = *U + &U . *U _tx 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . *U _tx 2 `ui `ux . *U _dev 7 ]
+"426
+[; ;src/main.c: 426:     tx->payload[1] = (uint8_t)(dev->tvoc_ppb & 0xFF);
+[e = *U + &U . *U _tx 2 * -> -> -> 1 `i `ui `ux -> -> # *U &U . *U _tx 2 `ui `ux -> & -> . *U _dev 8 `ui -> -> 255 `i `ui `uc ]
+"427
+[; ;src/main.c: 427:     tx->payload[2] = (uint8_t)((dev->tvoc_ppb >> 8) & 0xFF);
+[e = *U + &U . *U _tx 2 * -> -> -> 2 `i `ui `ux -> -> # *U &U . *U _tx 2 `ui `ux -> & >> -> . *U _dev 8 `ui -> 8 `i -> -> 255 `i `ui `uc ]
+"428
+[; ;src/main.c: 428:     tx->payload[3] = (uint8_t)(dev->eco2_ppm & 0xFF);
+[e = *U + &U . *U _tx 2 * -> -> -> 3 `i `ui `ux -> -> # *U &U . *U _tx 2 `ui `ux -> & -> . *U _dev 9 `ui -> -> 255 `i `ui `uc ]
+"429
+[; ;src/main.c: 429:     tx->payload[4] = (uint8_t)((dev->eco2_ppm >> 8) & 0xFF);
+[e = *U + &U . *U _tx 2 * -> -> -> 4 `i `ui `ux -> -> # *U &U . *U _tx 2 `ui `ux -> & >> -> . *U _dev 9 `ui -> 8 `i -> -> 255 `i `ui `uc ]
+"430
+[; ;src/main.c: 430:     tx->payload[5] = dev->dev_status;
+[e = *U + &U . *U _tx 2 * -> -> -> 5 `i `ui `ux -> -> # *U &U . *U _tx 2 `ui `ux . *U _dev 2 ]
+"431
+[; ;src/main.c: 431: }
+[e :UE 1233 ]
+}
 [v $root$_main `(v ~T0 @X0 0 e ]
-"11 src/main.c
-[; ;src/main.c: 11: void main(void) {
-[v _main `(v ~T0 @X0 1 ef ]
+"433
+[; ;src/main.c: 433: int main(void)
+[v _main `(i ~T0 @X0 1 ef ]
+"434
+[; ;src/main.c: 434: {
 {
 [e :U _main ]
 [f ]
-"12
-[; ;src/main.c: 12:     return;
-[e $UE 1154  ]
-"13
-[; ;src/main.c: 13: }
-[e :UE 1154 ]
+"435
+[; ;src/main.c: 435:     CLOCK_init();
+[e ( _CLOCK_init ..  ]
+"436
+[; ;src/main.c: 436:     PIN_MANAGER_init();
+[e ( _PIN_MANAGER_init ..  ]
+"437
+[; ;src/main.c: 437:     ISR_init();
+[e ( _ISR_init ..  ]
+"438
+[; ;src/main.c: 438:     EUSART1_init();
+[e ( _EUSART1_init ..  ]
+"439
+[; ;src/main.c: 439:     TMR0_init();
+[e ( _TMR0_init ..  ]
+"442
+[; ;src/main.c: 442:     I2C2_init();
+[e ( _I2C2_init ..  ]
+"488
+[; ;src/main.c: 488:     uint32_t last_ms = 0;
+[v _last_ms `ul ~T0 @X0 1 a ]
+[e = _last_ms -> -> -> 0 `i `l `ul ]
+"489
+[; ;src/main.c: 489:     uint8_t dc = 1;
+[v _dc `uc ~T0 @X0 1 a ]
+[e = _dc -> -> 1 `i `uc ]
+"501
+[; ;src/main.c: 501:     ENS160_t sensor;
+[v _sensor `S1158 ~T0 @X0 1 a ]
+"502
+[; ;src/main.c: 502:     ENS160_init(&sensor,0x52);
+[e ( _ENS160_init (2 , &U _sensor -> -> 82 `i `uc ]
+"503
+[; ;src/main.c: 503:     uint16_t part_id = 0;
+[v _part_id `us ~T0 @X0 1 a ]
+[e = _part_id -> -> 0 `i `us ]
+"504
+[; ;src/main.c: 504:     _delay((unsigned long)((1000)*(16000000U/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 16000000 `ul `d .4000.0 `ul ]
+"505
+[; ;src/main.c: 505:     ENS160_probe(0x52, &part_id);
+[e ( _ENS160_probe (2 , -> -> 82 `i `uc &U _part_id ]
+"506
+[; ;src/main.c: 506:     _delay((unsigned long)((1000)*(16000000U/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 16000000 `ul `d .4000.0 `ul ]
+"507
+[; ;src/main.c: 507:     ENS160_set_opmode(&sensor, 0x02);
+[e ( _ENS160_set_opmode (2 , &U _sensor -> -> 2 `i `uc ]
+"508
+[; ;src/main.c: 508:     _delay((unsigned long)((1000)*(16000000U/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 16000000 `ul `d .4000.0 `ul ]
+"510
+[; ;src/main.c: 510:     while(1)
+[e :U 1236 ]
+"511
+[; ;src/main.c: 511:     {
+{
+"639
+[; ;src/main.c: 639:         ENS160_read_status(&sensor);
+[e ( _ENS160_read_status (1 &U _sensor ]
+"640
+[; ;src/main.c: 640:         _delay((unsigned long)((1000)*(16000000U/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 16000000 `ul `d .4000.0 `ul ]
+"641
+[; ;src/main.c: 641:         ENS160_read_data(&sensor);
+[e ( _ENS160_read_data (1 &U _sensor ]
+"642
+[; ;src/main.c: 642:         _delay((unsigned long)((1000)*(16000000U/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 16000000 `ul `d .4000.0 `ul ]
+"644
+[; ;src/main.c: 644:         COMM_build_resp_sensor(&tx_msg, &sensor);
+[e ( _COMM_build_resp_sensor (2 , &U _tx_msg &U _sensor ]
+"645
+[; ;src/main.c: 645:         COMM_assemble_frame(&tx_msg);
+[e ( _COMM_assemble_frame (1 &U _tx_msg ]
+"646
+[; ;src/main.c: 646:         COMM_TX_start(&tx_msg);
+[e ( _COMM_TX_start (1 &U _tx_msg ]
+"648
+[; ;src/main.c: 648:         _delay((unsigned long)((10000)*(16000000U/4000.0)));
+[e ( __delay (1 -> * -> -> 10000 `i `d / -> -> 16000000 `ul `d .4000.0 `ul ]
+"651
+[; ;src/main.c: 651:     }
+}
+[e :U 1235 ]
+[e $U 1236  ]
+[e :U 1237 ]
+"666
+[; ;src/main.c: 666:     return 1;
+[e ) -> 1 `i ]
+[e $UE 1234  ]
+"667
+[; ;src/main.c: 667: }
+[e :UE 1234 ]
 }

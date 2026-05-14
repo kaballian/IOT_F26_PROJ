@@ -3,8 +3,8 @@
 #include <pic16f18124.h>
 
 
-#define UART_RX_BUF_SIZE    64u
-#define UART_TX_BUF_SIZE    64u
+#define UART_RX_BUF_SIZE    32u
+#define UART_TX_BUF_SIZE    32u
 
 
 /*parser states*/
@@ -14,7 +14,7 @@
 
 extern volatile uint8_t g_uart_rx_f; //set in the ISR and consumed in the APP layer
 extern volatile uint8_t g_uart_rx_msg_r;
-extern volatile uint8_t END_REG = 0;
+volatile uint8_t END_REG = 0;
 
 static volatile uint8_t rx_buf[UART_RX_BUF_SIZE];
 static volatile uint8_t rx_head = 0;
@@ -23,8 +23,8 @@ static volatile uint8_t tx_buf[UART_TX_BUF_SIZE];
 static volatile uint8_t tx_head = 0;
 static volatile uint8_t tx_tail = 0;
 
-static const UART_tx_msg_t *g_tx_msg = 0;
-static uint8_t g_tx_idx = 0;
+static volatile const UART_tx_msg_t *g_tx_msg = 0;
+static volatile uint8_t g_tx_idx = 0;
 
 volatile uint8_t g_comm_tx_done_f = 0;
 
@@ -56,7 +56,7 @@ void EUSART1_init(void)
     TX1STAbits.SYNC = 0;
 
     //enable serial port
-    RC1STAbits.SPED = 1;
+    RC1STAbits.SPEN = 1;
 
     //enable TX and RX
     TX1STAbits.TXEN = 1;
@@ -65,10 +65,11 @@ void EUSART1_init(void)
     //8 bits mode
     TX1STAbits.TX9 = 0;
     RC1STAbits.RX9 = 0;
-    //9600 baud @ 16 MHZ
+    // //9600 baud @ 16 MHZ
     SP1BRGH = 0x01;
     SP1BRGL = 0xA0; //~416
 
+   
     rx_head = 0;
     rx_tail = 0;
     tx_head = 0;
@@ -96,8 +97,18 @@ void EUSART1_ISR(void)
     {   
         /*read data from receive buffer
         this also clears RC1IF flag automatically sec 12.10.13*/
-        uint8_t byte = RC1REG; 
+        // uint8_t byte = RC1REG; 
        
+        volatile uint8_t byte = RC1REG;
+
+        
+
+        // static UART_tx_msg_t tx_msg;
+        // tx_msg.cmd = CMD_PING;
+        // tx_msg.len = 0;
+
+        // COMM_assemble_frame(&tx_msg);
+        // COMM_TX_start(&tx_msg);
 
         UART_RX_ParserFeed(byte);
     }
@@ -136,7 +147,7 @@ bool EUSART1_read_byte(uint8_t *byte)
         return false;
     }
 
-    byte = rx_buf[rx_tail];
+    *byte = rx_buf[rx_tail];
     rx_tail = next_index(rx_tail, UART_RX_BUF_SIZE);
     return true;
 
@@ -207,5 +218,6 @@ void COMM_TX_start(UART_tx_msg_t *tx)
 {
     g_tx_msg = tx;
     g_tx_idx = 0;
+    g_comm_tx_done_f = 0;
     PIE4bits.TX1IE = 1; /*kick the ISR into action*/ 
 }

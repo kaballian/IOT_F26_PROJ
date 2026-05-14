@@ -5,6 +5,7 @@
       "name": "XC8",
       "includePath": [
         "${workspaceFolder}/**",
+        "${workspaceFolder}/include",
         "C:/Program Files/Microchip/xc8/v3.10/pic/include",
         "C:/Program Files/Microchip/xc8/v3.10/pic/include/c99",
         "C:/Users/alext/.mchp_packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8/pic/include",

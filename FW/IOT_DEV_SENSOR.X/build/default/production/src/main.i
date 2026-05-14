@@ -7,11 +7,12 @@
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "src/main.c" 2
+# 22 "src/main.c"
+# 1 "./include/ENS_160.h" 1
 
 
 
-
-
+# 1 "./include/utils.h" 1
 
 
 
@@ -13648,8 +13649,888 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 29 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 2 3
-# 10 "src/main.c" 2
+# 5 "./include/utils.h" 2
+# 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdbool.h" 1 3
+# 6 "./include/utils.h" 2
 
-void main(void) {
-    return;
+
+
+typedef struct {
+    volatile uint8_t *lat;
+    volatile uint8_t *tris;
+    uint8_t bitmask;
+}pin_t;
+# 23 "./include/utils.h"
+static __attribute__((inline)) void pin_set(const pin_t *p) {*p->lat |= p->bitmask;}
+
+static __attribute__((inline)) void pin_clear(const pin_t *p) {*p->lat &= (uint8_t)~p->bitmask;}
+
+
+static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uint8_t)~p->bitmask;}
+# 5 "./include/ENS_160.h" 2
+# 58 "./include/ENS_160.h"
+typedef struct
+{
+    uint8_t dev_addr;
+    uint16_t part_id;
+
+    uint8_t dev_status;
+    uint8_t validity_flag;
+    uint8_t present;
+    uint8_t initialized;
+    uint8_t data_valid;
+
+
+    uint8_t aqi;
+    uint16_t tvoc_ppb;
+    uint16_t eco2_ppm;
+}ENS160_t;
+
+_Bool ENS160_probe(uint8_t addr, uint16_t *part_id);
+_Bool ENS160_init(ENS160_t *dev, uint8_t addr);
+_Bool ENS160_read_status(ENS160_t *dev);
+_Bool ENS160_read_data(ENS160_t *dev);
+_Bool ENS160_set_opmode(ENS160_t *dev, uint8_t mode);
+_Bool ENS160_write_env(ENS160_t *dev, int16_t temp_c_x100, uint16_t rh_x100);
+# 23 "src/main.c" 2
+#pragma config FEXTOSC = OFF
+#pragma config RSTOSC = HFINTOSC_1MHz
+#pragma config CLKOUTEN = OFF
+#pragma config CSWEN = ON
+#pragma config VDDAR = HI
+#pragma config FCMEN = ON
+
+
+#pragma config MCLRE = EXTMCLR
+#pragma config PWRTS = PWRT_OFF
+#pragma config LPBOREN = OFF
+#pragma config BOREN = ON
+#pragma config DACAUTOEN = OFF
+#pragma config BORV = LO
+#pragma config ZCD = OFF
+#pragma config PPS1WAY = ON
+#pragma config STVREN = ON
+#pragma config DEBUG = OFF
+
+
+#pragma config WDTCPS = WDTCPS_31
+#pragma config WDTE = OFF
+#pragma config WDTCWS = WDTCWS_7
+#pragma config WDTCCS = SC
+
+
+#pragma config BBSIZE = BB512
+#pragma config BBEN = OFF
+#pragma config SAFEN = OFF
+#pragma config WRTAPP = OFF
+#pragma config WRTB = OFF
+#pragma config WRTC = OFF
+#pragma config WRTD = OFF
+#pragma config WRTSAF = OFF
+#pragma config LVP = ON
+
+
+#pragma config CP = OFF
+#pragma config CPD = OFF
+
+
+
+
+
+
+# 1 "./include/event_queue.h" 1
+
+
+
+# 1 "./include/system.h" 1
+
+
+
+
+
+# 1 "./include/clock.h" 1
+# 11 "./include/clock.h"
+void CLOCK_init(void);
+# 7 "./include/system.h" 2
+# 1 "./include/pins.h" 1
+
+
+
+
+
+void PIN_MANAGER_init(void);
+# 8 "./include/system.h" 2
+
+
+
+# 1 "./include/FAN.h" 1
+
+
+
+
+
+
+# 1 "./include/TMR1.h" 1
+
+
+
+
+
+
+void TMR1_CNT_init(void);
+uint16_t TMR1_CNT_meas(void);
+void TMR1_CNT_start(void);
+void TMR1_CNT_stop(void);
+void TMR1_CNT_reset(void);
+static uint16_t TMR1_read16(void);
+# 8 "./include/FAN.h" 2
+# 1 "./include/PWM.h" 1
+# 46 "./include/PWM.h"
+typedef struct
+{
+    volatile unsigned short *pR;
+    volatile uint8_t *con;
+    uint8_t ld_mask;
+    uint16_t period;
+}pwm_chan_t;
+
+
+void PWM_init(void);
+void PWM_set_raw(pwm_chan_t *chan, uint16_t counts);
+void PWM_set_percent(pwm_chan_t *chan, uint8_t percent);
+
+
+
+extern pwm_chan_t PWM_FAN1_CH;
+extern pwm_chan_t PWM_FAN2_CH;
+# 9 "./include/FAN.h" 2
+
+
+
+
+
+
+typedef struct
+{
+
+
+    pwm_chan_t *pwm;
+    uint8_t duty_percent;
+    uint16_t tach_count;
+    uint8_t pulses_pr_rev;
+    uint16_t RPM;
+}fan_t;
+
+void FAN_init(fan_t *fan,
+            pwm_chan_t *pwm,
+            uint8_t duty_percent);
+
+void FAN_set_duty(fan_t *fan, uint8_t duty_percent);
+
+
+uint16_t FAN_RPM_CONV(uint16_t pulses, uint16_t game_ms, uint8_t pulses_pr_rev);
+
+void FAN_CNT_start(fan_t *fan);
+void FAN_CNT_stop(fan_t *fan);
+# 12 "./include/system.h" 2
+# 1 "./include/EXT_SENSOR.h" 1
+# 13 "./include/system.h" 2
+
+# 1 "./include/I2C.h" 1
+
+
+
+
+
+_Bool I2C2_init(void);
+static _Bool I2C2_start(void);
+static _Bool I2C2_stop(void);
+static _Bool I2C2_write(uint8_t data);
+static _Bool I2C2_wait_idle(void);
+static _Bool I2C2_restart(void);
+static _Bool I2C2_write_byte(uint8_t byte);
+_Bool I2C2_read_byte(uint8_t *byte, _Bool ack);
+_Bool I2C2_write_reg(
+    uint8_t addr7,
+    uint8_t reg,
+    const uint8_t *data,
+    uint8_t len
+);
+_Bool I2C2_read_reg(
+    uint8_t addr7,
+    uint8_t reg,
+    uint8_t *data,
+    uint8_t len
+);
+# 15 "./include/system.h" 2
+
+
+# 1 "./include/eusart1.h" 1
+# 22 "./include/eusart1.h"
+volatile uint8_t g_uart_rx_f;
+volatile uint8_t g_uart_rx_msg_r;
+
+
+volatile uint8_t END_REG;
+
+
+
+typedef enum{
+    CMD_PING = 0x01,
+    CMD_STAT = 0x02,
+    CMD_SET_F1 = 0x03,
+    CMD_SET_F2 = 0x04,
+    CMD_GET_F1 = 0x05,
+    CMD_GET_F2 = 0x06,
+    CMD_GET_SENSOR = 0x07,
+    UART_CMD_ACK = 0xF0,
+    UART_CMD_NACK = 0xF1
+}UART_comm_t;
+
+
+typedef struct{
+    uint8_t cmd;
+    uint8_t len;
+    uint8_t payload[8];
+    uint8_t frame[16];
+    uint8_t frame_len;
+}UART_tx_msg_t;
+
+
+
+
+
+
+
+void EUSART1_init(void);
+void EUSART1_ISR(void);
+
+_Bool EUSART1_rx_available(void);
+_Bool EUSART1_read_byte(uint8_t *byte);
+_Bool EUSART1_tx_has_room(void);
+_Bool EUSART1_write_byte(uint8_t byte);
+uint8_t EUSART1_write_buf(const uint8_t *data, uint8_t len);
+
+
+void COMM_assemble_frame(UART_tx_msg_t *tx);
+void COMM_TX_start(UART_tx_msg_t *tx);
+# 18 "./include/system.h" 2
+# 1 "./include/ADG419BR.h" 1
+# 28 "./include/ADG419BR.h"
+typedef enum {
+    CHL_1 = 0,
+    CHL_2 = 1
+}switch_chl_t;
+
+typedef struct{
+    pin_t channelSelector;
+    switch_chl_t status;
+}ADG419_t;
+
+
+
+void ADG419_init(ADG419_t *dev, const pin_t select_pin);
+void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl);
+# 19 "./include/system.h" 2
+# 1 "./include/TMR0.h" 1
+# 14 "./include/TMR0.h"
+volatile uint8_t g_tmr0_1ms_flag;
+volatile uint32_t g_sys_ms;
+volatile uint8_t g_fan_f;
+
+void TMR0_init(void);
+void TMR0_ISR(void);
+# 20 "./include/system.h" 2
+
+# 1 "./include/interrupt.h" 1
+# 10 "./include/interrupt.h"
+extern volatile uint8_t g_tmr0_1ms_flag;
+
+
+void ISR_init();
+# 22 "./include/system.h" 2
+# 1 "./include/parse.h" 1
+# 12 "./include/parse.h"
+typedef struct {
+    uint8_t cmd;
+    uint8_t len;
+    uint8_t payload[8];
+}UART_msg_t;
+# 46 "./include/parse.h"
+void UART_RX_ParserFeed(uint8_t byte);
+void UART_RX_ParserReset();
+_Bool UART_parser_MsgAvailable(void);
+_Bool UART_parser_GetMsg(UART_msg_t *msg);
+uint8_t UART_CHKSUM(uint8_t cmd, uint8_t len, const uint8_t *payload);
+# 23 "./include/system.h" 2
+# 38 "./include/system.h"
+void SYSTEM_init(void);
+
+
+
+typedef enum{
+    None,
+    TMRTick,
+    UARTTIMEOUT,
+    UART,
+    UART_RESP,
+    MEAS_START,
+    MEAS_FAN1_START,
+    MEAS_FAN2_START,
+    MEAS_FAN1_DONE,
+    MEAS_FAN2_DONE,
+    MEAS_ENS160_START,
+    MEAS_ENS160_PROBE,
+    MEAS_ENS160_STAT,
+    MEAS_ENS160_READ,
+    MEAS_ENS160_DONE,
+    MEAS_BME280,
+    I2C_ERR,
+    INIT_COMP,
+    TMR_START,
+    CONV_START,
+    CONV_DONE,
+    PWM_SET,
+    UART_PARSE_RX,
+    SET_F1,
+    SET_F2,
+    SET_DONE,
+    COMM_TX_DONE,
+}event_t;
+
+typedef enum{
+    ST_INIT = 0,
+    ST_IDLE,
+    ST_MEAS,
+    ST_MEAS_F1,
+    ST_MEAS_F2,
+    ST_SET_F1,
+    ST_SET_F2,
+    ST_MEAS_ENS160,
+    ST_COMM,
+    ST_COUNT
+}state_t;
+
+typedef uint8_t flag8_t;
+
+
+typedef enum{
+    INIT_INCOMPLETE = 0,
+    INIT_PWM1 =(1u<<0),
+    INIT_PWM2 =(1u<<1),
+    INIT_ENS160 =(1u<<2),
+    INIT_BME280 =(1u<<3),
+    INIT_STAT_LED =(1u<<4),
+    INIT_UART =(1u<<5),
+    INIT_I2C =(1u<<6),
+}init_f_t;
+
+
+typedef enum {
+    FAULT_NONE = 0,
+    FAULT_FREQ_F1 =(1u<<0),
+    FAULT_FREQ_F2 =(1u<<1),
+    FAULT_ENS160 =(1u<<2),
+    FAULT_BME280 =(1u<<3),
+    FAULT_UART =(1u<<4)
+}fault_f_t;
+
+
+
+typedef enum{
+
+
+
+
+
+
+    NO_COMM = 0,
+    COMM_INIT,
+    READ_DATA,
+    COMM_COMP
+}I2C_COMM_f_t;
+
+
+typedef struct {
+    uint16_t humidity;
+    uint16_t pressure;
+}BME280_meas;
+
+typedef struct{
+    uint16_t AQI;
+}ENS160_meas;
+
+typedef enum {
+    GATE_NONE = 0,
+    GATE_F1,
+    GATE_F2,
+    GATE_ENS160,
+    GATE_F1_SET,
+    GATE_F2_SET,
+    GATE_COMM,
+}gate_owner_t;
+
+
+
+typedef enum{
+    COMM_RESP_NONE = 0,
+    COMM_RESP_PING,
+    COMM_RESP_STAT,
+    COMM_RESP_F1,
+    COMM_RESP_F2,
+    COMM_RESP_SENSOR,
+    COMM_RESP_ERROR
+}UART_COMM_resp_t;
+
+
+typedef struct{
+    UART_COMM_resp_t type;
+    uint8_t arg;
+}app_comm_req_t;
+
+typedef struct {
+    uint32_t sys_ms;
+    uint32_t fsm_tick;
+    uint16_t fan_gate_div;
+    uint32_t gate_deadline;
+    uint8_t gate_active;
+    uint8_t has_deadline;
+
+    flag8_t init_flags;
+    flag8_t fault_flags;
+    uint16_t F1_meas[8];
+    uint16_t F2_meas[8];
+    BME280_meas room_meas[8];
+    ENS160_meas AQI_meas[8];
+
+    uint8_t meas_head;
+    uint8_t meas_count;
+
+
+
+    gate_owner_t gate_owner;
+
+
+    UART_comm_t UART_CMD;
+    app_comm_req_t comm_req;
+    UART_tx_msg_t tx_msg;
+
+
+    I2C_COMM_f_t comm_i2c_flags;
+
+    ENS160_t ENS160;
+    fan_t FAN1;
+    fan_t FAN2;
+
+    ADG419_t FAN_selector;
+}context_t;
+
+
+typedef struct {
+    _Bool changed;
+    state_t next;
+}transition_t;
+
+static __attribute__((inline)) transition_t stay(state_t current){
+
+
+
+
+    transition_t t;
+    t.changed = 0;
+    t.next = current;
+    return t;
+}
+static __attribute__((inline)) transition_t to(state_t s)
+{
+    transition_t t = {
+        .changed = 1,
+        .next = s
+    };
+    return t;
+
+}
+
+typedef void (*state_entry_fn)(context_t *CTX);
+typedef void (*state_exit_fn)(context_t *CTX);
+typedef transition_t(*state_handle_fn)(context_t *CTX, event_t e, state_t current);
+
+typedef struct {
+    state_entry_fn entry;
+    state_exit_fn exit;
+    state_handle_fn handle;
+}state_ops_t;
+
+typedef struct{
+    context_t CTX;
+    state_t state;
+}FSM_t;
+
+
+void FSM_init(FSM_t *sm);
+void FSM_transition(FSM_t *sm, state_t next);
+void FSM_dispatch(FSM_t *sm, event_t ev);
+# 5 "./include/event_queue.h" 2
+
+
+
+
+
+
+typedef struct {
+    event_t buf[8];
+    uint8_t head;
+    uint8_t tail;
+    uint8_t count;
+}event_q_t;
+
+__attribute__((inline)) void EVENT_Q_init(event_q_t *q);
+__attribute__((inline)) _Bool EVENT_Q_push(event_q_t *q, event_t ev);
+__attribute__((inline)) _Bool EVENT_Q_pop(event_q_t *q, event_t *ev);
+__attribute__((inline)) _Bool EVENT_Q_is_empty(const event_q_t *q);
+__attribute__((inline)) _Bool EVENT_Q_is_full(const event_q_t *e);
+# 69 "src/main.c" 2
+# 94 "src/main.c"
+typedef enum{
+    STEP_F1 = 0,
+    STEP_F2,
+    STEP_ENS160,
+    STEP_COMM,
+    STEP_COUNT
+}app_step_t;
+
+
+
+
+
+
+static FSM_t sm;
+static event_q_t ev_q;
+static app_step_t step_index;
+
+
+volatile uint8_t g_fsm_tick_f = 0;
+
+volatile uint8_t g_fan_f = 0;
+volatile uint8_t g_ENS160_f = 0;
+volatile uint32_t g_sys_ms = 0;
+volatile uint32_t g_fan_deadline = 0;
+
+extern volatile uint8_t g_comm_tx_done_f;
+
+
+static void APP_handleUART(context_t *CTX);
+void APP_dispatch_events(void);
+
+
+static __attribute__((inline)) void APP_post_event(event_t ev)
+{
+
+
+    (void)EVENT_Q_push(&ev_q, ev);
+}
+
+void APP_init(void)
+{
+    EVENT_Q_init(&ev_q);
+    FSM_init(&sm);
+}
+
+void APP_service(void)
+{
+
+    if(g_fsm_tick_f)
+    {
+        g_fsm_tick_f = 0;
+        g_sys_ms++;
+        sm.CTX.sys_ms++;
+
+
+        if(sm.CTX.gate_active)
+        {
+
+            if(sm.CTX.has_deadline && (sm.CTX.gate_owner == GATE_F1 || sm.CTX.gate_owner == GATE_F2))
+            {
+
+                if(sm.CTX.sys_ms >= sm.CTX.gate_deadline)
+                {
+
+                    sm.CTX.gate_active = 0;
+
+                    switch(sm.CTX.gate_owner)
+                    {
+
+
+
+                        case GATE_F1:{
+                            sm.CTX.gate_owner = GATE_NONE;
+                            APP_post_event(MEAS_FAN1_DONE);
+                            break;
+                        }
+                        case GATE_F2:{
+                            sm.CTX.gate_owner = GATE_NONE;
+                            APP_post_event(MEAS_FAN2_DONE);
+                            break;
+                        }
+                        default:
+                            sm.CTX.gate_owner = GATE_NONE;
+                            break;
+                    }
+                }
+            }
+            else
+            {
+
+            }
+        }
+
+
+
+        else if(sm.CTX.gate_owner == GATE_ENS160)
+        {
+
+
+            switch(sm.CTX.comm_i2c_flags)
+            {
+
+
+
+                case COMM_INIT:
+                {
+                    APP_post_event(MEAS_ENS160_READ);
+                    break;
+                }
+                case READ_DATA:
+                {
+                    break;
+                }
+                case COMM_COMP:
+                {
+                    APP_post_event(MEAS_ENS160_DONE);
+                }
+
+                case NO_COMM:
+                default:
+                    break;
+            }
+        }
+        else if(sm.CTX.gate_owner == GATE_F1_SET)
+        {
+            APP_post_event(SET_DONE);
+        }
+        else if(sm.CTX.gate_owner == GATE_F2_SET)
+        {
+            APP_post_event(SET_DONE);
+        }
+
+
+
+
+        else if(sm.state == ST_IDLE)
+        {
+
+
+            switch(step_index)
+            {
+                case STEP_F1:{
+                    APP_post_event(MEAS_FAN1_START);
+                    step_index = STEP_F2;
+                    break;
+                }
+                case STEP_F2:{
+                    APP_post_event(MEAS_FAN2_START);
+                    step_index = STEP_ENS160;
+                    break;
+                }
+                case STEP_ENS160:{
+                    APP_post_event(MEAS_ENS160_START);
+                    step_index = STEP_COMM;
+                    break;
+                }
+                case STEP_COMM:{
+                    APP_post_event(UART);
+                    break;
+                }
+                default:
+                    step_index = STEP_F1;
+                    break;
+            }
+        }
+    }
+# 275 "src/main.c"
+    if(UART_parser_MsgAvailable())
+    {
+        APP_handleUART(&sm.CTX);
+    }
+
+
+    if(g_comm_tx_done_f)
+    {
+        g_comm_tx_done_f = 0;
+        APP_post_event(COMM_TX_DONE);
+    }
+
+
+}
+
+
+static void APP_handleUART(context_t *CTX)
+{
+    UART_msg_t msg;
+
+    if(!UART_parser_GetMsg(&msg))
+    {
+        return;
+    }
+
+
+
+
+    switch(msg.cmd)
+    {
+
+        case CMD_PING: {
+            CTX->comm_req.type = COMM_RESP_PING;
+            APP_post_event(UART_RESP);
+            break;
+        }
+
+        case CMD_STAT: {
+            CTX->comm_req.type = COMM_RESP_STAT;
+            APP_post_event(UART_RESP);
+            break;
+        }
+        case CMD_SET_F1: {
+            CTX->FAN1.duty_percent = msg.payload[0];
+            APP_post_event(SET_F1);
+            break;
+        }
+        case CMD_SET_F2: {
+            CTX->FAN2.duty_percent = msg.payload[0];
+            APP_post_event(SET_F2);
+            break;
+        }
+
+        case CMD_GET_F1: {
+            CTX->comm_req.type = COMM_RESP_F1;
+            APP_post_event(UART_RESP);
+            break;
+        }
+
+        case CMD_GET_F2: {
+            CTX->comm_req.type = COMM_RESP_F2;
+            APP_post_event(UART_RESP);
+            break;
+        }
+
+        case CMD_GET_SENSOR: {
+            CTX->comm_req.type = COMM_RESP_SENSOR;
+            APP_post_event(UART_RESP);
+            break;
+        }
+    }
+}
+
+
+
+void APP_dispatch_events(void)
+{
+    event_t ev;
+    while(EVENT_Q_pop(&ev_q, &ev))
+    {
+        FSM_dispatch(&sm, ev);
+    }
+}
+# 383 "src/main.c"
+static UART_tx_msg_t tx_msg;
+static UART_msg_t rx_msg;
+static _Bool fan_gate_active = 0;
+static uint32_t fan_gate_deadline = 0;
+static uint16_t fan_gate_ms = 500u;
+
+
+static __attribute__((inline)) _Bool time_reached(uint32_t now, uint32_t deadline)
+{
+    return (int32_t)(now - deadline) >= 0;
+}
+void FAN_measure_start(fan_t *fan)
+{
+    fan_gate_active = 1;
+    fan_gate_deadline = g_sys_ms + fan_gate_ms;
+
+    FAN_CNT_start(fan);
+}
+static void wait_ms_sys(uint32_t delay_ms)
+{
+    uint32_t deadline = g_sys_ms + delay_ms;
+
+    while(!time_reached(g_sys_ms, deadline))
+    {
+
+    }
+}
+
+
+void COMM_build_resp_f1(UART_tx_msg_t *tx, uint8_t duty, uint16_t rpm)
+{
+    tx->cmd = CMD_GET_F1;
+    tx->len = 3;
+    tx->payload[0] = duty;
+    tx->payload[1] = (uint8_t)(rpm & 0xFF);
+    tx->payload[2] = (uint8_t)((rpm >> 8) & 0xFF);
+}
+
+void COMM_build_resp_sensor(UART_tx_msg_t *tx, ENS160_t *dev)
+{
+    tx->cmd = CMD_GET_SENSOR;
+    tx->len = 6;
+    tx->payload[0] = dev->aqi;
+    tx->payload[1] = (uint8_t)(dev->tvoc_ppb & 0xFF);
+    tx->payload[2] = (uint8_t)((dev->tvoc_ppb >> 8) & 0xFF);
+    tx->payload[3] = (uint8_t)(dev->eco2_ppm & 0xFF);
+    tx->payload[4] = (uint8_t)((dev->eco2_ppm >> 8) & 0xFF);
+    tx->payload[5] = dev->dev_status;
+}
+
+int main(void)
+{
+    CLOCK_init();
+    PIN_MANAGER_init();
+    ISR_init();
+    EUSART1_init();
+    TMR0_init();
+
+
+    I2C2_init();
+# 488 "src/main.c"
+    uint32_t last_ms = 0;
+    uint8_t dc = 1;
+# 501 "src/main.c"
+    ENS160_t sensor;
+    ENS160_init(&sensor,0x52);
+    uint16_t part_id = 0;
+    _delay((unsigned long)((1000)*(16000000U/4000.0)));
+    ENS160_probe(0x52, &part_id);
+    _delay((unsigned long)((1000)*(16000000U/4000.0)));
+    ENS160_set_opmode(&sensor, 0x02);
+    _delay((unsigned long)((1000)*(16000000U/4000.0)));
+
+    while(1)
+    {
+# 639 "src/main.c"
+        ENS160_read_status(&sensor);
+        _delay((unsigned long)((1000)*(16000000U/4000.0)));
+        ENS160_read_data(&sensor);
+        _delay((unsigned long)((1000)*(16000000U/4000.0)));
+
+        COMM_build_resp_sensor(&tx_msg, &sensor);
+        COMM_assemble_frame(&tx_msg);
+        COMM_TX_start(&tx_msg);
+
+        _delay((unsigned long)((10000)*(16000000U/4000.0)));
+
+
+    }
+# 666 "src/main.c"
+    return 1;
 }

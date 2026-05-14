@@ -156,8 +156,8 @@ void PIN_MANAGER_init(void)
     RC3PPS  = 0x1E; //SCA
     // RC4PPS  = 0x1B; //SCL
     RC4PPS  = 0x1D; //SCL
-    RC5PPS  = 0x01; // CLC1_out / status LED
-
+    // RC5PPS  = 0x01; // CLC1_out / status LED
+    
     /*lock sequence*/
     INTCONbits.GIE = 0;
     PPSLOCK = 0x55;

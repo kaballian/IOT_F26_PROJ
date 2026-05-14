@@ -45,29 +45,56 @@ void PWM_init(void)
     PWM1S1P2 = 120; //24%
 
 }
-void PWM_set_duty(void *CTX, uint16_t duty)
+void PWM_set_raw(pwm_chan_t *chan, uint16_t counts)
 {
-    pwm_chan_t *chan = (pwm_chan_t *)CTX;
-    
-    if(chan == 0) //check for nullptr
-    {
+    if(chan == 0)
         return;
-    }
-    if(duty > 100)
-    {
-        duty = 100;
-    }
-    if(duty < 1)
-    {
-        duty = 1;
-    }
-   
-    /* 
-    MAP:
-    [a:b] -> [c:d]   assuming a!=b
-    f(t) = c + ((d-c) / (b-a)) * (t-a)
-    */
-    // *(chan->pR) = (uint16_t)(499/100)*(duty); //this could be precomputed
-    *(chan->pR) = (uint16_t)(((uint32_t)chan->period * duty) / 100u);
+    if(counts > chan->period)
+        counts = chan->period;
+
+    *(chan->pR) = counts;
     *(chan->con) |= chan->ld_mask;
 }
+void PWM_set_percent(pwm_chan_t *chan, uint8_t percent)
+{
+    if(chan == 0)
+        return;
+    if(percent > 100)
+        percent = 100;
+
+    uint16_t counts = (uint16_t)(((uint32_t)chan->period * percent) /100u);
+    PWM_set_raw(chan, counts);
+}
+
+
+
+// void PWM_set_duty(pwm_chan_t *chan, uint16_t duty)
+// {
+//     pwm_chan_t *chan = (pwm_chan_t *)CTX;
+    
+//     if(chan == 0) //check for nullptr
+//     {
+//         return;
+//     }
+//     if(duty > 100)
+//     {
+//         duty = 100;
+//     }
+//     if(duty < 1)
+//     {
+//         duty = 1;
+//     }
+   
+//     /* 
+//     MAP:
+//     [a:b] -> [c:d]   assuming a!=b
+//     f(t) = c + ((d-c) / (b-a)) * (t-a)
+//     */
+//     // *(chan->pR) = (uint16_t)(499/100)*(duty); //this could be precomputed
+//     *(chan->pR) = (uint16_t)(((uint32_t)chan->period * duty) / 100u);
+//     *(chan->con) |= chan->ld_mask;
+// }
+
+
+//V2
+
