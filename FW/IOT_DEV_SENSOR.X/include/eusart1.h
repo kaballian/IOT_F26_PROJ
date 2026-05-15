@@ -36,7 +36,15 @@ typedef enum{
     CMD_GET_F2      = 0x06,     // payload [fan_id]
     CMD_GET_SENSOR  = 0x07,     // payload [sensor id] 
     UART_CMD_ACK    = 0xF0,
-    UART_CMD_NACK   = 0xF1
+    UART_CMD_NACK   = 0xF1,
+    CMD_DBG_ST      = 0xDB,     //FSM UART DEBUG STATE,
+    // CMD_DBG_ST_IDLE     = 0xD2,
+    // CMD_DBG_ST_MEAS_F1  = 0xD3,
+    // CMD_DBG_ST_MEAS_F2  = 0xD4,
+    // CMD_DBG_ST_SET_F1   = 0xD5,
+    // CMD_DBG_ST_SET_F2   = 0xD6,
+    // CMD_DBG_ST_ENS160   = 0xD7,
+    // CMD_DBG_ST_COMM     = 0xD8,
 }UART_comm_t;
 
 
@@ -57,13 +65,14 @@ typedef struct{
 void EUSART1_init(void);
 void EUSART1_ISR(void);
 /*byte transmission API*/
-bool EUSART1_rx_available(void);
-bool EUSART1_read_byte(uint8_t *byte);
-bool EUSART1_tx_has_room(void);
-bool EUSART1_write_byte(uint8_t byte);
-uint8_t EUSART1_write_buf(const uint8_t *data, uint8_t len);
+// bool EUSART1_rx_available(void);
+// bool EUSART1_read_byte(uint8_t *byte);
+// bool EUSART1_tx_has_room(void);
+// bool EUSART1_write_byte(uint8_t byte);
+// uint8_t EUSART1_write_buf(const uint8_t *data, uint8_t len);
 
-
+bool COMM_tx_done(void);
+void COMM_clear_tx_done(void);
 void COMM_assemble_frame(UART_tx_msg_t *tx);
 void COMM_TX_start(UART_tx_msg_t *tx);
 

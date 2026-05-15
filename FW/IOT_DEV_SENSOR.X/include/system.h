@@ -241,5 +241,6 @@ typedef struct{
 void FSM_init(FSM_t *sm);
 void FSM_transition(FSM_t *sm, state_t next);
 void FSM_dispatch(FSM_t *sm, event_t ev);
+void FSM_UART_debug_transmission(context_t *CTX, state_t old, event_t ev, state_t next);
 
 #endif
