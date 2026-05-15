@@ -13837,7 +13837,15 @@ typedef enum{
     CMD_GET_F2 = 0x06,
     CMD_GET_SENSOR = 0x07,
     UART_CMD_ACK = 0xF0,
-    UART_CMD_NACK = 0xF1
+    UART_CMD_NACK = 0xF1,
+    CMD_DBG_ST = 0xDB,
+
+
+
+
+
+
+
 }UART_comm_t;
 
 
@@ -13858,13 +13866,14 @@ typedef struct{
 void EUSART1_init(void);
 void EUSART1_ISR(void);
 
-_Bool EUSART1_rx_available(void);
-_Bool EUSART1_read_byte(uint8_t *byte);
-_Bool EUSART1_tx_has_room(void);
-_Bool EUSART1_write_byte(uint8_t byte);
-uint8_t EUSART1_write_buf(const uint8_t *data, uint8_t len);
 
 
+
+
+
+
+_Bool COMM_tx_done(void);
+void COMM_clear_tx_done(void);
 void COMM_assemble_frame(UART_tx_msg_t *tx);
 void COMM_TX_start(UART_tx_msg_t *tx);
 # 18 "src/../include/system.h" 2
@@ -13887,9 +13896,9 @@ void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl);
 # 19 "src/../include/system.h" 2
 # 1 "./include/TMR0.h" 1
 # 14 "./include/TMR0.h"
-volatile uint8_t g_tmr0_1ms_flag;
-volatile uint32_t g_sys_ms;
-volatile uint8_t g_fan_f;
+extern volatile uint8_t g_tmr0_1ms_flag;
+extern volatile uint32_t g_sys_ms;
+extern volatile uint8_t g_fan_f;
 
 void TMR0_init(void);
 void TMR0_ISR(void);
@@ -13927,9 +13936,10 @@ typedef enum{
     UARTTIMEOUT,
     UART,
     UART_RESP,
-    MEAS_START,
+    MEAS_FAN_START,
     MEAS_FAN1_START,
     MEAS_FAN2_START,
+    MEAS_FAN_DONE,
     MEAS_FAN1_DONE,
     MEAS_FAN2_DONE,
     MEAS_ENS160_START,
@@ -13946,7 +13956,7 @@ typedef enum{
     PWM_SET,
     UART_PARSE_RX,
     SET_F1,
-    SET_F2,
+    SET_FAN,
     SET_DONE,
     COMM_TX_DONE,
 }event_t;
@@ -13955,8 +13965,10 @@ typedef enum{
     ST_INIT = 0,
     ST_IDLE,
     ST_MEAS,
+    ST_MEAS_FAN,
     ST_MEAS_F1,
     ST_MEAS_F2,
+    ST_SET_FAN,
     ST_SET_F1,
     ST_SET_F2,
     ST_MEAS_ENS160,
@@ -14018,10 +14030,20 @@ typedef enum {
     GATE_F1,
     GATE_F2,
     GATE_ENS160,
+    GATE_FAN,
     GATE_F1_SET,
     GATE_F2_SET,
+    GATE_FAN_SET,
     GATE_COMM,
 }gate_owner_t;
+
+typedef enum{
+    FAN_1 = 0,
+    FAN_2 = 1,
+    FAN_COUNT = 2,
+}fan_sel_t;
+
+
 
 
 
@@ -14074,8 +14096,10 @@ typedef struct {
     ENS160_t ENS160;
     fan_t FAN1;
     fan_t FAN2;
+    fan_t FANS[FAN_COUNT];
 
     ADG419_t FAN_selector;
+    fan_sel_t active_fan;
 }context_t;
 
 
@@ -14084,17 +14108,13 @@ typedef struct {
     state_t next;
 }transition_t;
 
-static __attribute__((inline)) transition_t stay(state_t current){
-
-
-
-
+static transition_t stay(state_t current){
     transition_t t;
     t.changed = 0;
     t.next = current;
     return t;
 }
-static __attribute__((inline)) transition_t to(state_t s)
+static transition_t to(state_t s)
 {
     transition_t t = {
         .changed = 1,
@@ -14105,12 +14125,12 @@ static __attribute__((inline)) transition_t to(state_t s)
 }
 
 typedef void (*state_entry_fn)(context_t *CTX);
-typedef void (*state_exit_fn)(context_t *CTX);
+
 typedef transition_t(*state_handle_fn)(context_t *CTX, event_t e, state_t current);
 
 typedef struct {
     state_entry_fn entry;
-    state_exit_fn exit;
+
     state_handle_fn handle;
 }state_ops_t;
 
@@ -14123,29 +14143,12 @@ typedef struct{
 void FSM_init(FSM_t *sm);
 void FSM_transition(FSM_t *sm, state_t next);
 void FSM_dispatch(FSM_t *sm, event_t ev);
+void FSM_UART_debug_transmission(context_t *CTX, state_t old, event_t ev, state_t next);
 # 2 "src/system.c" 2
-# 12 "src/system.c"
+# 17 "src/system.c"
 void SYSTEM_init(void)
 {
-
-    CLOCK_init();
-
-    PIN_MANAGER_init();
-
-    ISR_init();
-
-    PWM_init();
-
-    I2C2_init();
-
-    EUSART1_init();
-
-    TMR1_CNT_init();
-
-    TMR0_init();
-
-
-
+# 40 "src/system.c"
 }
 
 
@@ -14153,12 +14156,22 @@ void SYSTEM_init(void)
 
 static void st_init_entry(context_t *CTX)
 {
-# 48 "src/system.c"
+
+
+
+    FAN_init(&CTX->FANS[FAN_1], &PWM_FAN1_CH, 20);
+    FAN_init(&CTX->FANS[FAN_2], &PWM_FAN2_CH, 30);
+
+
+
+
+
+
     ADG419_init(&CTX->FAN_selector, ((pin_t){.lat=&LATA, .tris=&TRISA, .bitmask=(1u<<2)}));
 
 
-    FAN_set_duty(&CTX->FAN1, 10);
-    FAN_set_duty(&CTX->FAN2, 15);
+
+
 
 
 
@@ -14170,6 +14183,7 @@ static void st_init_entry(context_t *CTX)
 
     CTX->init_flags |= (INIT_PWM1 | INIT_PWM2 | INIT_ENS160 | INIT_I2C);
     CTX->comm_i2c_flags = NO_COMM;
+
 }
 static transition_t st_init_handle(context_t *CTX, event_t ev, state_t current)
 {
@@ -14197,15 +14211,31 @@ static transition_t st_idle_handle(context_t *CTX, event_t ev,state_t current)
     switch(ev)
     {
         case MEAS_FAN1_START:
-            return to(ST_MEAS_F1);
         case MEAS_FAN2_START:
-            return to(ST_MEAS_F2);
+        case MEAS_FAN_START:
+            return to(ST_MEAS_FAN);
+
+
+
+
+
+
+
         case MEAS_ENS160_START:
             return to(ST_MEAS_ENS160);
-        case SET_F1:
-            return to(ST_SET_F1);
-        case SET_F2:
-            return to(ST_SET_F2);
+
+
+
+
+
+
+        case SET_FAN:{
+            fan_t *fan = &CTX->FANS[CTX->active_fan];
+            FAN_set_duty(fan, fan->duty_percent);
+            return stay(current);
+        }
+
+
 
 
         case UART_RESP:
@@ -14217,61 +14247,39 @@ static transition_t st_idle_handle(context_t *CTX, event_t ev,state_t current)
 }
 
 
-static void st_meas_f1_entry(context_t *CTX)
+static void st_meas_fan_entry(context_t *CTX)
 {
-
-    ADG419_CHL_SELECT(&CTX->FAN_selector, CHL_1);
-
-    FAN_CNT_start(&CTX->FAN1);
-
-    CTX->gate_owner = GATE_F1;
+# 161 "src/system.c"
+    CTX->gate_owner = GATE_FAN;
     CTX->gate_active = 1;
     CTX->gate_deadline = g_sys_ms + 500;
     CTX->has_deadline = 1;
 
+
+
+
+
+    ADG419_CHL_SELECT(&CTX->FAN_selector, ((switch_chl_t)(CTX->active_fan)));
+    FAN_CNT_start(&CTX->FANS[CTX->active_fan]);
+
+
 }
-static transition_t st_meas_f1_handle(context_t *CTX, event_t ev, state_t current)
+static transition_t st_meas_fan_handle(context_t *CTX, event_t ev, state_t current)
 {
-    switch (ev)
+    switch(ev)
     {
-    case MEAS_FAN1_DONE:
-        FAN_CNT_stop(&CTX->FAN1);
-        CTX->gate_active = 0;
-        CTX->has_deadline = 0;
-        return to(ST_IDLE);
-    default:
-        return stay(current);
+        case MEAS_FAN_DONE:{
+            FAN_CNT_stop(&CTX->FANS[CTX->active_fan]);
+            CTX->gate_active = 0;
+            CTX->has_deadline = 0;
+            return to(ST_IDLE);
+            }
+        default:
+            return stay(current);
+
     }
 }
-static void st_meas_f2_entry(context_t *CTX)
-{
-
-    ADG419_CHL_SELECT(&CTX->FAN_selector, CHL_2);
-
-    FAN_CNT_start(&CTX->FAN2);
-    CTX->gate_owner = GATE_F2;
-    CTX->gate_active = 1;
-    CTX->gate_deadline = g_sys_ms + 500;
-    CTX->has_deadline = 1;
-
-}
-static transition_t st_meas_f2_handle(context_t *CTX, event_t ev, state_t current)
-{
-    switch (ev)
-    {
-    case MEAS_FAN2_DONE:
-        FAN_CNT_stop(&CTX->FAN2);
-        CTX->gate_active = 0;
-        CTX->has_deadline = 0;
-        return to(ST_IDLE);
-    default:
-        return stay(current);
-    }
-}
-
-
-
-
+# 248 "src/system.c"
 static void st_meas_ens160_entry(context_t *CTX)
 {
     CTX->gate_owner = GATE_ENS160;
@@ -14296,11 +14304,14 @@ static transition_t st_meas_ens160_handle(context_t *CTX, event_t ev, state_t cu
         {
             if(!CTX->ENS160.initialized)
             {
+                CTX->fault_flags |= FAULT_ENS160;
+                CTX->comm_i2c_flags = COMM_COMP;
                 return stay(current);
             }
             if(!ENS160_read_status(&CTX->ENS160))
             {
                 CTX->fault_flags |= FAULT_ENS160;
+                CTX->comm_i2c_flags = COMM_COMP;
                 return to(ST_IDLE);
             }
             if(CTX->ENS160.dev_status & 0x02)
@@ -14319,6 +14330,8 @@ static transition_t st_meas_ens160_handle(context_t *CTX, event_t ev, state_t cu
 
 
             CTX->comm_i2c_flags = NO_COMM;
+            CTX->gate_active = 0;
+            CTX->gate_owner = GATE_NONE;
             return to(ST_IDLE);
         }
 
@@ -14335,7 +14348,7 @@ static void st_comm_entry(context_t *CTX)
 {
     CTX->gate_owner = GATE_COMM;
     CTX->gate_active = 1;
-# 238 "src/system.c"
+# 325 "src/system.c"
     switch(CTX->comm_req.type)
     {
         case COMM_RESP_PING:{
@@ -14346,31 +14359,31 @@ static void st_comm_entry(context_t *CTX)
 
             break;
         }
-        case COMM_RESP_F1:{
-            CTX->tx_msg.cmd = CMD_GET_F1;
+
+        case COMM_RESP_F1:
+        case COMM_RESP_F2:
+        {
+            fan_sel_t fan_id = (CTX->comm_req.type == COMM_RESP_F1) ? FAN_1 : FAN_2;
+            fan_t *fan = &CTX->FANS[fan_id];
+
+            CTX->tx_msg.cmd = (fan_id = FAN_1) ? CMD_GET_F1 : CMD_GET_F2;
             CTX->tx_msg.len = 3;
             CTX->tx_msg.payload[0] = CTX->FAN1.duty_percent;
             CTX->tx_msg.payload[1] = (uint8_t)(CTX->FAN1.RPM >> 8);
             CTX->tx_msg.payload[2] = (uint8_t)(CTX->FAN1.RPM);
             break;
         }
-        case COMM_RESP_F2:{
-            CTX->tx_msg.cmd = CMD_GET_F2;
-            CTX->tx_msg.len = 3;
-            CTX->tx_msg.payload[0] = CTX->FAN2.duty_percent;
-            CTX->tx_msg.payload[1] = (uint8_t)(CTX->FAN2.RPM >> 8);
-            CTX->tx_msg.payload[2] = (uint8_t)(CTX->FAN2.RPM );
-            break;
-        }
+# 365 "src/system.c"
         case COMM_RESP_SENSOR:{
             CTX->tx_msg.cmd = CMD_GET_SENSOR;
-            CTX->tx_msg.len = 6;
+            CTX->tx_msg.len = 7;
             CTX->tx_msg.payload[0] = CTX->ENS160.dev_addr;
             CTX->tx_msg.payload[1] = CTX->ENS160.aqi;
             CTX->tx_msg.payload[2] = (uint8_t)(CTX->ENS160.tvoc_ppb>>8);
             CTX->tx_msg.payload[3] = (uint8_t)(CTX->ENS160.tvoc_ppb);
             CTX->tx_msg.payload[4] = (uint8_t)(CTX->ENS160.eco2_ppm>>8);
             CTX->tx_msg.payload[5] = (uint8_t)(CTX->ENS160.eco2_ppm);
+            CTX->tx_msg.payload[6] = CTX->ENS160.dev_status;
             break;
         }
 
@@ -14392,70 +14405,26 @@ static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
     {
         case COMM_TX_DONE: {
             CTX->comm_req.type = COMM_RESP_NONE;
-            CTX->tx_msg.frame_len = 0;
-            CTX->tx_msg.len = 0;
-
+            CTX->gate_active = 0;
             return to(ST_IDLE);
-
-            break;
         }
-
         default:
             return stay(current);
-            break;
-
     }
-
-
-
 }
-
-
-static void st_set_f1_entry(context_t *CTX)
-{
-    CTX->gate_owner = GATE_F1_SET;
-    CTX->gate_active = 1;
-    FAN_set_duty(&CTX->FAN1, CTX->FAN1.duty_percent);
-    CTX->gate_active = 0;
-
-}
-static transition_t st_set_f1_handle(context_t *CTX, event_t ev, state_t current)
-{
-
-
-    if(ev == SET_DONE)
-    {
-        return to(ST_IDLE);
-    }
-
-    return stay(current);
-}
-static void st_set_f2_entry(context_t *CTX)
-{
-    CTX->gate_owner = GATE_F2_SET;
-    CTX->gate_active = 1;
-    FAN_set_duty(&CTX->FAN2, CTX->FAN2.duty_percent);
-    CTX->gate_active = 0;
-}
-static transition_t st_set_f2_handle(context_t *CTX, event_t ev, state_t current)
-{
-    if(ev == SET_DONE)
-    {
-        return to(ST_IDLE);
-    }
-    return stay(current);
-}
-# 355 "src/system.c"
+# 468 "src/system.c"
 static const state_ops_t OPS[ST_COUNT] =
 {
-    [ST_INIT] = {st_init_entry,0,st_init_handle},
-    [ST_IDLE] = {st_idle_entry,0,st_idle_handle},
-    [ST_MEAS_F1] = {st_meas_f1_entry, 0, st_meas_f1_handle},
-    [ST_MEAS_F2] = {st_meas_f2_entry, 0, st_meas_f2_handle},
-    [ST_MEAS_ENS160] = {st_meas_ens160_entry, 0 , st_meas_ens160_handle},
-    [ST_COMM] = {st_comm_entry,0,st_comm_handle},
-    [ST_SET_F1] = {st_set_f1_entry, 0, st_set_f1_handle},
-    [ST_SET_F2] = {st_set_f2_entry, 0, st_set_f2_handle}
+    [ST_INIT] = {st_init_entry,st_init_handle},
+    [ST_IDLE] = {st_idle_entry,st_idle_handle},
+
+
+    [ST_MEAS_FAN] = {st_meas_fan_entry, st_meas_fan_handle},
+    [ST_MEAS_ENS160] = {st_meas_ens160_entry, st_meas_ens160_handle},
+    [ST_COMM] = {st_comm_entry,st_comm_handle},
+
+
+
 };
 
 
@@ -14464,14 +14433,7 @@ static const state_ops_t OPS[ST_COUNT] =
 void FSM_transition(FSM_t *sm, state_t next)
 {
     if(next==sm->state) return;
-
-
-    if(OPS[sm->state].exit)
-    {
-        OPS[sm->state].exit(&sm->CTX);
-    }
-
-
+# 496 "src/system.c"
     sm->state = next;
 
 
@@ -14503,11 +14465,31 @@ void FSM_init(FSM_t *sm)
 
 void FSM_dispatch(FSM_t *sm, event_t ev)
 {
-# 426 "src/system.c"
-    transition_t tr = OPS[sm->state].handle(&sm->CTX, ev, sm->state);
+    state_t old_state = sm->state;
+    transition_t tr = OPS[sm->state].handle(&sm->CTX, ev, old_state);
 
     if(tr.changed)
     {
+        FSM_UART_debug_transmission(&sm->CTX, old_state,ev,tr.next);
         FSM_transition(sm, tr.next);
     }
+}
+
+
+void FSM_UART_debug_transmission(context_t *CTX, state_t old, event_t ev, state_t next)
+{
+    if(!COMM_tx_done())
+        return;
+
+    COMM_clear_tx_done();
+
+    CTX->tx_msg.cmd = CMD_DBG_ST;
+    CTX->tx_msg.len = 3;
+    CTX->tx_msg.payload[0] = (uint8_t) old;
+    CTX->tx_msg.payload[1] = (uint8_t) ev;
+    CTX->tx_msg.payload[2] = (uint8_t) next;
+
+    COMM_assemble_frame(&CTX->tx_msg);
+    COMM_TX_start(&CTX->tx_msg);
+
 }

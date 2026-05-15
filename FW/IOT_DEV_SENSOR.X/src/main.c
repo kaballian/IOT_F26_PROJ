@@ -19,7 +19,7 @@ defined in system.h
 /*configs?*/
 // CONFIG1
 
-#include "include/ENS_160.h"
+
 #pragma config FEXTOSC = OFF    // External Oscillator Selection bits (Oscillator not enabled)
 #pragma config RSTOSC = HFINTOSC_1MHz// Reset Oscillator Selection bits (HFINTOSC (1MHz))
 #pragma config CLKOUTEN = OFF   // Clock Out Enable bit (CLKOUT function is disabled; i/o or oscillator function on OSC2)
@@ -109,252 +109,136 @@ static event_q_t ev_q;
 static app_step_t step_index;
 
 
-volatile uint8_t g_fsm_tick_f   = 0;    //HARDWARE FLAG
+// volatile uint8_t g_fsm_tick_f   = 0;    //HARDWARE FLAG
 
 volatile uint8_t g_fan_f        = 0;    //SOFTWARE FLAG
 volatile uint8_t g_ENS160_f     = 0;    //SOFTWARE FLAG
-volatile uint32_t g_sys_ms      = 0;    //sys tick counter
+// volatile uint32_t g_sys_ms      = 0;    //sys tick counter
 volatile uint32_t g_fan_deadline   = 0; //fan deadline check
     
-extern volatile uint8_t g_comm_tx_done_f; //ISR flag
+// extern volatile uint8_t g_comm_tx_done_f; //ISR flag
 
 /*helper proto*/
 static void APP_handleUART(context_t *CTX);
 void APP_dispatch_events(void);
 
 /*handling wrapper*/
-static inline void APP_post_event(event_t ev)
-{   
-    /*this essentially says:
-    something happend, please schedule it for handling*/
-    (void)EVENT_Q_push(&ev_q, ev);
-}
+// static inline void APP_post_event(event_t ev)
+// {   
+//     /*this essentially says:
+//     something happend, please schedule it for handling*/
+//     (void)EVENT_Q_push(&ev_q, ev);
+// }
 
-void APP_init(void)
-{
-    EVENT_Q_init(&ev_q);
-    FSM_init(&sm);
-}
 
-void APP_service(void)
+
+
+void APP_service(context_t *CTX, event_q_t *ev)
 {
-    /*at each system tick (1ms) done by TMR 0 */
-    if(g_fsm_tick_f)
+    // EVENT_Q_push(ev,MEAS_FAN1_START);
+    static uint8_t step = 0;
+    static uint32_t last_ms = 0;
+    static UART_msg_t rx_msg;
+
+    if(UART_parser_GetMsg(&rx_msg))
     {
-        g_fsm_tick_f = 0; //reset tick flag
-        g_sys_ms++;       //increment flag 
-        sm.CTX.sys_ms++;
-
-        /*check if work is ongoing*/
-        if(sm.CTX.gate_active) 
+        switch(rx_msg.cmd)
         {
-            /*if an action that has a deadline is active*/
-            if(sm.CTX.has_deadline && (sm.CTX.gate_owner == GATE_F1 || sm.CTX.gate_owner == GATE_F2))
+            case CMD_SET_F1:
+            case CMD_SET_F2:
             {
-                /*check if ongoing work has exceeded the deadline*/
-                if(sm.CTX.sys_ms >= sm.CTX.gate_deadline) 
-                {
-                    /*reset work flag*/
-                    sm.CTX.gate_active = 0;
-                    /*check whos doing work*/
-                    switch(sm.CTX.gate_owner)
-                    {   
-                        /*it assumed that work is done, 
-                        so that no gate owner exists. clear flag
-                        and post the app event*/
-                        case GATE_F1:{
-                            sm.CTX.gate_owner = GATE_NONE;
-                            APP_post_event(MEAS_FAN1_DONE);
-                            break;
-                        }
-                        case GATE_F2:{
-                            sm.CTX.gate_owner = GATE_NONE;
-                            APP_post_event(MEAS_FAN2_DONE);
-                            break;
-                        }
-                        default:
-                            sm.CTX.gate_owner = GATE_NONE;
-                            break;
-                    }
-                }
+                fan_sel_t fan_id = (rx_msg.cmd == CMD_SET_F1) ? FAN_1 : FAN_2;
+                CTX->active_fan = fan_id;
+                CTX->FANS[fan_id].duty_percent = rx_msg.payload[1];
+                EVENT_Q_push(ev, SET_FAN);
+                break;
             }
-            else /*if the work does not have a deadline*/
-            {
-                /*nothing for now*/
-            }
-        }
-        /*communication*/
-        /*if work is active and the gate owner is ENS160*/
-        // else if(sm.CTX.gate_active && sm.CTX.gate_owner == GATE_ENS160)
-        else if(sm.CTX.gate_owner == GATE_ENS160)
-        {
-            
-            /*for now, get full status and measurements*/
-            switch(sm.CTX.comm_i2c_flags)
-            {
-                /*comm init essentially invokes the handler
-                doing the measurement, thus READ_DATA case
-                is unnecessary*/
-                case COMM_INIT:
-                {
-                    APP_post_event(MEAS_ENS160_READ);
-                    break;
-                }
-                case READ_DATA:
-                {
-                    break;
-                }
-                case COMM_COMP:
-                {
-                    APP_post_event(MEAS_ENS160_DONE);
-                }
 
-                case NO_COMM: /*rollover to default case*/
-                default:
-                    break;
+            case CMD_GET_SENSOR:{
+                CTX->comm_req.type = COMM_RESP_SENSOR;
+                EVENT_Q_push(ev, UART_RESP);
+                break;
             }
-        }
-        else if(sm.CTX.gate_owner == GATE_F1_SET)
-        {
-            APP_post_event(SET_DONE);
-        }
-        else if(sm.CTX.gate_owner == GATE_F2_SET)
-        {
-            APP_post_event(SET_DONE);
-        }
-            
-        
 
-        
-        else if(sm.state == ST_IDLE)
-        {
-            /*Step index is set ahead of time, this indicates
-            that the scheduler knows what is coming after*/
-            switch(step_index)
+            case CMD_GET_F1:
             {
-                case STEP_F1:{
-                    APP_post_event(MEAS_FAN1_START);
-                    step_index = STEP_F2;
-                    break;
-                }
-                case STEP_F2:{
-                    APP_post_event(MEAS_FAN2_START);
-                    step_index = STEP_ENS160;
-                    break;
-                }
-                case STEP_ENS160:{
-                    APP_post_event(MEAS_ENS160_START);
-                    step_index = STEP_COMM;
-                    break;
-                }
-                case STEP_COMM:{
-                    APP_post_event(UART);
-                    break;
-                }
-                default:
-                    step_index = STEP_F1;
-                    break;
+                CTX->comm_req.type = COMM_RESP_F1;
+                EVENT_Q_push(ev, UART_RESP);
+                break;
+            }
+            case CMD_GET_F2:
+            {
+                CTX->comm_req.type = COMM_RESP_F2;
+                EVENT_Q_push(ev, UART_RESP);
+                break;
             }
         }
     }
-    
-    /*this might be faulty, this event
-    can only ever be served if the application logic
-    lands here without a system tick.
-    All of the above code could essentially execute and take up
-    so much time this never gets served.
-    This is a scheduling issue and needs to be checked if its
-    a reality. 
 
-    either by checker execution time/probability of 
-    all of the above code or by issuing a uart checker 
-    every N amount of system ticks. 
-    */
-    
-    /*UART with parser*/
-    if(UART_parser_MsgAvailable())
+    if(CTX->gate_active && CTX->has_deadline)
     {
-        APP_handleUART(&sm.CTX);
+        if((CTX->sys_ms - CTX->gate_deadline) < 0x80000000UL)
+        {
+            if(CTX->gate_owner == GATE_FAN)
+            {
+                EVENT_Q_push(ev, MEAS_FAN_DONE);
+            }
+
+            CTX->gate_active = 0;
+            CTX->has_deadline = 0;
+        }
+        return;
     }
 
-    /*TX check*/
-    if(g_comm_tx_done_f)
+    if(CTX->gate_owner == GATE_ENS160)
     {
-        g_comm_tx_done_f = 0; /*clear the TX done flag*/
-        APP_post_event(COMM_TX_DONE);
+        if(CTX->comm_i2c_flags == COMM_INIT)
+        {
+            CTX->comm_i2c_flags = READ_DATA;
+            EVENT_Q_push(ev, MEAS_ENS160_READ);
+        }
+        else if(CTX->comm_i2c_flags == COMM_COMP)
+        {
+            EVENT_Q_push(ev, MEAS_ENS160_DONE);
+        }
     }
-    
 
-}
-/*design visibility, only app_service should be
-able to call this function*/
-static void APP_handleUART(context_t *CTX)
-{
-    UART_msg_t msg;
 
-    if(!UART_parser_GetMsg(&msg))
+    if((CTX->sys_ms - last_ms) < 2000)
     {
         return;
     }
 
-    /*cases marked with TX, are UART cases that 
-    require a TX response to the sender, meaning that the
-    FSM should be send to COMM state and then handled there*/
-    switch(msg.cmd)
+    last_ms = CTX->sys_ms;
+
+    switch(step)
     {
-        /*TX*/
-        case CMD_PING: {
-            CTX->comm_req.type = COMM_RESP_PING;
-            APP_post_event(UART_RESP);
+        case 0:{
+            CTX->active_fan = FAN_1;
+            EVENT_Q_push(ev, MEAS_FAN_START);
+            step = 1;
             break;
         }
-        /*TX*/
-        case CMD_STAT: {
-            CTX->comm_req.type = COMM_RESP_STAT;
-            APP_post_event(UART_RESP);
+
+        case 1:{
+            CTX->active_fan = FAN_2;
+            EVENT_Q_push(ev, MEAS_FAN_START);
+            step = 2;
             break;
         }
-        case CMD_SET_F1: {
-            CTX->FAN1.duty_percent = msg.payload[0];
-            APP_post_event(SET_F1);            
+
+        case 2:{
+            EVENT_Q_push(ev, MEAS_ENS160_START);
+            step = 0;
             break;
         }
-        case CMD_SET_F2: {
-            CTX->FAN2.duty_percent = msg.payload[0];
-            APP_post_event(SET_F2);
-            break;
-        }
-        /*TX*/
-        case CMD_GET_F1: {
-            CTX->comm_req.type = COMM_RESP_F1;
-            APP_post_event(UART_RESP);
-            break;
-        }
-        /*TX*/
-        case CMD_GET_F2: {
-            CTX->comm_req.type = COMM_RESP_F2;
-            APP_post_event(UART_RESP);    
-            break;
-        }
-        /*TX*/
-        case CMD_GET_SENSOR: {
-            CTX->comm_req.type = COMM_RESP_SENSOR;
-            APP_post_event(UART_RESP);
+
+        default:{
             break;
         }
     }
 }
 
-
-/*dispatch APP events into FSM*/
-void APP_dispatch_events(void)
-{
-    event_t ev;
-    while(EVENT_Q_pop(&ev_q, &ev))
-    {
-        FSM_dispatch(&sm, ev);
-    }
-}
 
 
 // int main(void) {
@@ -380,55 +264,46 @@ void APP_dispatch_events(void)
 //     return 1;
 
 // }
-static UART_tx_msg_t tx_msg;
-static UART_msg_t rx_msg;
-static bool fan_gate_active = false;
-static uint32_t fan_gate_deadline = 0;
-static uint16_t fan_gate_ms = 500u;
+// static UART_tx_msg_t tx_msg; //used in test 3 and 4
+// static UART_msg_t rx_msg;
+// static bool fan_gate_active = false;
+// static uint32_t fan_gate_deadline = 0;
+// static uint16_t fan_gate_ms = 500u;
     
 /*protos for testing fan measurement*/
-static inline bool time_reached(uint32_t now, uint32_t deadline)
-{
-    return (int32_t)(now - deadline) >= 0;
-}
-void FAN_measure_start(fan_t *fan)
-{
-    fan_gate_active = true;
-    fan_gate_deadline = g_sys_ms + fan_gate_ms;
+// static inline bool time_reached(uint32_t now, uint32_t deadline)
+// {
+//     return (int32_t)(now - deadline) >= 0;
+// }
+// void FAN_measure_start(fan_t *fan)
+// {
+//     fan_gate_active = true;
+//     fan_gate_deadline = g_sys_ms + fan_gate_ms;
 
-    FAN_CNT_start(fan);
-}
-static void wait_ms_sys(uint32_t delay_ms)
-{
-    uint32_t deadline = g_sys_ms + delay_ms;
-
-    while(!time_reached(g_sys_ms, deadline))
-    {
-
-    }
-}
+//     FAN_CNT_start(fan);
+// }
 
 /*TX message assembler for F1*/
-void COMM_build_resp_f1(UART_tx_msg_t *tx, uint8_t duty, uint16_t rpm)
-{
-    tx->cmd = CMD_GET_F1;
-    tx->len = 3;
-    tx->payload[0] = duty; 
-    tx->payload[1] = (uint8_t)(rpm & 0xFF);
-    tx->payload[2] = (uint8_t)((rpm >> 8) & 0xFF);
-}
+// void COMM_build_resp_f1(UART_tx_msg_t *tx, uint8_t duty, uint16_t rpm)
+// {
+//     tx->cmd = CMD_GET_F1;
+//     tx->len = 3;
+//     tx->payload[0] = duty; 
+//     tx->payload[1] = (uint8_t)(rpm & 0xFF);
+//     tx->payload[2] = (uint8_t)((rpm >> 8) & 0xFF);
+// }
 
-void COMM_build_resp_sensor(UART_tx_msg_t *tx, ENS160_t *dev)
-{
-    tx->cmd = CMD_GET_SENSOR;
-    tx->len = 6;
-    tx->payload[0] = dev->aqi; 
-    tx->payload[1] = (uint8_t)(dev->tvoc_ppb & 0xFF);
-    tx->payload[2] = (uint8_t)((dev->tvoc_ppb >> 8) & 0xFF);
-    tx->payload[3] = (uint8_t)(dev->eco2_ppm & 0xFF);
-    tx->payload[4] = (uint8_t)((dev->eco2_ppm >> 8) & 0xFF);
-    tx->payload[5] = dev->dev_status;
-}
+// void COMM_build_resp_sensor(UART_tx_msg_t *tx, ENS160_t *dev)
+// {
+//     tx->cmd = CMD_GET_SENSOR;
+//     tx->len = 6;
+//     tx->payload[0] = dev->aqi; 
+//     tx->payload[1] = (uint8_t)(dev->tvoc_ppb & 0xFF);
+//     tx->payload[2] = (uint8_t)((dev->tvoc_ppb >> 8) & 0xFF);
+//     tx->payload[3] = (uint8_t)(dev->eco2_ppm & 0xFF);
+//     tx->payload[4] = (uint8_t)((dev->eco2_ppm >> 8) & 0xFF);
+//     tx->payload[5] = dev->dev_status;
+// }
 
 int main(void)
 {   
@@ -437,9 +312,9 @@ int main(void)
     ISR_init(); // works
     EUSART1_init(); //works
     TMR0_init(); //works
-    // TMR1_CNT_init();
-    // PWM_init();
-    I2C2_init();
+    TMR1_CNT_init(); // works
+    PWM_init(); 
+    I2C2_init(); // works
 
     //WORKS
     // while(1)
@@ -485,8 +360,8 @@ int main(void)
     //     }
     // }
 
-    uint32_t last_ms = 0;
-    uint8_t dc = 1;
+    // uint32_t last_ms = 0;
+    // uint8_t dc = 1;
     //WORKS  -- 3
     // fan_t fan1;
     // fan_t fan2;
@@ -497,16 +372,33 @@ int main(void)
     // __delay_ms(1000);
 
 
-    //test I2C ENS16t0  --4 
-    ENS160_t sensor;
-    ENS160_init(&sensor,ENS_160_ADDR0);
-    uint16_t part_id = 0;
-    __delay_ms(1000);
-    ENS160_probe(ENS_160_ADDR0, &part_id);
-    __delay_ms(1000);
-    ENS160_set_opmode(&sensor, ENS160_OPMODE_STANDARD);
-    __delay_ms(1000);
-        
+    //test I2C ENS16t0  --4 WORKS
+    // ENS160_t sensor;
+    // ENS160_init(&sensor,ENS_160_ADDR0);
+    // uint16_t part_id = 0;
+    // __delay_ms(1000);
+    // ENS160_probe(ENS_160_ADDR0, &part_id);
+    // __delay_ms(1000);
+    // ENS160_set_opmode(&sensor, ENS160_OPMODE_STANDARD);
+    // __delay_ms(1000);
+
+
+    // test -- 5 FSM with UART
+    // FSM_init(&sm);
+    // __delay_ms(2000);
+    
+    // FSM_dispatch(&sm, INIT_COMP);
+    // __delay_ms(2000);
+
+    // test -- 6 app_service without TMR
+    FSM_init(&sm);    
+    EVENT_Q_init(&ev_q);
+    FSM_dispatch(&sm, INIT_COMP);
+    // __delay_ms(1000);
+    
+
+
+
     while(1)
     {
         //works
@@ -634,22 +526,99 @@ int main(void)
         // __delay_ms(1000);
         
 
-        // part - send with UART
+        // part - send with UART -- WORKS -- 4
 
-        ENS160_read_status(&sensor);
-        __delay_ms(1000);
-        ENS160_read_data(&sensor);
-        __delay_ms(1000);
+        // ENS160_read_status(&sensor);
+        // __delay_ms(1000);
+        // ENS160_read_data(&sensor);
+        // __delay_ms(1000);
 
-        COMM_build_resp_sensor(&tx_msg, &sensor);
-        COMM_assemble_frame(&tx_msg);
-        COMM_TX_start(&tx_msg);
+        // COMM_build_resp_sensor(&tx_msg, &sensor);
+        // COMM_assemble_frame(&tx_msg);
+        // COMM_TX_start(&tx_msg);
 
-        __delay_ms(10000);
+        // __delay_ms(10000);
+
+
+
+
+        //part 5 - FSM with UART -- works
+        /* init function runs in main once, outside of while
+        in while, run through every state, at every event transition 
+        print a uart message about current state and next state
+        PUT UART IN THE DISPATCHER
+        */
+    
+        // FSM_dispatch(&sm, MEAS_FAN1_START);
+        // __delay_ms(2000);
+
+        // FSM_dispatch(&sm, MEAS_FAN1_DONE);
+        // __delay_ms(2000);
+
+        // FSM_dispatch(&sm, MEAS_FAN2_START);
+        // __delay_ms(2000);
+
+        // FSM_dispatch(&sm, MEAS_FAN2_DONE);
+        // __delay_ms(2000);
+        
+        //UART SANITY CHECK
+        // if(COMM_tx_done())
+        // {
+        //     COMM_clear_tx_done();
+
+        //     sm.CTX.tx_msg.cmd = CMD_DBG_ST;
+        //     sm.CTX.tx_msg.len = 3;
+        //     sm.CTX.tx_msg.payload[0] = 0xAA;
+        //     sm.CTX.tx_msg.payload[1] = 0xBB;
+        //     sm.CTX.tx_msg.payload[2] = 0xCC;
+        //     COMM_assemble_frame(&sm.CTX.tx_msg);
+        //     COMM_TX_start(&sm.CTX.tx_msg);
+
+        // }
+
+
+        //PART 6 - fsm with app_service -- no TMR
+        
+        //sanity check, transitions are too fast for UART
+        // EVENT_Q_push(&ev_q, MEAS_FAN1_START);
+        // event_t ev;
+        // while(EVENT_Q_pop(&ev_q, &ev))
+        // {
+        //     FSM_dispatch(&sm, ev);
+        // }
+        // __delay_ms(500);
+
+        // EVENT_Q_push(&ev_q, MEAS_FAN1_DONE);
+        // while(EVENT_Q_pop(&ev_q, &ev))
+        // {
+        //     FSM_dispatch(&sm, ev);
+        // }
+        
+        // __delay_ms(1000);
+       
+        if(g_tmr0_1ms_flag)
+        {
+            g_tmr0_1ms_flag = 0;
+            sm.CTX.sys_ms = g_sys_ms;
+            APP_service(&sm.CTX, &ev_q);
+        }
+        
+        event_t ev;
+        while(EVENT_Q_pop(&ev_q, &ev))
+        {
+            FSM_dispatch(&sm, ev);
+        }
+
+
+    
+
 
 
     }   
 
+
+
+    
 
     //WORKS
     // ANSELCbits.ANSELC5 = 0;
@@ -662,7 +631,7 @@ int main(void)
     //     LATCbits.LATC5 ^= 1;
     //     __delay_ms(1000);
     // }
-
+    
     return 1;
 }
 

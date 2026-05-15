@@ -13831,7 +13831,15 @@ typedef enum{
     CMD_GET_F2 = 0x06,
     CMD_GET_SENSOR = 0x07,
     UART_CMD_ACK = 0xF0,
-    UART_CMD_NACK = 0xF1
+    UART_CMD_NACK = 0xF1,
+    CMD_DBG_ST = 0xDB,
+
+
+
+
+
+
+
 }UART_comm_t;
 
 
@@ -13852,13 +13860,14 @@ typedef struct{
 void EUSART1_init(void);
 void EUSART1_ISR(void);
 
-_Bool EUSART1_rx_available(void);
-_Bool EUSART1_read_byte(uint8_t *byte);
-_Bool EUSART1_tx_has_room(void);
-_Bool EUSART1_write_byte(uint8_t byte);
-uint8_t EUSART1_write_buf(const uint8_t *data, uint8_t len);
 
 
+
+
+
+
+_Bool COMM_tx_done(void);
+void COMM_clear_tx_done(void);
 void COMM_assemble_frame(UART_tx_msg_t *tx);
 void COMM_TX_start(UART_tx_msg_t *tx);
 # 18 "./include/system.h" 2
@@ -13881,9 +13890,9 @@ void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl);
 # 19 "./include/system.h" 2
 # 1 "./include/TMR0.h" 1
 # 14 "./include/TMR0.h"
-volatile uint8_t g_tmr0_1ms_flag;
-volatile uint32_t g_sys_ms;
-volatile uint8_t g_fan_f;
+extern volatile uint8_t g_tmr0_1ms_flag;
+extern volatile uint32_t g_sys_ms;
+extern volatile uint8_t g_fan_f;
 
 void TMR0_init(void);
 void TMR0_ISR(void);
@@ -13921,9 +13930,10 @@ typedef enum{
     UARTTIMEOUT,
     UART,
     UART_RESP,
-    MEAS_START,
+    MEAS_FAN_START,
     MEAS_FAN1_START,
     MEAS_FAN2_START,
+    MEAS_FAN_DONE,
     MEAS_FAN1_DONE,
     MEAS_FAN2_DONE,
     MEAS_ENS160_START,
@@ -13940,7 +13950,7 @@ typedef enum{
     PWM_SET,
     UART_PARSE_RX,
     SET_F1,
-    SET_F2,
+    SET_FAN,
     SET_DONE,
     COMM_TX_DONE,
 }event_t;
@@ -13949,8 +13959,10 @@ typedef enum{
     ST_INIT = 0,
     ST_IDLE,
     ST_MEAS,
+    ST_MEAS_FAN,
     ST_MEAS_F1,
     ST_MEAS_F2,
+    ST_SET_FAN,
     ST_SET_F1,
     ST_SET_F2,
     ST_MEAS_ENS160,
@@ -14012,10 +14024,20 @@ typedef enum {
     GATE_F1,
     GATE_F2,
     GATE_ENS160,
+    GATE_FAN,
     GATE_F1_SET,
     GATE_F2_SET,
+    GATE_FAN_SET,
     GATE_COMM,
 }gate_owner_t;
+
+typedef enum{
+    FAN_1 = 0,
+    FAN_2 = 1,
+    FAN_COUNT = 2,
+}fan_sel_t;
+
+
 
 
 
@@ -14068,8 +14090,10 @@ typedef struct {
     ENS160_t ENS160;
     fan_t FAN1;
     fan_t FAN2;
+    fan_t FANS[FAN_COUNT];
 
     ADG419_t FAN_selector;
+    fan_sel_t active_fan;
 }context_t;
 
 
@@ -14078,17 +14102,13 @@ typedef struct {
     state_t next;
 }transition_t;
 
-static __attribute__((inline)) transition_t stay(state_t current){
-
-
-
-
+static transition_t stay(state_t current){
     transition_t t;
     t.changed = 0;
     t.next = current;
     return t;
 }
-static __attribute__((inline)) transition_t to(state_t s)
+static transition_t to(state_t s)
 {
     transition_t t = {
         .changed = 1,
@@ -14099,12 +14119,12 @@ static __attribute__((inline)) transition_t to(state_t s)
 }
 
 typedef void (*state_entry_fn)(context_t *CTX);
-typedef void (*state_exit_fn)(context_t *CTX);
+
 typedef transition_t(*state_handle_fn)(context_t *CTX, event_t e, state_t current);
 
 typedef struct {
     state_entry_fn entry;
-    state_exit_fn exit;
+
     state_handle_fn handle;
 }state_ops_t;
 
@@ -14117,6 +14137,7 @@ typedef struct{
 void FSM_init(FSM_t *sm);
 void FSM_transition(FSM_t *sm, state_t next);
 void FSM_dispatch(FSM_t *sm, event_t ev);
+void FSM_UART_debug_transmission(context_t *CTX, state_t old, event_t ev, state_t next);
 # 4 "src/FAN.c" 2
 
 void FAN_init(fan_t *fan,

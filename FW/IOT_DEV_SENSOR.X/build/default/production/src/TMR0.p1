@@ -66,6 +66,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "677
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 677: extern volatile PIR0bits_t PIR0bits __attribute__((address(0x08C)));
 [v _PIR0bits `VS44 ~T0 @X0 0 e@140 ]
+"16 ./include/TMR0.h
+[; ;./include/TMR0.h: 16: extern volatile uint8_t g_fan_f;
+[v _g_fan_f `Vuc ~T0 @X0 0 e ]
 "38 D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 38: __asm("INDF0 equ 00h");
 [; <" INDF0 equ 00h ;# ">
@@ -1302,15 +1305,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e =& *U . *U _p 1 -> -> ~ -> . *U _p 2 `i `uc `uc ]
 [e :UE 1157 ]
 }
-"14 ./include/TMR0.h
-[; ;./include/TMR0.h: 14: volatile uint8_t g_tmr0_1ms_flag;
-[v _g_tmr0_1ms_flag `Vuc ~T0 @X0 1 e ]
-"15
-[; ;./include/TMR0.h: 15: volatile uint32_t g_sys_ms;
-[v _g_sys_ms `Vul ~T0 @X0 1 e ]
-"16
-[; ;./include/TMR0.h: 16: volatile uint8_t g_fan_f;
-[v _g_fan_f `Vuc ~T0 @X0 1 e ]
 "12 src/TMR0.c
 [; ;src/TMR0.c: 12: volatile uint8_t g_tmr0_1ms_flag = 0;
 [v _g_tmr0_1ms_flag `Vuc ~T0 @X0 1 e ]

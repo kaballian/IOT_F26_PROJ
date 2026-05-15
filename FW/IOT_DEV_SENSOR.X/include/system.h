@@ -23,7 +23,7 @@
 
 
 
-
+#define FAN_TO_CHL(fan) ((switch_chl_t)(fan)) //casts fan_sel_t -> switch_chl_t
 
 
 
@@ -45,9 +45,10 @@ typedef enum{
     UARTTIMEOUT,
     UART,
     UART_RESP,
-    MEAS_START,
+    MEAS_FAN_START,
     MEAS_FAN1_START,
     MEAS_FAN2_START,
+    MEAS_FAN_DONE,
     MEAS_FAN1_DONE,
     MEAS_FAN2_DONE,
     MEAS_ENS160_START,
@@ -64,7 +65,7 @@ typedef enum{
     PWM_SET,
     UART_PARSE_RX,
     SET_F1,
-    SET_F2,
+    SET_FAN,
     SET_DONE,
     COMM_TX_DONE,
 }event_t;
@@ -73,8 +74,10 @@ typedef enum{
     ST_INIT = 0,
     ST_IDLE,
     ST_MEAS,
+    ST_MEAS_FAN,
     ST_MEAS_F1,
     ST_MEAS_F2,
+    ST_SET_FAN,
     ST_SET_F1,
     ST_SET_F2,
     ST_MEAS_ENS160,
@@ -136,10 +139,20 @@ typedef enum {
     GATE_F1,
     GATE_F2,
     GATE_ENS160,
+    GATE_FAN,
     GATE_F1_SET,
     GATE_F2_SET,
+    GATE_FAN_SET,
     GATE_COMM,
 }gate_owner_t;
+
+typedef enum{
+    FAN_1 = 0,
+    FAN_2 = 1,
+    FAN_COUNT = 2,
+}fan_sel_t;
+
+
 
 /*UART response type*/
 
@@ -166,7 +179,7 @@ typedef struct {
     uint32_t    gate_deadline;
     uint8_t     gate_active;
     uint8_t     has_deadline;
-
+    
     flag8_t     init_flags;
     flag8_t     fault_flags;
     uint16_t    F1_meas[FAN_BUF_LEN];
@@ -192,8 +205,10 @@ typedef struct {
     ENS160_t        ENS160;
     fan_t           FAN1;
     fan_t           FAN2;
+    fan_t           FANS[FAN_COUNT];
     // switch_chl_t    FAN_selector;
     ADG419_t        FAN_selector;    
+    fan_sel_t       active_fan;  //either 0(fan1) or 1(fan2)
 }context_t;
 
 //state transition
@@ -202,17 +217,13 @@ typedef struct {
     state_t next;
 }transition_t;
 
-static inline transition_t stay(state_t current){
-    // transition_t t = {
-    //     .changed    = false,
-    //     .next       = 0
-    // };
+static transition_t stay(state_t current){
     transition_t t;
     t.changed = false;
     t.next = current;
     return t;
 }
-static inline transition_t to(state_t s)
+static transition_t to(state_t s)
 {
     transition_t t = {
         .changed    = true,
@@ -223,12 +234,12 @@ static inline transition_t to(state_t s)
 }
 
 typedef void        (*state_entry_fn)(context_t *CTX);
-typedef void        (*state_exit_fn)(context_t *CTX);
+//typedef void        (*state_exit_fn)(context_t *CTX);
 typedef transition_t(*state_handle_fn)(context_t *CTX, event_t e, state_t current);
 
 typedef struct {
     state_entry_fn  entry;
-    state_exit_fn   exit;
+    //state_exit_fn   exit;
     state_handle_fn handle;
 }state_ops_t;
 //state machine

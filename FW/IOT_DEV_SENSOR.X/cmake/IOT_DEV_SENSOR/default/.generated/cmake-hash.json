@@ -1,6 +1,7 @@
 {
-    "hashFileVersion": "1.0.0",
-    "projectFileHash": "54b83f97e9ef746a631ee40bdc71b75a8796bc7b366c16d07f78eabeb924b44b",
+    "hashFileVersion": "1.1.0",
+    "projectFileHash": "d4ddb60321d23015adfb9ec07da8113fd3d016d1cc1280977634dc14caadbb6a",
     "cmakeFilesHash": "eacbbd2e65dba14ce4b6a5db4988499b57133bccdb31cd55cfa402f739076105",
-    "cmakerVersion": "4.2.1"
+    "cmakerVersion": "4.2.2",
+    "workspacePath": "c:/users/alext/documents/au/iot_f26_proj/fw/iot_dev_sensor.x"
 }

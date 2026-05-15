@@ -15,11 +15,17 @@ typedef struct {
     uint8_t count;
 }event_q_t;
 
-inline void EVENT_Q_init(event_q_t *q);
-inline bool EVENT_Q_push(event_q_t *q, event_t ev);
-inline bool EVENT_Q_pop(event_q_t *q, event_t *ev);
-inline bool EVENT_Q_is_empty(const event_q_t *q);
-inline bool EVENT_Q_is_full(const event_q_t *e);
+// inline void EVENT_Q_init(event_q_t *q);
+// inline bool EVENT_Q_push(event_q_t *q, event_t ev);
+// inline bool EVENT_Q_pop(event_q_t *q, event_t *ev);
+// inline bool EVENT_Q_is_empty(const event_q_t *q);
+// inline bool EVENT_Q_is_full(const event_q_t *e);
 
+
+void EVENT_Q_init(event_q_t *q);
+bool EVENT_Q_push(event_q_t *q, event_t ev);
+bool EVENT_Q_pop(event_q_t *q, event_t *ev);
+bool EVENT_Q_is_empty(const event_q_t *q);
+bool EVENT_Q_is_full(const event_q_t *e);
 
 #endif

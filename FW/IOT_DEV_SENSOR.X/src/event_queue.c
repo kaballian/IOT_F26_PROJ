@@ -1,13 +1,13 @@
 #include "include/event_queue.h"
 
 
-inline void EVENT_Q_init(event_q_t *q)
+void EVENT_Q_init(event_q_t *q)
 {
     q->head     = 0;
     q->tail     = 0;
     q->count    = 0;
 }
-inline bool EVENT_Q_push(event_q_t *q, event_t ev)
+bool EVENT_Q_push(event_q_t *q, event_t ev)
 {
     if(q->count >= EV_Q_SIZE)
     {
@@ -19,7 +19,7 @@ inline bool EVENT_Q_push(event_q_t *q, event_t ev)
     q->count++;
     return true;
 }
-inline bool EVENT_Q_pop(event_q_t *q, event_t *ev)
+bool EVENT_Q_pop(event_q_t *q, event_t *ev)
 {
     if(q->count == 0)
     {
@@ -30,11 +30,11 @@ inline bool EVENT_Q_pop(event_q_t *q, event_t *ev)
     q->count--;
     return true;
 }
-inline bool EVENT_Q_is_empty(const event_q_t *q)
+bool EVENT_Q_is_empty(const event_q_t *q)
 {
     return (q->count == 0);
 }
-inline bool EVENT_Q_is_full(const event_q_t *q)
+bool EVENT_Q_is_full(const event_q_t *q)
 
 {
     return (q->count >= EV_Q_SIZE);

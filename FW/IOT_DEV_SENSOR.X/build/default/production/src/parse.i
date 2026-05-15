@@ -13691,7 +13691,15 @@ typedef enum{
     CMD_GET_F2 = 0x06,
     CMD_GET_SENSOR = 0x07,
     UART_CMD_ACK = 0xF0,
-    UART_CMD_NACK = 0xF1
+    UART_CMD_NACK = 0xF1,
+    CMD_DBG_ST = 0xDB,
+
+
+
+
+
+
+
 }UART_comm_t;
 
 
@@ -13712,13 +13720,14 @@ typedef struct{
 void EUSART1_init(void);
 void EUSART1_ISR(void);
 
-_Bool EUSART1_rx_available(void);
-_Bool EUSART1_read_byte(uint8_t *byte);
-_Bool EUSART1_tx_has_room(void);
-_Bool EUSART1_write_byte(uint8_t byte);
-uint8_t EUSART1_write_buf(const uint8_t *data, uint8_t len);
 
 
+
+
+
+
+_Bool COMM_tx_done(void);
+void COMM_clear_tx_done(void);
 void COMM_assemble_frame(UART_tx_msg_t *tx);
 void COMM_TX_start(UART_tx_msg_t *tx);
 # 6 "./include/parse.h" 2

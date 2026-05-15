@@ -3,13 +3,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./include/utils.h: 9: typedef struct {
 [s S1154 `*Vuc 1 `*Vuc 1 `uc 1 ]
 [n S1154 . lat tris bitmask ]
-"205 ./include/system.h
-[; ;./include/system.h: 205: static __attribute__((inline)) transition_t stay(state_t current){
-[c E8258 0 1 2 3 4 5 6 7 8 9 .. ]
-[n E8258 . ST_INIT ST_IDLE ST_MEAS ST_MEAS_F1 ST_MEAS_F2 ST_SET_F1 ST_SET_F2 ST_MEAS_ENS160 ST_COMM ST_COUNT  ]
-"200
-[; ;./include/system.h: 200: typedef struct {
-[s S1168 `a 1 `E8258 1 ]
+"220 ./include/system.h
+[; ;./include/system.h: 220: static transition_t stay(state_t current){
+[c E8253 0 1 2 3 4 5 6 7 8 9 10 11 .. ]
+[n E8253 . ST_INIT ST_IDLE ST_MEAS ST_MEAS_FAN ST_MEAS_F1 ST_MEAS_F2 ST_SET_FAN ST_SET_F1 ST_SET_F2 ST_MEAS_ENS160 ST_COMM ST_COUNT  ]
+"215
+[; ;./include/system.h: 215: typedef struct {
+[s S1168 `a 1 `E8253 1 ]
 [n S1168 . changed next ]
 "47 ./include/PWM.h
 [; ;./include/PWM.h: 47: {
@@ -1282,74 +1282,63 @@ Version 4.0 HI-TECH Software Intermediate Code
 "26
 [; ;./include/eusart1.h: 26: volatile uint8_t END_REG;
 [v _END_REG `Vuc ~T0 @X0 1 e ]
-"14 ./include/TMR0.h
-[; ;./include/TMR0.h: 14: volatile uint8_t g_tmr0_1ms_flag;
-[v _g_tmr0_1ms_flag `Vuc ~T0 @X0 1 e ]
-"15
-[; ;./include/TMR0.h: 15: volatile uint32_t g_sys_ms;
-[v _g_sys_ms `Vul ~T0 @X0 1 e ]
-"16
-[; ;./include/TMR0.h: 16: volatile uint8_t g_fan_f;
-[v _g_fan_f `Vuc ~T0 @X0 1 e ]
-[v F8354 `(S1168 ~T0 @X0 1 tf1`E8258 ]
-"205 ./include/system.h
-[; ;./include/system.h: 205: static __attribute__((inline)) transition_t stay(state_t current){
-[v _stay `TF8354 ~T0 @X0 1 s ]
+"220 ./include/system.h
+[; ;./include/system.h: 220: static transition_t stay(state_t current){
+[v _stay `(S1168 ~T0 @X0 1 sf1`E8253 ]
 {
 [e :U _stay ]
-[v _current `E8258 ~T0 @X0 1 r1 ]
+[v _current `E8253 ~T0 @X0 1 r1 ]
 [f ]
-"210
-[; ;./include/system.h: 210:     transition_t t;
+"221
+[; ;./include/system.h: 221:     transition_t t;
 [v _t `S1168 ~T0 @X0 1 a ]
-"211
-[; ;./include/system.h: 211:     t.changed = 0;
+"222
+[; ;./include/system.h: 222:     t.changed = 0;
 [e = . _t 0 -> -> 0 `i `a ]
-"212
-[; ;./include/system.h: 212:     t.next = current;
+"223
+[; ;./include/system.h: 223:     t.next = current;
 [e = . _t 1 _current ]
-"213
-[; ;./include/system.h: 213:     return t;
+"224
+[; ;./include/system.h: 224:     return t;
 [e ) _t ]
 [e $UE 1169  ]
-"214
-[; ;./include/system.h: 214: }
+"225
+[; ;./include/system.h: 225: }
 [e :UE 1169 ]
 }
-[v F8358 `(S1168 ~T0 @X0 1 tf1`E8258 ]
-"215
-[; ;./include/system.h: 215: static __attribute__((inline)) transition_t to(state_t s)
-[v _to `TF8358 ~T0 @X0 1 s ]
-"216
-[; ;./include/system.h: 216: {
+"226
+[; ;./include/system.h: 226: static transition_t to(state_t s)
+[v _to `(S1168 ~T0 @X0 1 sf1`E8253 ]
+"227
+[; ;./include/system.h: 227: {
 {
 [e :U _to ]
-"215
-[; ;./include/system.h: 215: static __attribute__((inline)) transition_t to(state_t s)
-[v _s `E8258 ~T0 @X0 1 r1 ]
-"216
-[; ;./include/system.h: 216: {
+"226
+[; ;./include/system.h: 226: static transition_t to(state_t s)
+[v _s `E8253 ~T0 @X0 1 r1 ]
+"227
+[; ;./include/system.h: 227: {
 [f ]
-[v F8360 `S1168 ~T0 @X0 1 s ]
-[i F8360
+[v F8364 `S1168 ~T0 @X0 1 s ]
+[i F8364
 :U ..
 :U ..
-"217
-[; ;./include/system.h: 217:     transition_t t = {
+"228
+[; ;./include/system.h: 228:     transition_t t = {
 -> -> 0 `i `a
--> -> 0 `i `E8258
+-> -> 0 `i `E8253
 ..
 ..
 ]
 [v _t `S1168 ~T0 @X0 1 a ]
-[e = _t F8360 ]
+[e = _t F8364 ]
 [e ; = . _t 0 -> -> 1 `i `a = . _t 1 _s ]
-"221
-[; ;./include/system.h: 221:     return t;
+"232
+[; ;./include/system.h: 232:     return t;
 [e ) _t ]
 [e $UE 1170  ]
-"223
-[; ;./include/system.h: 223: }
+"234
+[; ;./include/system.h: 234: }
 [e :UE 1170 ]
 }
 "5 src/FAN.c

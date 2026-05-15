@@ -13676,9 +13676,9 @@ static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uin
 
 
 
-volatile uint8_t g_tmr0_1ms_flag;
-volatile uint32_t g_sys_ms;
-volatile uint8_t g_fan_f;
+extern volatile uint8_t g_tmr0_1ms_flag;
+extern volatile uint32_t g_sys_ms;
+extern volatile uint8_t g_fan_f;
 
 void TMR0_init(void);
 void TMR0_ISR(void);

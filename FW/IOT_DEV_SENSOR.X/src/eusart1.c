@@ -16,17 +16,26 @@ extern volatile uint8_t g_uart_rx_f; //set in the ISR and consumed in the APP la
 extern volatile uint8_t g_uart_rx_msg_r;
 volatile uint8_t END_REG = 0;
 
-static volatile uint8_t rx_buf[UART_RX_BUF_SIZE];
-static volatile uint8_t rx_head = 0;
-static volatile uint8_t rx_tail = 0;
-static volatile uint8_t tx_buf[UART_TX_BUF_SIZE];
-static volatile uint8_t tx_head = 0;
-static volatile uint8_t tx_tail = 0;
+// static volatile uint8_t rx_buf[UART_RX_BUF_SIZE];
+// static volatile uint8_t rx_head = 0;
+// static volatile uint8_t rx_tail = 0;
+// static volatile uint8_t tx_buf[UART_TX_BUF_SIZE];
+// static volatile uint8_t tx_head = 0;
+// static volatile uint8_t tx_tail = 0;
 
 static volatile const UART_tx_msg_t *g_tx_msg = 0;
 static volatile uint8_t g_tx_idx = 0;
 
-volatile uint8_t g_comm_tx_done_f = 0;
+volatile bool g_comm_tx_done_f = true;
+
+bool COMM_tx_done(void)
+{
+    return g_comm_tx_done_f;
+}
+void COMM_clear_tx_done(void)
+{
+    g_comm_tx_done_f = false;
+}
 
 static uint8_t next_index(uint8_t index, uint8_t size)
 {
@@ -70,10 +79,10 @@ void EUSART1_init(void)
     SP1BRGL = 0xA0; //~416
 
    
-    rx_head = 0;
-    rx_tail = 0;
-    tx_head = 0;
-    tx_tail = 0;
+    // rx_head = 0;
+    // rx_tail = 0;
+    // tx_head = 0;
+    // tx_tail = 0;
 
 
     UART_RX_ParserReset();
@@ -130,72 +139,72 @@ void EUSART1_ISR(void)
     }
 }
 
-bool EUSART1_rx_available(void)
-{   /*if the head is not at the same place at the fail, there is free space*/
-    return (rx_head != rx_tail);
-}
+// bool EUSART1_rx_available(void)
+// {   /*if the head is not at the same place at the fail, there is free space*/
+//     return (rx_head != rx_tail);
+// }
 
-bool EUSART1_read_byte(uint8_t *byte)
-{
-    if(byte == 0)
-    {
-        return false;
-    }
+// bool EUSART1_read_byte(uint8_t *byte)
+// {
+//     if(byte == 0)
+//     {
+//         return false;
+//     }
 
-    if(rx_head == rx_tail)
-    {   //check for room
-        return false;
-    }
+//     if(rx_head == rx_tail)
+//     {   //check for room
+//         return false;
+//     }
 
-    *byte = rx_buf[rx_tail];
-    rx_tail = next_index(rx_tail, UART_RX_BUF_SIZE);
-    return true;
+//     *byte = rx_buf[rx_tail];
+//     rx_tail = next_index(rx_tail, UART_RX_BUF_SIZE);
+//     return true;
 
-}
+// }
 
-bool EUSART1_tx_has_room(void)
-{
-    uint8_t next = next_index(tx_head, UART_TX_BUF_SIZE);
-    return (next != tx_tail);
-}
+// bool EUSART1_tx_has_room(void)
+// {
+//     uint8_t next = next_index(tx_head, UART_TX_BUF_SIZE);
+//     return (next != tx_tail);
+// }
 
-bool EUSART1_write_byte(uint8_t byte)
-{
-    uint8_t next = next_index(tx_head, UART_TX_BUF_SIZE);
+// bool EUSART1_write_byte(uint8_t byte)
+// {
+//     uint8_t next = next_index(tx_head, UART_TX_BUF_SIZE);
 
-    if(next == tx_tail)
-    {
-        return false; //buffer is full
-    }
-    tx_buf[tx_head] = byte;
-    tx_head = next;
+//     if(next == tx_tail)
+//     {
+//         return false; //buffer is full
+//     }
+//     tx_buf[tx_head] = byte;
+//     tx_head = next;
 
-    /*activate TX interrupt*/
-    PIE4bits.TX1IE = 1;
+//     /*activate TX interrupt*/
+//     PIE4bits.TX1IE = 1;
 
-    return true;
-}
-uint8_t EUSART1_write_buf(const uint8_t *data, uint8_t len)
-{
-    uint8_t i;
-    uint8_t written = 0;
+//     return true;
+// }
+// uint8_t EUSART1_write_buf(const uint8_t *data, uint8_t len)
+// {
+//     uint8_t i;
+//     uint8_t written = 0;
 
-    if(data == 0)
-    {
-        return 0;
-    }
+//     if(data == 0)
+//     {
+//         return 0;
+//     }
 
-    for(i = 0; i < len; i++)
-    {
-        if(!EUSART1_write_byte(data[i]))
-        {
-            break;
-        }
-        written++;
-    }
-    return written;
+//     for(i = 0; i < len; i++)
+//     {
+//         if(!EUSART1_write_byte(data[i]))
+//         {
+//             break;
+//         }
+//         written++;
+//     }
+//     return written;
 
-}
+// }
 
 void COMM_assemble_frame(UART_tx_msg_t *tx)
 {
