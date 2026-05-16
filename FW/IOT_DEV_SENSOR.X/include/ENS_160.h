@@ -77,7 +77,7 @@ bool ENS160_init(ENS160_t *dev, uint8_t addr);
 bool ENS160_read_status(ENS160_t *dev);
 bool ENS160_read_data(ENS160_t *dev);
 bool ENS160_set_opmode(ENS160_t *dev, uint8_t mode);
-bool ENS160_write_env(ENS160_t *dev, int16_t temp_c_x100, uint16_t rh_x100);
+//bool ENS160_write_env(ENS160_t *dev, int16_t temp_c_x100, uint16_t rh_x100);
 
 
 #endif

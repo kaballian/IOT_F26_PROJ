@@ -13659,13 +13659,6 @@ typedef struct {
     volatile uint8_t *tris;
     uint8_t bitmask;
 }pin_t;
-# 23 "./include/utils.h"
-static __attribute__((inline)) void pin_set(const pin_t *p) {*p->lat |= p->bitmask;}
-
-static __attribute__((inline)) void pin_clear(const pin_t *p) {*p->lat &= (uint8_t)~p->bitmask;}
-
-
-static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uint8_t)~p->bitmask;}
 # 5 "./include/ENS_160.h" 2
 # 58 "./include/ENS_160.h"
 typedef struct
@@ -13690,7 +13683,6 @@ _Bool ENS160_init(ENS160_t *dev, uint8_t addr);
 _Bool ENS160_read_status(ENS160_t *dev);
 _Bool ENS160_read_data(ENS160_t *dev);
 _Bool ENS160_set_opmode(ENS160_t *dev, uint8_t mode);
-_Bool ENS160_write_env(ENS160_t *dev, int16_t temp_c_x100, uint16_t rh_x100);
 # 2 "src/ENS_160.c" 2
 # 1 "./include/I2C.h" 1
 
@@ -13724,6 +13716,7 @@ _Bool I2C2_read_reg(
 
 
 
+
 static uint16_t ENS160_u16_from_le(const uint8_t *buf)
 {
     return (uint16_t)buf[0] | ((uint16_t)buf[1] <<8);
@@ -13732,10 +13725,10 @@ _Bool ENS160_probe(uint8_t addr, uint16_t *part_id)
 {
 
     uint8_t buf[2];
-    if(part_id == 0)
-    {
-        return 0;
-    }
+
+
+
+
 
     if(!I2C2_read_reg(addr, 0x00, buf, 2))
     {
@@ -13753,10 +13746,10 @@ _Bool ENS160_init(ENS160_t *dev, uint8_t addr)
 
 
     uint16_t part_id;
-    if(dev == 0)
-    {
-        return 0;
-    }
+
+
+
+
 
     dev->dev_addr = addr;
     dev->present = 0u;
@@ -13796,15 +13789,15 @@ _Bool ENS160_read_status(ENS160_t *dev)
 
     uint8_t status;
 
-    if(dev == 0)
-    {
-        return 0;
-    }
+
+
+
+
     if(!I2C2_read_reg(dev->dev_addr, 0x20, &status, 1))
     {
         return 0;
     }
-# 98 "src/ENS_160.c"
+# 99 "src/ENS_160.c"
     dev->dev_status = status;
 
 
@@ -13817,12 +13810,7 @@ _Bool ENS160_read_status(ENS160_t *dev)
 _Bool ENS160_read_data(ENS160_t *dev)
 {
     uint8_t buf[5];
-
-    if(dev == 0)
-    {
-        return 0;
-    }
-# 127 "src/ENS_160.c"
+# 128 "src/ENS_160.c"
     if(!I2C2_read_reg(dev->dev_addr, 0x21, buf, 5))
     {
         return 0;
@@ -13836,7 +13824,7 @@ _Bool ENS160_read_data(ENS160_t *dev)
 
 
     dev->data_valid = (dev->validity_flag != 3u);
-
+    return 1;
 }
 _Bool ENS160_set_opmode(ENS160_t *dev, uint8_t mode)
 {
@@ -13849,8 +13837,4 @@ _Bool ENS160_set_opmode(ENS160_t *dev, uint8_t mode)
 
     return I2C2_write_reg(dev->dev_addr, 0x10, &mode, 1);
 
-}
-_Bool ENS160_write_env(ENS160_t *dev, int16_t temp_c_x100, uint16_t rh_x100)
-{
-# 183 "src/ENS_160.c"
 }

@@ -20,12 +20,12 @@ p->lat is a pointer to the correct LAT register ( ex. &LATA)
 */
 
 /*set the output of the pin HIGH*/
-static inline void pin_set(const pin_t *p)      {*p->lat |= p->bitmask;}
+//static void pin_set(const pin_t *p)      {*p->lat |= p->bitmask;}
 /*clears the output of the pin, sets it to 0*/
-static inline void pin_clear(const pin_t *p)    {*p->lat &= (uint8_t)~p->bitmask;}
+//static void pin_clear(const pin_t *p)    {*p->lat &= (uint8_t)~p->bitmask;}
  /* tris register controls output drivers  analog pins always read '0',
 TRIS = 0 -> output, TRIS = 1 -> input*/
-static inline void pin_output(const pin_t *p)   {*p->tris &= (uint8_t)~p->bitmask;}
+//static void pin_output(const pin_t *p)   {*p->tris &= (uint8_t)~p->bitmask;}
 
 
 /*

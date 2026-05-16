@@ -24,6 +24,10 @@ to the device, as the .c file owns the singular(Static) instance.
 #define PIN_RA2     ((pin_t){.lat=&LATA, .tris=&TRISA, .bitmask=(1u<<2)})
 
 
+#define ADG419_SEL_OUTPUT() (TRISAbits.TRISA2 = 0)
+#define ADG419_SEL_LOW()    (LATAbits.LATA2 = 0)
+#define ADG419_SEL_HIGH()   (LATAbits.LATA2 = 1)
+
 #define ADG419_CHLS 2
 typedef enum {
     CHL_1 = 0,
@@ -31,13 +35,16 @@ typedef enum {
 }switch_chl_t;
 
 typedef struct{
-    pin_t         channelSelector;
+    // pin_t         channelSelector;
     switch_chl_t        status;
 }ADG419_t;
 
 
 // typedef void (*ADG419BR_CHL_SELECT)(switch_chl_t chl);
-void ADG419_init(ADG419_t *dev, const pin_t select_pin);
+// void ADG419_init(ADG419_t *dev, const pin_t select_pin);
+// void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl);
+
+void ADG419_init(ADG419_t *dev);
 void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl);
 
 #endif

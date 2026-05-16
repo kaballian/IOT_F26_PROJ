@@ -1,8 +1,4 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"9 ./include/utils.h
-[; ;./include/utils.h: 9: typedef struct {
-[s S1154 `*Vuc 1 `*Vuc 1 `uc 1 ]
-[n S1154 . lat tris bitmask ]
 "2614 D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 2614:     struct {
 [s S127 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -1272,39 +1268,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "23281
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 23281: __asm("TOSH equ 01FEFh");
 [; <" TOSH equ 01FEFh ;# ">
-[v F8049 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"23 ./include/utils.h
-[; ;./include/utils.h: 23: static __attribute__((inline)) void pin_set(const pin_t *p) {*p->lat |= p->bitmask;}
-[v _pin_set `TF8049 ~T0 @X0 1 s ]
-{
-[e :U _pin_set ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =| *U . *U _p 0 -> . *U _p 2 `uc ]
-[e :UE 1155 ]
-}
-[v F8053 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"25
-[; ;./include/utils.h: 25: static __attribute__((inline)) void pin_clear(const pin_t *p) {*p->lat &= (uint8_t)~p->bitmask;}
-[v _pin_clear `TF8053 ~T0 @X0 1 s ]
-{
-[e :U _pin_clear ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =& *U . *U _p 0 -> -> ~ -> . *U _p 2 `i `uc `uc ]
-[e :UE 1156 ]
-}
-[v F8057 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"28
-[; ;./include/utils.h: 28: static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uint8_t)~p->bitmask;}
-[v _pin_output `TF8057 ~T0 @X0 1 s ]
-{
-[e :U _pin_output ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =& *U . *U _p 1 -> -> ~ -> . *U _p 2 `i `uc `uc ]
-[e :UE 1157 ]
-}
 "12 src/TMR0.c
 [; ;src/TMR0.c: 12: volatile uint8_t g_tmr0_1ms_flag = 0;
 [v _g_tmr0_1ms_flag `Vuc ~T0 @X0 1 e ]
@@ -1360,7 +1323,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . . _T0CON0bits 0 4 -> -> 1 `i `uc ]
 "32
 [; ;src/TMR0.c: 32: }
-[e :UE 1158 ]
+[e :UE 1155 ]
 }
 "34
 [; ;src/TMR0.c: 34: void TMR0_ISR(void)
@@ -1384,5 +1347,5 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ++ _g_fan_f -> -> 1 `i `Vuc ]
 "43
 [; ;src/TMR0.c: 43: }
-[e :UE 1159 ]
+[e :UE 1156 ]
 }

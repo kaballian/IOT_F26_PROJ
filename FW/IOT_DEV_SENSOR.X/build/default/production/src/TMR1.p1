@@ -1,8 +1,4 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"9 ./include/utils.h
-[; ;./include/utils.h: 9: typedef struct {
-[s S1154 `*Vuc 1 `*Vuc 1 `uc 1 ]
-[n S1154 . lat tris bitmask ]
 "3976 D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 3976:     struct {
 [s S183 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 ]
@@ -1287,39 +1283,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "23281
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 23281: __asm("TOSH equ 01FEFh");
 [; <" TOSH equ 01FEFh ;# ">
-[v F8049 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"23 ./include/utils.h
-[; ;./include/utils.h: 23: static __attribute__((inline)) void pin_set(const pin_t *p) {*p->lat |= p->bitmask;}
-[v _pin_set `TF8049 ~T0 @X0 1 s ]
-{
-[e :U _pin_set ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =| *U . *U _p 0 -> . *U _p 2 `uc ]
-[e :UE 1155 ]
-}
-[v F8053 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"25
-[; ;./include/utils.h: 25: static __attribute__((inline)) void pin_clear(const pin_t *p) {*p->lat &= (uint8_t)~p->bitmask;}
-[v _pin_clear `TF8053 ~T0 @X0 1 s ]
-{
-[e :U _pin_clear ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =& *U . *U _p 0 -> -> ~ -> . *U _p 2 `i `uc `uc ]
-[e :UE 1156 ]
-}
-[v F8057 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"28
-[; ;./include/utils.h: 28: static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uint8_t)~p->bitmask;}
-[v _pin_output `TF8057 ~T0 @X0 1 s ]
-{
-[e :U _pin_output ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =& *U . *U _p 1 -> -> ~ -> . *U _p 2 `i `uc `uc ]
-[e :UE 1157 ]
-}
 "4 src/TMR1.c
 [; ;src/TMR1.c: 4: void TMR1_CNT_init(void)
 [v _TMR1_CNT_init `(v ~T0 @X0 1 ef ]
@@ -1354,7 +1317,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _TMR1L -> -> 0 `i `uc ]
 "21
 [; ;src/TMR1.c: 21: }
-[e :UE 1158 ]
+[e :UE 1155 ]
 }
 "22
 [; ;src/TMR1.c: 22: uint16_t TMR1_CNT_meas(void)
@@ -1385,10 +1348,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 "34
 [; ;src/TMR1.c: 34:     return pulses;
 [e ) _pulses ]
-[e $UE 1159  ]
+[e $UE 1156  ]
 "35
 [; ;src/TMR1.c: 35: }
-[e :UE 1159 ]
+[e :UE 1156 ]
 }
 "37
 [; ;src/TMR1.c: 37: static uint16_t TMR1_read16(void)
@@ -1409,10 +1372,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 "41
 [; ;src/TMR1.c: 41:     return ((uint16_t)high << 8) | low;
 [e ) -> | << -> -> _high `us `ui -> 8 `i -> _low `ui `us ]
-[e $UE 1160  ]
+[e $UE 1157  ]
 "42
 [; ;src/TMR1.c: 42: }
-[e :UE 1160 ]
+[e :UE 1157 ]
 }
 "44
 [; ;src/TMR1.c: 44: void TMR1_CNT_start(void)
@@ -1427,7 +1390,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . . _T1CONbits 0 0 -> -> 1 `i `uc ]
 "47
 [; ;src/TMR1.c: 47: }
-[e :UE 1161 ]
+[e :UE 1158 ]
 }
 "48
 [; ;src/TMR1.c: 48: void TMR1_CNT_stop(void)
@@ -1442,7 +1405,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . . _T1CONbits 0 0 -> -> 0 `i `uc ]
 "51
 [; ;src/TMR1.c: 51: }
-[e :UE 1162 ]
+[e :UE 1159 ]
 }
 "52
 [; ;src/TMR1.c: 52: void TMR1_CNT_reset(void)
@@ -1466,5 +1429,5 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . . _PIR1bits 0 6 -> -> 0 `i `uc ]
 "60
 [; ;src/TMR1.c: 60: }
-[e :UE 1163 ]
+[e :UE 1160 ]
 }

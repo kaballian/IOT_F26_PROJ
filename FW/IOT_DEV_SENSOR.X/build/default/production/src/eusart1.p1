@@ -1,12 +1,8 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"9 ./include/utils.h
-[; ;./include/utils.h: 9: typedef struct {
-[s S1154 `*Vuc 1 `*Vuc 1 `uc 1 ]
-[n S1154 . lat tris bitmask ]
 "51 ./include/eusart1.h
 [; ;./include/eusart1.h: 51: typedef struct{
-[s S1158 `uc 1 `uc 1 `uc -> 8 `i `uc -> 16 `i `uc 1 ]
-[n S1158 . cmd len payload frame frame_len ]
+[s S1155 `uc 1 `uc 1 `uc -> 8 `i `uc -> 16 `i `uc 1 ]
+[n S1155 . cmd len payload frame frame_len ]
 "10950 D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 10950: extern volatile unsigned char TX1REG __attribute__((address(0x70D)));
 [v _TX1REG `Vuc ~T0 @X0 0 e@1805 ]
@@ -58,9 +54,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "11034
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 11034: extern volatile RC1STAbits_t RC1STAbits __attribute__((address(0x710)));
 [v _RC1STAbits `VS561 ~T0 @X0 0 e@1808 ]
-"47 ./include/parse.h
-[; ;./include/parse.h: 47: void UART_RX_ParserReset();
-[v _UART_RX_ParserReset `(v ~T0 @X0 0 e? ]
+"45 ./include/parse.h
+[; ;./include/parse.h: 45: void UART_RX_Parserinit(void);
+[v _UART_RX_Parserinit `(v ~T0 @X0 0 ef ]
 "854 D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 854:     struct {
 [s S53 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -1295,39 +1291,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "23281
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 23281: __asm("TOSH equ 01FEFh");
 [; <" TOSH equ 01FEFh ;# ">
-[v F8049 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"23 ./include/utils.h
-[; ;./include/utils.h: 23: static __attribute__((inline)) void pin_set(const pin_t *p) {*p->lat |= p->bitmask;}
-[v _pin_set `TF8049 ~T0 @X0 1 s ]
-{
-[e :U _pin_set ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =| *U . *U _p 0 -> . *U _p 2 `uc ]
-[e :UE 1155 ]
-}
-[v F8053 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"25
-[; ;./include/utils.h: 25: static __attribute__((inline)) void pin_clear(const pin_t *p) {*p->lat &= (uint8_t)~p->bitmask;}
-[v _pin_clear `TF8053 ~T0 @X0 1 s ]
-{
-[e :U _pin_clear ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =& *U . *U _p 0 -> -> ~ -> . *U _p 2 `i `uc `uc ]
-[e :UE 1156 ]
-}
-[v F8057 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"28
-[; ;./include/utils.h: 28: static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uint8_t)~p->bitmask;}
-[v _pin_output `TF8057 ~T0 @X0 1 s ]
-{
-[e :U _pin_output ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =& *U . *U _p 1 -> -> ~ -> . *U _p 2 `i `uc `uc ]
-[e :UE 1157 ]
-}
 "22 ./include/eusart1.h
 [; ;./include/eusart1.h: 22: volatile uint8_t g_uart_rx_f;
 [v _g_uart_rx_f `Vuc ~T0 @X0 1 e ]
@@ -1345,9 +1308,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 ]
 "26
 [; ;src/eusart1.c: 26: static volatile const UART_tx_msg_t *g_tx_msg = 0;
-[v _g_tx_msg `*CVS1158 ~T0 @X0 1 s ]
+[v _g_tx_msg `*CVS1155 ~T0 @X0 1 s ]
 [i _g_tx_msg
--> -> 0 `i `*CVS1158
+-> -> 0 `i `*CVS1155
 ]
 "27
 [; ;src/eusart1.c: 27: static volatile uint8_t g_tx_idx = 0;
@@ -1356,10 +1319,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 ]
 "29
-[; ;src/eusart1.c: 29: volatile _Bool g_comm_tx_done_f = 1;
+[; ;src/eusart1.c: 29: volatile _Bool g_comm_tx_done_f = 0;
 [v _g_comm_tx_done_f `Va ~T0 @X0 1 e ]
 [i _g_comm_tx_done_f
--> -> 1 `i `a
+-> -> 0 `i `a
 ]
 "31
 [; ;src/eusart1.c: 31: _Bool COMM_tx_done(void)
@@ -1372,10 +1335,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 "33
 [; ;src/eusart1.c: 33:     return g_comm_tx_done_f;
 [e ) _g_comm_tx_done_f ]
-[e $UE 1160  ]
+[e $UE 1157  ]
 "34
 [; ;src/eusart1.c: 34: }
-[e :UE 1160 ]
+[e :UE 1157 ]
 }
 "35
 [; ;src/eusart1.c: 35: void COMM_clear_tx_done(void)
@@ -1390,7 +1353,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _g_comm_tx_done_f -> -> 0 `i `a ]
 "38
 [; ;src/eusart1.c: 38: }
-[e :UE 1161 ]
+[e :UE 1158 ]
 }
 "40
 [; ;src/eusart1.c: 40: static uint8_t next_index(uint8_t index, uint8_t size)
@@ -1411,7 +1374,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ++ _index -> -> 1 `i `uc ]
 "44
 [; ;src/eusart1.c: 44:     if(index >= size)
-[e $ ! >= -> _index `i -> _size `i 1163  ]
+[e $ ! >= -> _index `i -> _size `i 1160  ]
 "45
 [; ;src/eusart1.c: 45:     {
 {
@@ -1421,14 +1384,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "47
 [; ;src/eusart1.c: 47:     }
 }
-[e :U 1163 ]
+[e :U 1160 ]
 "48
 [; ;src/eusart1.c: 48:     return index;
 [e ) _index ]
-[e $UE 1162  ]
+[e $UE 1159  ]
 "49
 [; ;src/eusart1.c: 49: }
-[e :UE 1162 ]
+[e :UE 1159 ]
 }
 "51
 [; ;src/eusart1.c: 51: void EUSART1_init(void)
@@ -1486,188 +1449,188 @@ Version 4.0 HI-TECH Software Intermediate Code
 "79
 [; ;src/eusart1.c: 79:     SP1BRGL = 0xA0;
 [e = _SP1BRGL -> -> 160 `i `uc ]
-"88
-[; ;src/eusart1.c: 88:     UART_RX_ParserReset();
-[e ( _UART_RX_ParserReset ..  ]
-"89
-[; ;src/eusart1.c: 89: }
-[e :UE 1164 ]
+"85
+[; ;src/eusart1.c: 85:     UART_RX_Parserinit();
+[e ( _UART_RX_Parserinit ..  ]
+"86
+[; ;src/eusart1.c: 86: }
+[e :UE 1161 ]
 }
-"93
-[; ;src/eusart1.c: 93: void EUSART1_ISR(void)
+"90
+[; ;src/eusart1.c: 90: void EUSART1_ISR(void)
 [v _EUSART1_ISR `(v ~T0 @X0 1 ef ]
-"94
-[; ;src/eusart1.c: 94: {
+"91
+[; ;src/eusart1.c: 91: {
 {
 [e :U _EUSART1_ISR ]
 [f ]
-"98
-[; ;src/eusart1.c: 98:     if(RC1STAbits.OERR)
-[e $ ! != -> . . _RC1STAbits 0 1 `i -> 0 `i 1166  ]
-"99
-[; ;src/eusart1.c: 99:     {
+"95
+[; ;src/eusart1.c: 95:     if(RC1STAbits.OERR)
+[e $ ! != -> . . _RC1STAbits 0 1 `i -> 0 `i 1163  ]
+"96
+[; ;src/eusart1.c: 96:     {
 {
-"100
-[; ;src/eusart1.c: 100:         RC1STAbits.CREN = 0;
+"97
+[; ;src/eusart1.c: 97:         RC1STAbits.CREN = 0;
 [e = . . _RC1STAbits 0 4 -> -> 0 `i `uc ]
-"101
-[; ;src/eusart1.c: 101:         RC1STAbits.CREN = 1;
+"98
+[; ;src/eusart1.c: 98:         RC1STAbits.CREN = 1;
 [e = . . _RC1STAbits 0 4 -> -> 1 `i `uc ]
-"102
-[; ;src/eusart1.c: 102:     }
+"99
+[; ;src/eusart1.c: 99:     }
 }
-[e :U 1166 ]
-"105
-[; ;src/eusart1.c: 105:     if(PIR4bits.RC1IF)
-[e $ ! != -> . . _PIR4bits 0 7 `i -> 0 `i 1167  ]
-"106
-[; ;src/eusart1.c: 106:     {
+[e :U 1163 ]
+"102
+[; ;src/eusart1.c: 102:     if(PIR4bits.RC1IF)
+[e $ ! != -> . . _PIR4bits 0 7 `i -> 0 `i 1164  ]
+"103
+[; ;src/eusart1.c: 103:     {
 {
-"111
-[; ;src/eusart1.c: 111:         volatile uint8_t byte = RC1REG;
+"108
+[; ;src/eusart1.c: 108:         volatile uint8_t byte = RC1REG;
 [v _byte `Vuc ~T0 @X0 1 a ]
 [e = _byte _RC1REG ]
-"122
-[; ;src/eusart1.c: 122:         UART_RX_ParserFeed(byte);
+"119
+[; ;src/eusart1.c: 119:         UART_RX_ParserFeed(byte);
 [e ( _UART_RX_ParserFeed (1 _byte ]
-"123
-[; ;src/eusart1.c: 123:     }
+"120
+[; ;src/eusart1.c: 120:     }
+}
+[e :U 1164 ]
+"124
+[; ;src/eusart1.c: 124:     if(PIR4bits.TX1IF)
+[e $ ! != -> . . _PIR4bits 0 6 `i -> 0 `i 1165  ]
+"125
+[; ;src/eusart1.c: 125:     {
+{
+"126
+[; ;src/eusart1.c: 126:         if(g_tx_msg && (g_tx_idx < g_tx_msg->frame_len))
+[e $ ! && != _g_tx_msg -> -> 0 `i `*CVS1155 < -> _g_tx_idx `i -> . *U _g_tx_msg 4 `i 1166  ]
+"127
+[; ;src/eusart1.c: 127:         {
+{
+"128
+[; ;src/eusart1.c: 128:             TX1REG = g_tx_msg->frame[g_tx_idx++];
+[e = _TX1REG *U + &U . *U _g_tx_msg 3 * -> ++ _g_tx_idx -> -> 1 `i `Vuc `ux -> -> # *U &U . *U _g_tx_msg 3 `ui `ux ]
+"129
+[; ;src/eusart1.c: 129:         }else{
+}
+[e $U 1167  ]
+[e :U 1166 ]
+{
+"130
+[; ;src/eusart1.c: 130:             PIE4bits.TX1IE = 0;
+[e = . . _PIE4bits 0 6 -> -> 0 `i `uc ]
+"131
+[; ;src/eusart1.c: 131:             g_tx_msg = 0;
+[e = _g_tx_msg -> -> 0 `i `*CVS1155 ]
+"132
+[; ;src/eusart1.c: 132:             g_tx_idx = 0;
+[e = _g_tx_idx -> -> 0 `i `uc ]
+"134
+[; ;src/eusart1.c: 134:             g_comm_tx_done_f = 1;
+[e = _g_comm_tx_done_f -> -> 1 `i `a ]
+"135
+[; ;src/eusart1.c: 135:         }
 }
 [e :U 1167 ]
-"127
-[; ;src/eusart1.c: 127:     if(PIR4bits.TX1IF)
-[e $ ! != -> . . _PIR4bits 0 6 `i -> 0 `i 1168  ]
-"128
-[; ;src/eusart1.c: 128:     {
-{
-"129
-[; ;src/eusart1.c: 129:         if(g_tx_msg && (g_tx_idx < g_tx_msg->frame_len))
-[e $ ! && != _g_tx_msg -> -> 0 `i `*CVS1158 < -> _g_tx_idx `i -> . *U _g_tx_msg 4 `i 1169  ]
-"130
-[; ;src/eusart1.c: 130:         {
-{
-"131
-[; ;src/eusart1.c: 131:             TX1REG = g_tx_msg->frame[g_tx_idx++];
-[e = _TX1REG *U + &U . *U _g_tx_msg 3 * -> ++ _g_tx_idx -> -> 1 `i `Vuc `ux -> -> # *U &U . *U _g_tx_msg 3 `ui `ux ]
-"132
-[; ;src/eusart1.c: 132:         }else{
+"136
+[; ;src/eusart1.c: 136:     }
 }
-[e $U 1170  ]
-[e :U 1169 ]
-{
-"133
-[; ;src/eusart1.c: 133:             PIE4bits.TX1IE = 0;
-[e = . . _PIE4bits 0 6 -> -> 0 `i `uc ]
-"134
-[; ;src/eusart1.c: 134:             g_tx_msg = 0;
-[e = _g_tx_msg -> -> 0 `i `*CVS1158 ]
-"135
-[; ;src/eusart1.c: 135:             g_tx_idx = 0;
-[e = _g_tx_idx -> -> 0 `i `uc ]
+[e :U 1165 ]
 "137
-[; ;src/eusart1.c: 137:             g_comm_tx_done_f = 1;
-[e = _g_comm_tx_done_f -> -> 1 `i `a ]
-"138
-[; ;src/eusart1.c: 138:         }
+[; ;src/eusart1.c: 137: }
+[e :UE 1162 ]
 }
-[e :U 1170 ]
-"139
-[; ;src/eusart1.c: 139:     }
-}
-[e :U 1168 ]
-"140
-[; ;src/eusart1.c: 140: }
-[e :UE 1165 ]
-}
-"209
-[; ;src/eusart1.c: 209: void COMM_assemble_frame(UART_tx_msg_t *tx)
-[v _COMM_assemble_frame `(v ~T0 @X0 1 ef1`*S1158 ]
-"210
-[; ;src/eusart1.c: 210: {
+"206
+[; ;src/eusart1.c: 206: void COMM_assemble_frame(UART_tx_msg_t *tx)
+[v _COMM_assemble_frame `(v ~T0 @X0 1 ef1`*S1155 ]
+"207
+[; ;src/eusart1.c: 207: {
 {
 [e :U _COMM_assemble_frame ]
-"209
-[; ;src/eusart1.c: 209: void COMM_assemble_frame(UART_tx_msg_t *tx)
-[v _tx `*S1158 ~T0 @X0 1 r1 ]
-"210
-[; ;src/eusart1.c: 210: {
+"206
+[; ;src/eusart1.c: 206: void COMM_assemble_frame(UART_tx_msg_t *tx)
+[v _tx `*S1155 ~T0 @X0 1 r1 ]
+"207
+[; ;src/eusart1.c: 207: {
 [f ]
-"211
-[; ;src/eusart1.c: 211:     uint8_t i = 0;
+"208
+[; ;src/eusart1.c: 208:     uint8_t i = 0;
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
-"212
-[; ;src/eusart1.c: 212:     tx->frame[i++] = 0x5A;
+"209
+[; ;src/eusart1.c: 209:     tx->frame[i++] = 0x5A;
 [e = *U + &U . *U _tx 3 * -> ++ _i -> -> 1 `i `uc `ux -> -> # *U &U . *U _tx 3 `ui `ux -> -> 90 `i `uc ]
-"213
-[; ;src/eusart1.c: 213:     tx->frame[i++] = tx->cmd;
+"210
+[; ;src/eusart1.c: 210:     tx->frame[i++] = tx->cmd;
 [e = *U + &U . *U _tx 3 * -> ++ _i -> -> 1 `i `uc `ux -> -> # *U &U . *U _tx 3 `ui `ux . *U _tx 0 ]
-"214
-[; ;src/eusart1.c: 214:     tx->frame[i++] = tx->len;
+"211
+[; ;src/eusart1.c: 211:     tx->frame[i++] = tx->len;
 [e = *U + &U . *U _tx 3 * -> ++ _i -> -> 1 `i `uc `ux -> -> # *U &U . *U _tx 3 `ui `ux . *U _tx 1 ]
-"216
-[; ;src/eusart1.c: 216:     for(uint8_t j = 0; j < tx->len; j++)
+"213
+[; ;src/eusart1.c: 213:     for(uint8_t j = 0; j < tx->len; j++)
 {
 [v _j `uc ~T0 @X0 1 a ]
 [e = _j -> -> 0 `i `uc ]
-[e $U 1175  ]
-[e :U 1172 ]
-"217
-[; ;src/eusart1.c: 217:     {
+[e $U 1172  ]
+[e :U 1169 ]
+"214
+[; ;src/eusart1.c: 214:     {
 {
-"218
-[; ;src/eusart1.c: 218:         tx->frame[i++] = tx->payload[j];
+"215
+[; ;src/eusart1.c: 215:         tx->frame[i++] = tx->payload[j];
 [e = *U + &U . *U _tx 3 * -> ++ _i -> -> 1 `i `uc `ux -> -> # *U &U . *U _tx 3 `ui `ux *U + &U . *U _tx 2 * -> _j `ux -> -> # *U &U . *U _tx 2 `ui `ux ]
-"219
-[; ;src/eusart1.c: 219:     }
+"216
+[; ;src/eusart1.c: 216:     }
 }
 [e ++ _j -> -> 1 `i `uc ]
-[e :U 1175 ]
-[e $ < -> _j `i -> . *U _tx 1 `i 1172  ]
-[e :U 1173 ]
+[e :U 1172 ]
+[e $ < -> _j `i -> . *U _tx 1 `i 1169  ]
+[e :U 1170 ]
 }
-"221
-[; ;src/eusart1.c: 221:     tx->frame[i++] = UART_CHKSUM(tx->cmd, tx->len, tx->payload);
+"218
+[; ;src/eusart1.c: 218:     tx->frame[i++] = UART_CHKSUM(tx->cmd, tx->len, tx->payload);
 [e = *U + &U . *U _tx 3 * -> ++ _i -> -> 1 `i `uc `ux -> -> # *U &U . *U _tx 3 `ui `ux ( _UART_CHKSUM (3 , , . *U _tx 0 . *U _tx 1 -> &U . *U _tx 2 `*Cuc ]
-"222
-[; ;src/eusart1.c: 222:     tx->frame[i++] = 0xAA;
+"219
+[; ;src/eusart1.c: 219:     tx->frame[i++] = 0xAA;
 [e = *U + &U . *U _tx 3 * -> ++ _i -> -> 1 `i `uc `ux -> -> # *U &U . *U _tx 3 `ui `ux -> -> 170 `i `uc ]
-"223
-[; ;src/eusart1.c: 223:     tx->frame[i++] = 0x55;
+"220
+[; ;src/eusart1.c: 220:     tx->frame[i++] = 0x55;
 [e = *U + &U . *U _tx 3 * -> ++ _i -> -> 1 `i `uc `ux -> -> # *U &U . *U _tx 3 `ui `ux -> -> 85 `i `uc ]
-"224
-[; ;src/eusart1.c: 224:     tx->frame_len = i;
+"221
+[; ;src/eusart1.c: 221:     tx->frame_len = i;
 [e = . *U _tx 4 _i ]
-"225
-[; ;src/eusart1.c: 225: }
-[e :UE 1171 ]
+"222
+[; ;src/eusart1.c: 222: }
+[e :UE 1168 ]
 }
-"226
-[; ;src/eusart1.c: 226: void COMM_TX_start(UART_tx_msg_t *tx)
-[v _COMM_TX_start `(v ~T0 @X0 1 ef1`*S1158 ]
-"227
-[; ;src/eusart1.c: 227: {
+"223
+[; ;src/eusart1.c: 223: void COMM_TX_start(UART_tx_msg_t *tx)
+[v _COMM_TX_start `(v ~T0 @X0 1 ef1`*S1155 ]
+"224
+[; ;src/eusart1.c: 224: {
 {
 [e :U _COMM_TX_start ]
-"226
-[; ;src/eusart1.c: 226: void COMM_TX_start(UART_tx_msg_t *tx)
-[v _tx `*S1158 ~T0 @X0 1 r1 ]
-"227
-[; ;src/eusart1.c: 227: {
+"223
+[; ;src/eusart1.c: 223: void COMM_TX_start(UART_tx_msg_t *tx)
+[v _tx `*S1155 ~T0 @X0 1 r1 ]
+"224
+[; ;src/eusart1.c: 224: {
 [f ]
-"228
-[; ;src/eusart1.c: 228:     g_tx_msg = tx;
-[e = _g_tx_msg -> _tx `*CVS1158 ]
-"229
-[; ;src/eusart1.c: 229:     g_tx_idx = 0;
+"225
+[; ;src/eusart1.c: 225:     g_tx_msg = tx;
+[e = _g_tx_msg -> _tx `*CVS1155 ]
+"226
+[; ;src/eusart1.c: 226:     g_tx_idx = 0;
 [e = _g_tx_idx -> -> 0 `i `uc ]
-"230
-[; ;src/eusart1.c: 230:     g_comm_tx_done_f = 0;
+"227
+[; ;src/eusart1.c: 227:     g_comm_tx_done_f = 0;
 [e = _g_comm_tx_done_f -> -> 0 `i `a ]
-"231
-[; ;src/eusart1.c: 231:     PIE4bits.TX1IE = 1;
+"228
+[; ;src/eusart1.c: 228:     PIE4bits.TX1IE = 1;
 [e = . . _PIE4bits 0 6 -> -> 1 `i `uc ]
-"232
-[; ;src/eusart1.c: 232: }
-[e :UE 1176 ]
+"229
+[; ;src/eusart1.c: 229: }
+[e :UE 1173 ]
 }

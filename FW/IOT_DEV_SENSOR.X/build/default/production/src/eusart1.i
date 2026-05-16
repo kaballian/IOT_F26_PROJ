@@ -13658,13 +13658,6 @@ typedef struct {
     volatile uint8_t *tris;
     uint8_t bitmask;
 }pin_t;
-# 23 "./include/utils.h"
-static __attribute__((inline)) void pin_set(const pin_t *p) {*p->lat |= p->bitmask;}
-
-static __attribute__((inline)) void pin_clear(const pin_t *p) {*p->lat &= (uint8_t)~p->bitmask;}
-
-
-static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uint8_t)~p->bitmask;}
 # 18 "./include/eusart1.h" 2
 
 
@@ -13734,7 +13727,8 @@ typedef struct {
     uint8_t len;
     uint8_t payload[8];
 }UART_msg_t;
-# 46 "./include/parse.h"
+# 45 "./include/parse.h"
+void UART_RX_Parserinit(void);
 void UART_RX_ParserFeed(uint8_t byte);
 void UART_RX_ParserReset();
 _Bool UART_parser_MsgAvailable(void);
@@ -13749,7 +13743,7 @@ volatile uint8_t END_REG = 0;
 static volatile const UART_tx_msg_t *g_tx_msg = 0;
 static volatile uint8_t g_tx_idx = 0;
 
-volatile _Bool g_comm_tx_done_f = 1;
+volatile _Bool g_comm_tx_done_f = 0;
 
 _Bool COMM_tx_done(void)
 {
@@ -13800,8 +13794,12 @@ void EUSART1_init(void)
 
     SP1BRGH = 0x01;
     SP1BRGL = 0xA0;
-# 88 "src/eusart1.c"
-    UART_RX_ParserReset();
+
+
+
+
+
+    UART_RX_Parserinit();
 }
 
 
@@ -13825,7 +13823,7 @@ void EUSART1_ISR(void)
 
 
         volatile uint8_t byte = RC1REG;
-# 122 "src/eusart1.c"
+# 119 "src/eusart1.c"
         UART_RX_ParserFeed(byte);
     }
 
@@ -13845,7 +13843,7 @@ void EUSART1_ISR(void)
         }
     }
 }
-# 209 "src/eusart1.c"
+# 206 "src/eusart1.c"
 void COMM_assemble_frame(UART_tx_msg_t *tx)
 {
     uint8_t i = 0;

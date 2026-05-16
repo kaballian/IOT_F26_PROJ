@@ -12,35 +12,57 @@
 //     .status                 = CHL_1,
 // };
 
-void ADG419_init(ADG419_t *dev, const pin_t select_pin)
+// void ADG419_init(ADG419_t *dev, const pin_t select_pin)
+// {
+//     if(dev == 0)
+//     {
+//         return;
+//     }
+
+//     dev->channelSelector    = select_pin;
+//     dev->status             = CHL_1;
+
+//     pin_output(&dev->channelSelector);
+//     ADG419_CHL_SELECT(dev, CHL_1);
+// }
+
+// void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl)
+// {
+//     switch (chl)
+//     {
+//     case CHL_1:
+//         pin_clear(&dev->channelSelector);
+//         break;
+    
+//     case CHL_2:
+//         pin_set(&dev->channelSelector);
+//         break;
+
+//     default:
+//         break;
+//     }
+
+// }
+void ADG419_init(ADG419_t *dev)
 {
-    if(dev == 0)
-    {
-        return;
-    }
-
-    dev->channelSelector    = select_pin;
-    dev->status             = CHL_1;
-
-    pin_output(&dev->channelSelector);
+    dev->status = CHL_1;
+    ADG419_SEL_OUTPUT();
     ADG419_CHL_SELECT(dev, CHL_1);
 }
 
+
 void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl)
 {
-    switch (chl)
+    switch(chl)
     {
-    case CHL_1:
-        pin_clear(&dev->channelSelector);
-        break;
-    
-    case CHL_2:
-        pin_set(&dev->channelSelector);
-        break;
+        case CHL_1:
+            ADG419_SEL_LOW();
+            dev->status = CHL_1;
+            break;
 
-    default:
-        break;
+        case CHL_2:
+            ADG419_SEL_HIGH();
+            dev->status = CHL_2;
+            break;
     }
-
 }
-

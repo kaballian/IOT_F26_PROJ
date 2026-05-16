@@ -11,6 +11,9 @@
 
 
 
+
+# 1 "./include/eusart1.h" 1
+# 16 "./include/eusart1.h"
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 1 3
 # 18 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -13644,9 +13647,7 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 29 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 2 3
-# 5 "./include/parse.h" 2
-# 1 "./include/eusart1.h" 1
-# 17 "./include/eusart1.h"
+# 17 "./include/eusart1.h" 2
 # 1 "./include/utils.h" 1
 
 
@@ -13662,13 +13663,6 @@ typedef struct {
     volatile uint8_t *tris;
     uint8_t bitmask;
 }pin_t;
-# 23 "./include/utils.h"
-static __attribute__((inline)) void pin_set(const pin_t *p) {*p->lat |= p->bitmask;}
-
-static __attribute__((inline)) void pin_clear(const pin_t *p) {*p->lat &= (uint8_t)~p->bitmask;}
-
-
-static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uint8_t)~p->bitmask;}
 # 18 "./include/eusart1.h" 2
 
 
@@ -13742,7 +13736,8 @@ typedef struct {
     uint8_t len;
     uint8_t payload[8];
 }UART_msg_t;
-# 46 "./include/parse.h"
+# 45 "./include/parse.h"
+void UART_RX_Parserinit(void);
 void UART_RX_ParserFeed(uint8_t byte);
 void UART_RX_ParserReset();
 _Bool UART_parser_MsgAvailable(void);
@@ -13781,14 +13776,19 @@ static UART_rx_parser_t rx_parser;
 static volatile uint8_t msg_ready = 0;
 static volatile UART_msg_t rx_msg;
 
+void UART_RX_Parserinit(void){
+    rx_parser.state = RX_WAIT_SOF;
+    rx_parser.cmd = 0;
+    rx_parser.len = 0;
+}
 void UART_RX_ParserReset()
 {
 
     rx_parser.state = RX_WAIT_SOF;
     rx_parser.cmd = 0;
     rx_parser.len = 0;
-    rx_parser.idx = 0;
-    rx_parser.CHKsum = 0;
+
+
 
 
 }

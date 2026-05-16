@@ -13657,14 +13657,11 @@ typedef struct {
     volatile uint8_t *tris;
     uint8_t bitmask;
 }pin_t;
-# 23 "./include/utils.h"
-static __attribute__((inline)) void pin_set(const pin_t *p) {*p->lat |= p->bitmask;}
-
-static __attribute__((inline)) void pin_clear(const pin_t *p) {*p->lat &= (uint8_t)~p->bitmask;}
-
-
-static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uint8_t)~p->bitmask;}
 # 24 "./include/ADG419BR.h" 2
+
+
+
+
 
 
 
@@ -13675,44 +13672,39 @@ typedef enum {
 }switch_chl_t;
 
 typedef struct{
-    pin_t channelSelector;
+
     switch_chl_t status;
 }ADG419_t;
 
 
 
-void ADG419_init(ADG419_t *dev, const pin_t select_pin);
+
+
+
+void ADG419_init(ADG419_t *dev);
 void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl);
 # 2 "src/ARG419BR.c" 2
-# 15 "src/ARG419BR.c"
-void ADG419_init(ADG419_t *dev, const pin_t select_pin)
+# 46 "src/ARG419BR.c"
+void ADG419_init(ADG419_t *dev)
 {
-    if(dev == 0)
-    {
-        return;
-    }
-
-    dev->channelSelector = select_pin;
     dev->status = CHL_1;
-
-    pin_output(&dev->channelSelector);
+    (TRISAbits.TRISA2 = 0);
     ADG419_CHL_SELECT(dev, CHL_1);
 }
 
+
 void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl)
 {
-    switch (chl)
+    switch(chl)
     {
-    case CHL_1:
-        pin_clear(&dev->channelSelector);
-        break;
+        case CHL_1:
+            (LATAbits.LATA2 = 0);
+            dev->status = CHL_1;
+            break;
 
-    case CHL_2:
-        pin_set(&dev->channelSelector);
-        break;
-
-    default:
-        break;
+        case CHL_2:
+            (LATAbits.LATA2 = 1);
+            dev->status = CHL_2;
+            break;
     }
-
 }

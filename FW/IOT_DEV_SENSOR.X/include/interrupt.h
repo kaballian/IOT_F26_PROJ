@@ -10,6 +10,6 @@
 extern volatile uint8_t g_tmr0_1ms_flag;
 
 
-void ISR_init();
+void ISR_init(void);
 
 #endif

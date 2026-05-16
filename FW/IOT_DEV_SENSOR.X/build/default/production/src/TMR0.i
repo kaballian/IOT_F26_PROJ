@@ -13663,13 +13663,6 @@ typedef struct {
     volatile uint8_t *tris;
     uint8_t bitmask;
 }pin_t;
-# 23 "./include/utils.h"
-static __attribute__((inline)) void pin_set(const pin_t *p) {*p->lat |= p->bitmask;}
-
-static __attribute__((inline)) void pin_clear(const pin_t *p) {*p->lat &= (uint8_t)~p->bitmask;}
-
-
-static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uint8_t)~p->bitmask;}
 # 9 "./include/TMR0.h" 2
 
 

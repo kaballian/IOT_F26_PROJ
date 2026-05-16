@@ -56,15 +56,7 @@ static bool I2C2_stop(void)
     }
     return (timeout > 0u);
 }
-/*probing purposes only*/
-static bool I2C2_write(uint8_t data)
-{
-    SSP2BUF = data;
-    while(SSP2STATbits.BF); //wait for transfer complete
-    while(SSP2CON2bits.ACKSTAT); //wait for acknowledge
 
-    return (SSP2CON2bits.ACKSTAT == 0); //the the acknowledge condition
-}
 static bool I2C2_write_byte(uint8_t byte)
 {
     /*after writing to SSPxBUF, we wait for transfer to finish end inspect acknowled*/

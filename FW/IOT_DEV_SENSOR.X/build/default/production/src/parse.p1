@@ -1,20 +1,16 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"9 ./include/utils.h
-[; ;./include/utils.h: 9: typedef struct {
-[s S1154 `*Vuc 1 `*Vuc 1 `uc 1 ]
-[n S1154 . lat tris bitmask ]
 "30 src/parse.c
 [; ;src/parse.c: 30: static UART_rx_parser_t rx_parser;
-[c E8105 0 1 2 3 4 5 6 .. ]
-[n E8105 . RX_WAIT_SOF RX_WAIT_CMD RX_WAIT_LEN RX_WAIT_PAYLOAD RX_WAIT_CHK RX_WAIT_END1 RX_WAIT_END2  ]
+[c E8094 0 1 2 3 4 5 6 .. ]
+[n E8094 . RX_WAIT_SOF RX_WAIT_CMD RX_WAIT_LEN RX_WAIT_PAYLOAD RX_WAIT_CHK RX_WAIT_END1 RX_WAIT_END2  ]
 "15
 [; ;src/parse.c: 15: typedef struct{
-[s S1160 `E8105 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc -> 8 `i ]
-[n S1160 . state cmd len idx CHKsum payload ]
+[s S1157 `E8094 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc -> 8 `i ]
+[n S1157 . state cmd len idx CHKsum payload ]
 "12 ./include/parse.h
 [; ;./include/parse.h: 12: typedef struct {
-[s S1159 `uc 1 `uc 1 `uc -> 8 `i ]
-[n S1159 . cmd len payload ]
+[s S1156 `uc 1 `uc 1 `uc -> 8 `i ]
+[n S1156 . cmd len payload ]
 "38 D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 38: __asm("INDF0 equ 00h");
 [; <" INDF0 equ 00h ;# ">
@@ -1218,39 +1214,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "23281
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 23281: __asm("TOSH equ 01FEFh");
 [; <" TOSH equ 01FEFh ;# ">
-[v F8049 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"23 ./include/utils.h
-[; ;./include/utils.h: 23: static __attribute__((inline)) void pin_set(const pin_t *p) {*p->lat |= p->bitmask;}
-[v _pin_set `TF8049 ~T0 @X0 1 s ]
-{
-[e :U _pin_set ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =| *U . *U _p 0 -> . *U _p 2 `uc ]
-[e :UE 1155 ]
-}
-[v F8053 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"25
-[; ;./include/utils.h: 25: static __attribute__((inline)) void pin_clear(const pin_t *p) {*p->lat &= (uint8_t)~p->bitmask;}
-[v _pin_clear `TF8053 ~T0 @X0 1 s ]
-{
-[e :U _pin_clear ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =& *U . *U _p 0 -> -> ~ -> . *U _p 2 `i `uc `uc ]
-[e :UE 1156 ]
-}
-[v F8057 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"28
-[; ;./include/utils.h: 28: static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uint8_t)~p->bitmask;}
-[v _pin_output `TF8057 ~T0 @X0 1 s ]
-{
-[e :U _pin_output ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =& *U . *U _p 1 -> -> ~ -> . *U _p 2 `i `uc `uc ]
-[e :UE 1157 ]
-}
 "22 ./include/eusart1.h
 [; ;./include/eusart1.h: 22: volatile uint8_t g_uart_rx_f;
 [v _g_uart_rx_f `Vuc ~T0 @X0 1 e ]
@@ -1262,7 +1225,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _END_REG `Vuc ~T0 @X0 1 e ]
 "30 src/parse.c
 [; ;src/parse.c: 30: static UART_rx_parser_t rx_parser;
-[v _rx_parser `S1160 ~T0 @X0 1 s ]
+[v _rx_parser `S1157 ~T0 @X0 1 s ]
 "31
 [; ;src/parse.c: 31: static volatile uint8_t msg_ready = 0;
 [v _msg_ready `Vuc ~T0 @X0 1 s ]
@@ -1271,434 +1234,447 @@ Version 4.0 HI-TECH Software Intermediate Code
 ]
 "32
 [; ;src/parse.c: 32: static volatile UART_msg_t rx_msg;
-[v _rx_msg `VS1159 ~T0 @X0 1 s ]
+[v _rx_msg `VS1156 ~T0 @X0 1 s ]
 "34
-[; ;src/parse.c: 34: void UART_RX_ParserReset()
-[v _UART_RX_ParserReset `(v ~T0 @X0 1 ef ]
+[; ;src/parse.c: 34: void UART_RX_Parserinit(void){
+[v _UART_RX_Parserinit `(v ~T0 @X0 1 ef ]
+{
+[e :U _UART_RX_Parserinit ]
+[f ]
 "35
-[; ;src/parse.c: 35: {
+[; ;src/parse.c: 35:     rx_parser.state = RX_WAIT_SOF;
+[e = . _rx_parser 0 . `E8094 0 ]
+"36
+[; ;src/parse.c: 36:     rx_parser.cmd = 0;
+[e = . _rx_parser 1 -> -> 0 `i `uc ]
+"37
+[; ;src/parse.c: 37:     rx_parser.len = 0;
+[e = . _rx_parser 2 -> -> 0 `i `uc ]
+"38
+[; ;src/parse.c: 38: }
+[e :UE 1158 ]
+}
+"39
+[; ;src/parse.c: 39: void UART_RX_ParserReset()
+[v _UART_RX_ParserReset `(v ~T0 @X0 1 ef ]
+"40
+[; ;src/parse.c: 40: {
 {
 [e :U _UART_RX_ParserReset ]
 [f ]
-"37
-[; ;src/parse.c: 37:     rx_parser.state = RX_WAIT_SOF;
-[e = . _rx_parser 0 . `E8105 0 ]
-"38
-[; ;src/parse.c: 38:     rx_parser.cmd = 0;
+"42
+[; ;src/parse.c: 42:     rx_parser.state = RX_WAIT_SOF;
+[e = . _rx_parser 0 . `E8094 0 ]
+"43
+[; ;src/parse.c: 43:     rx_parser.cmd = 0;
 [e = . _rx_parser 1 -> -> 0 `i `uc ]
-"39
-[; ;src/parse.c: 39:     rx_parser.len = 0;
-[e = . _rx_parser 2 -> -> 0 `i `uc ]
-"40
-[; ;src/parse.c: 40:     rx_parser.idx = 0;
-[e = . _rx_parser 3 -> -> 0 `i `uc ]
-"41
-[; ;src/parse.c: 41:     rx_parser.CHKsum = 0;
-[e = . _rx_parser 4 -> -> 0 `i `uc ]
 "44
-[; ;src/parse.c: 44: }
-[e :UE 1161 ]
-}
+[; ;src/parse.c: 44:     rx_parser.len = 0;
+[e = . _rx_parser 2 -> -> 0 `i `uc ]
 "49
-[; ;src/parse.c: 49: void UART_RX_ParserFeed(uint8_t byte)
+[; ;src/parse.c: 49: }
+[e :UE 1159 ]
+}
+"54
+[; ;src/parse.c: 54: void UART_RX_ParserFeed(uint8_t byte)
 [v _UART_RX_ParserFeed `(v ~T0 @X0 1 ef1`uc ]
-"50
-[; ;src/parse.c: 50: {
+"55
+[; ;src/parse.c: 55: {
 {
 [e :U _UART_RX_ParserFeed ]
-"49
-[; ;src/parse.c: 49: void UART_RX_ParserFeed(uint8_t byte)
-[v _byte `uc ~T0 @X0 1 r1 ]
-"50
-[; ;src/parse.c: 50: {
-[f ]
-"52
-[; ;src/parse.c: 52:     switch(rx_parser.state)
-[e $U 1164  ]
-"53
-[; ;src/parse.c: 53:     {
-{
 "54
-[; ;src/parse.c: 54:         case RX_WAIT_SOF:{
+[; ;src/parse.c: 54: void UART_RX_ParserFeed(uint8_t byte)
+[v _byte `uc ~T0 @X0 1 r1 ]
+"55
+[; ;src/parse.c: 55: {
+[f ]
+"57
+[; ;src/parse.c: 57:     switch(rx_parser.state)
+[e $U 1162  ]
+"58
+[; ;src/parse.c: 58:     {
+{
+"59
+[; ;src/parse.c: 59:         case RX_WAIT_SOF:{
+[e :U 1163 ]
+{
+"60
+[; ;src/parse.c: 60:             if(byte == 0x5A){
+[e $ ! == -> _byte `i -> 90 `i 1164  ]
+{
+"61
+[; ;src/parse.c: 61:                 rx_parser.state = RX_WAIT_CMD;
+[e = . _rx_parser 0 . `E8094 1 ]
+"62
+[; ;src/parse.c: 62:                 rx_parser.idx = 0;
+[e = . _rx_parser 3 -> -> 0 `i `uc ]
+"63
+[; ;src/parse.c: 63:                 rx_parser.CHKsum = 0;
+[e = . _rx_parser 4 -> -> 0 `i `uc ]
+"64
+[; ;src/parse.c: 64:             }
+}
+[e :U 1164 ]
+"65
+[; ;src/parse.c: 65:             break;
+[e $U 1161  ]
+"66
+[; ;src/parse.c: 66:         }
+}
+"67
+[; ;src/parse.c: 67:         case RX_WAIT_CMD:{
 [e :U 1165 ]
 {
-"55
-[; ;src/parse.c: 55:             if(byte == 0x5A){
-[e $ ! == -> _byte `i -> 90 `i 1166  ]
-{
-"56
-[; ;src/parse.c: 56:                 rx_parser.state = RX_WAIT_CMD;
-[e = . _rx_parser 0 . `E8105 1 ]
-"57
-[; ;src/parse.c: 57:                 rx_parser.idx = 0;
-[e = . _rx_parser 3 -> -> 0 `i `uc ]
-"58
-[; ;src/parse.c: 58:                 rx_parser.CHKsum = 0;
-[e = . _rx_parser 4 -> -> 0 `i `uc ]
-"59
-[; ;src/parse.c: 59:             }
-}
-[e :U 1166 ]
-"60
-[; ;src/parse.c: 60:             break;
-[e $U 1163  ]
-"61
-[; ;src/parse.c: 61:         }
-}
-"62
-[; ;src/parse.c: 62:         case RX_WAIT_CMD:{
-[e :U 1167 ]
-{
-"64
-[; ;src/parse.c: 64:             rx_parser.cmd = byte;
+"69
+[; ;src/parse.c: 69:             rx_parser.cmd = byte;
 [e = . _rx_parser 1 _byte ]
-"65
-[; ;src/parse.c: 65:             rx_parser.CHKsum ^= byte;
-[e =^ . _rx_parser 4 -> _byte `uc ]
-"66
-[; ;src/parse.c: 66:             rx_parser.state = RX_WAIT_LEN;
-[e = . _rx_parser 0 . `E8105 2 ]
-"67
-[; ;src/parse.c: 67:             break;
-[e $U 1163  ]
-"68
-[; ;src/parse.c: 68:         }
-}
 "70
-[; ;src/parse.c: 70:         case RX_WAIT_LEN:{
-[e :U 1168 ]
-{
-"71
-[; ;src/parse.c: 71:             rx_parser.len = byte;
-[e = . _rx_parser 2 _byte ]
-"72
-[; ;src/parse.c: 72:             rx_parser.CHKsum ^= byte;
+[; ;src/parse.c: 70:             rx_parser.CHKsum ^= byte;
 [e =^ . _rx_parser 4 -> _byte `uc ]
-"74
-[; ;src/parse.c: 74:             if(rx_parser.len > 8)
-[e $ ! > -> . _rx_parser 2 `i -> 8 `i 1169  ]
+"71
+[; ;src/parse.c: 71:             rx_parser.state = RX_WAIT_LEN;
+[e = . _rx_parser 0 . `E8094 2 ]
+"72
+[; ;src/parse.c: 72:             break;
+[e $U 1161  ]
+"73
+[; ;src/parse.c: 73:         }
+}
 "75
-[; ;src/parse.c: 75:             {
+[; ;src/parse.c: 75:         case RX_WAIT_LEN:{
+[e :U 1166 ]
 {
 "76
-[; ;src/parse.c: 76:                 UART_RX_ParserReset();
-[e ( _UART_RX_ParserReset ..  ]
+[; ;src/parse.c: 76:             rx_parser.len = byte;
+[e = . _rx_parser 2 _byte ]
 "77
-[; ;src/parse.c: 77:             }else if(rx_parser.len == 0)
+[; ;src/parse.c: 77:             rx_parser.CHKsum ^= byte;
+[e =^ . _rx_parser 4 -> _byte `uc ]
+"79
+[; ;src/parse.c: 79:             if(rx_parser.len > 8)
+[e $ ! > -> . _rx_parser 2 `i -> 8 `i 1167  ]
+"80
+[; ;src/parse.c: 80:             {
+{
+"81
+[; ;src/parse.c: 81:                 UART_RX_ParserReset();
+[e ( _UART_RX_ParserReset ..  ]
+"82
+[; ;src/parse.c: 82:             }else if(rx_parser.len == 0)
+}
+[e $U 1168  ]
+[e :U 1167 ]
+[e $ ! == -> . _rx_parser 2 `i -> 0 `i 1169  ]
+"83
+[; ;src/parse.c: 83:             {
+{
+"85
+[; ;src/parse.c: 85:                 rx_parser.state = RX_WAIT_CHK;
+[e = . _rx_parser 0 . `E8094 4 ]
+"86
+[; ;src/parse.c: 86:             }else{
 }
 [e $U 1170  ]
 [e :U 1169 ]
-[e $ ! == -> . _rx_parser 2 `i -> 0 `i 1171  ]
-"78
-[; ;src/parse.c: 78:             {
 {
-"80
-[; ;src/parse.c: 80:                 rx_parser.state = RX_WAIT_CHK;
-[e = . _rx_parser 0 . `E8105 4 ]
-"81
-[; ;src/parse.c: 81:             }else{
+"88
+[; ;src/parse.c: 88:                 rx_parser.idx = 0;
+[e = . _rx_parser 3 -> -> 0 `i `uc ]
+"89
+[; ;src/parse.c: 89:                 rx_parser.state = RX_WAIT_PAYLOAD;
+[e = . _rx_parser 0 . `E8094 3 ]
+"90
+[; ;src/parse.c: 90:             }
 }
-[e $U 1172  ]
+[e :U 1170 ]
+[e :U 1168 ]
+"91
+[; ;src/parse.c: 91:             break;
+[e $U 1161  ]
+"92
+[; ;src/parse.c: 92:         }
+}
+"94
+[; ;src/parse.c: 94:         case RX_WAIT_PAYLOAD:{
 [e :U 1171 ]
 {
-"83
-[; ;src/parse.c: 83:                 rx_parser.idx = 0;
-[e = . _rx_parser 3 -> -> 0 `i `uc ]
-"84
-[; ;src/parse.c: 84:                 rx_parser.state = RX_WAIT_PAYLOAD;
-[e = . _rx_parser 0 . `E8105 3 ]
-"85
-[; ;src/parse.c: 85:             }
+"96
+[; ;src/parse.c: 96:             rx_parser.payload[rx_parser.idx++] = byte;
+[e = *U + &U . _rx_parser 5 * -> ++ . _rx_parser 3 -> -> 1 `i `uc `ux -> -> # *U &U . _rx_parser 5 `ui `ux _byte ]
+"97
+[; ;src/parse.c: 97:             rx_parser.CHKsum ^= byte;
+[e =^ . _rx_parser 4 -> _byte `uc ]
+"101
+[; ;src/parse.c: 101:             if(rx_parser.idx >= rx_parser.len)
+[e $ ! >= -> . _rx_parser 3 `i -> . _rx_parser 2 `i 1172  ]
+"102
+[; ;src/parse.c: 102:             {
+{
+"103
+[; ;src/parse.c: 103:                 rx_parser.state = RX_WAIT_CHK;
+[e = . _rx_parser 0 . `E8094 4 ]
+"104
+[; ;src/parse.c: 104:             }
 }
 [e :U 1172 ]
-[e :U 1170 ]
-"86
-[; ;src/parse.c: 86:             break;
-[e $U 1163  ]
-"87
-[; ;src/parse.c: 87:         }
+"105
+[; ;src/parse.c: 105:             break;
+[e $U 1161  ]
+"106
+[; ;src/parse.c: 106:         }
 }
-"89
-[; ;src/parse.c: 89:         case RX_WAIT_PAYLOAD:{
+"108
+[; ;src/parse.c: 108:         case RX_WAIT_CHK:{
 [e :U 1173 ]
 {
-"91
-[; ;src/parse.c: 91:             rx_parser.payload[rx_parser.idx++] = byte;
-[e = *U + &U . _rx_parser 5 * -> ++ . _rx_parser 3 -> -> 1 `i `uc `ux -> -> # *U &U . _rx_parser 5 `ui `ux _byte ]
-"92
-[; ;src/parse.c: 92:             rx_parser.CHKsum ^= byte;
-[e =^ . _rx_parser 4 -> _byte `uc ]
-"96
-[; ;src/parse.c: 96:             if(rx_parser.idx >= rx_parser.len)
-[e $ ! >= -> . _rx_parser 3 `i -> . _rx_parser 2 `i 1174  ]
-"97
-[; ;src/parse.c: 97:             {
+"110
+[; ;src/parse.c: 110:             if(byte == rx_parser.CHKsum)
+[e $ ! == -> _byte `i -> . _rx_parser 4 `i 1174  ]
+"111
+[; ;src/parse.c: 111:             {
 {
-"98
-[; ;src/parse.c: 98:                 rx_parser.state = RX_WAIT_CHK;
-[e = . _rx_parser 0 . `E8105 4 ]
-"99
-[; ;src/parse.c: 99:             }
+"113
+[; ;src/parse.c: 113:                 rx_parser.state = RX_WAIT_END1;
+[e = . _rx_parser 0 . `E8094 5 ]
+"114
+[; ;src/parse.c: 114:             }else{
 }
+[e $U 1175  ]
 [e :U 1174 ]
-"100
-[; ;src/parse.c: 100:             break;
-[e $U 1163  ]
-"101
-[; ;src/parse.c: 101:         }
+{
+"115
+[; ;src/parse.c: 115:                 UART_RX_ParserReset();
+[e ( _UART_RX_ParserReset ..  ]
+"116
+[; ;src/parse.c: 116:             }
 }
-"103
-[; ;src/parse.c: 103:         case RX_WAIT_CHK:{
 [e :U 1175 ]
-{
-"105
-[; ;src/parse.c: 105:             if(byte == rx_parser.CHKsum)
-[e $ ! == -> _byte `i -> . _rx_parser 4 `i 1176  ]
-"106
-[; ;src/parse.c: 106:             {
-{
-"108
-[; ;src/parse.c: 108:                 rx_parser.state = RX_WAIT_END1;
-[e = . _rx_parser 0 . `E8105 5 ]
-"109
-[; ;src/parse.c: 109:             }else{
+"117
+[; ;src/parse.c: 117:             break;
+[e $U 1161  ]
+"118
+[; ;src/parse.c: 118:         }
 }
-[e $U 1177  ]
+"121
+[; ;src/parse.c: 121:         case RX_WAIT_END1:{
 [e :U 1176 ]
 {
-"110
-[; ;src/parse.c: 110:                 UART_RX_ParserReset();
-[e ( _UART_RX_ParserReset ..  ]
-"111
-[; ;src/parse.c: 111:             }
+"122
+[; ;src/parse.c: 122:             if(byte == 0xAA)
+[e $ ! == -> _byte `i -> 170 `i 1177  ]
+"123
+[; ;src/parse.c: 123:             {
+{
+"124
+[; ;src/parse.c: 124:                 rx_parser.state = RX_WAIT_END2;
+[e = . _rx_parser 0 . `E8094 6 ]
+"125
+[; ;src/parse.c: 125:             }else{
 }
+[e $U 1178  ]
 [e :U 1177 ]
-"112
-[; ;src/parse.c: 112:             break;
-[e $U 1163  ]
-"113
-[; ;src/parse.c: 113:         }
+{
+"126
+[; ;src/parse.c: 126:                 UART_RX_ParserReset();
+[e ( _UART_RX_ParserReset ..  ]
+"127
+[; ;src/parse.c: 127:             }
 }
-"116
-[; ;src/parse.c: 116:         case RX_WAIT_END1:{
 [e :U 1178 ]
-{
-"117
-[; ;src/parse.c: 117:             if(byte == 0xAA)
-[e $ ! == -> _byte `i -> 170 `i 1179  ]
-"118
-[; ;src/parse.c: 118:             {
-{
-"119
-[; ;src/parse.c: 119:                 rx_parser.state = RX_WAIT_END2;
-[e = . _rx_parser 0 . `E8105 6 ]
-"120
-[; ;src/parse.c: 120:             }else{
+"128
+[; ;src/parse.c: 128:             break;
+[e $U 1161  ]
+"129
+[; ;src/parse.c: 129:         }
 }
-[e $U 1180  ]
+"131
+[; ;src/parse.c: 131:         case RX_WAIT_END2:{
 [e :U 1179 ]
 {
-"121
-[; ;src/parse.c: 121:                 UART_RX_ParserReset();
-[e ( _UART_RX_ParserReset ..  ]
-"122
-[; ;src/parse.c: 122:             }
-}
-[e :U 1180 ]
-"123
-[; ;src/parse.c: 123:             break;
-[e $U 1163  ]
-"124
-[; ;src/parse.c: 124:         }
-}
-"126
-[; ;src/parse.c: 126:         case RX_WAIT_END2:{
-[e :U 1181 ]
-{
-"127
-[; ;src/parse.c: 127:             if(byte == 0x55)
-[e $ ! == -> _byte `i -> 85 `i 1182  ]
-"128
-[; ;src/parse.c: 128:             {
-{
-"129
-[; ;src/parse.c: 129:                 rx_msg.cmd = rx_parser.cmd;
-[e = . _rx_msg 0 . _rx_parser 1 ]
-"130
-[; ;src/parse.c: 130:                 rx_msg.len = rx_parser.len;
-[e = . _rx_msg 1 . _rx_parser 2 ]
 "132
-[; ;src/parse.c: 132:                 for(uint8_t i = 0; i < rx_parser.len; i++)
+[; ;src/parse.c: 132:             if(byte == 0x55)
+[e $ ! == -> _byte `i -> 85 `i 1180  ]
+"133
+[; ;src/parse.c: 133:             {
+{
+"134
+[; ;src/parse.c: 134:                 rx_msg.cmd = rx_parser.cmd;
+[e = . _rx_msg 0 . _rx_parser 1 ]
+"135
+[; ;src/parse.c: 135:                 rx_msg.len = rx_parser.len;
+[e = . _rx_msg 1 . _rx_parser 2 ]
+"137
+[; ;src/parse.c: 137:                 for(uint8_t i = 0; i < rx_parser.len; i++)
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
-[e $U 1186  ]
-[e :U 1183 ]
-"133
-[; ;src/parse.c: 133:                 {
+[e $U 1184  ]
+[e :U 1181 ]
+"138
+[; ;src/parse.c: 138:                 {
 {
-"134
-[; ;src/parse.c: 134:                     rx_msg.payload[i] = rx_parser.payload[i];
+"139
+[; ;src/parse.c: 139:                     rx_msg.payload[i] = rx_parser.payload[i];
 [e = *U + &U . _rx_msg 2 * -> _i `ux -> -> # *U &U . _rx_msg 2 `ui `ux *U + &U . _rx_parser 5 * -> _i `ux -> -> # *U &U . _rx_parser 5 `ui `ux ]
-"135
-[; ;src/parse.c: 135:                 }
+"140
+[; ;src/parse.c: 140:                 }
 }
 [e ++ _i -> -> 1 `i `uc ]
-[e :U 1186 ]
-[e $ < -> _i `i -> . _rx_parser 2 `i 1183  ]
 [e :U 1184 ]
-}
-"137
-[; ;src/parse.c: 137:                 msg_ready = 1;
-[e = _msg_ready -> -> 1 `i `uc ]
-"138
-[; ;src/parse.c: 138:             }
-}
+[e $ < -> _i `i -> . _rx_parser 2 `i 1181  ]
 [e :U 1182 ]
-"140
-[; ;src/parse.c: 140:             UART_RX_ParserReset();
-[e ( _UART_RX_ParserReset ..  ]
-"141
-[; ;src/parse.c: 141:             break;
-[e $U 1163  ]
-"142
-[; ;src/parse.c: 142:         }
 }
-"144
-[; ;src/parse.c: 144:         default:
-[e :U 1187 ]
+"142
+[; ;src/parse.c: 142:                 msg_ready = 1;
+[e = _msg_ready -> -> 1 `i `uc ]
+"143
+[; ;src/parse.c: 143:             }
+}
+[e :U 1180 ]
 "145
 [; ;src/parse.c: 145:             UART_RX_ParserReset();
 [e ( _UART_RX_ParserReset ..  ]
 "146
 [; ;src/parse.c: 146:             break;
-[e $U 1163  ]
+[e $U 1161  ]
 "147
-[; ;src/parse.c: 147:     }
+[; ;src/parse.c: 147:         }
 }
-[e $U 1163  ]
-[e :U 1164 ]
-[e [\ -> . _rx_parser 0 `ui , $ -> . `E8105 0 `ui 1165
- , $ -> . `E8105 1 `ui 1167
- , $ -> . `E8105 2 `ui 1168
- , $ -> . `E8105 3 `ui 1173
- , $ -> . `E8105 4 `ui 1175
- , $ -> . `E8105 5 `ui 1178
- , $ -> . `E8105 6 `ui 1181
- 1187 ]
-[e :U 1163 ]
-"148
-[; ;src/parse.c: 148: }
-[e :UE 1162 ]
-}
+"149
+[; ;src/parse.c: 149:         default:
+[e :U 1185 ]
+"150
+[; ;src/parse.c: 150:             UART_RX_ParserReset();
+[e ( _UART_RX_ParserReset ..  ]
 "151
-[; ;src/parse.c: 151: _Bool UART_parser_MsgAvailable(void)
-[v _UART_parser_MsgAvailable `(a ~T0 @X0 1 ef ]
+[; ;src/parse.c: 151:             break;
+[e $U 1161  ]
 "152
-[; ;src/parse.c: 152: {
+[; ;src/parse.c: 152:     }
+}
+[e $U 1161  ]
+[e :U 1162 ]
+[e [\ -> . _rx_parser 0 `ui , $ -> . `E8094 0 `ui 1163
+ , $ -> . `E8094 1 `ui 1165
+ , $ -> . `E8094 2 `ui 1166
+ , $ -> . `E8094 3 `ui 1171
+ , $ -> . `E8094 4 `ui 1173
+ , $ -> . `E8094 5 `ui 1176
+ , $ -> . `E8094 6 `ui 1179
+ 1185 ]
+[e :U 1161 ]
+"153
+[; ;src/parse.c: 153: }
+[e :UE 1160 ]
+}
+"156
+[; ;src/parse.c: 156: _Bool UART_parser_MsgAvailable(void)
+[v _UART_parser_MsgAvailable `(a ~T0 @X0 1 ef ]
+"157
+[; ;src/parse.c: 157: {
 {
 [e :U _UART_parser_MsgAvailable ]
 [f ]
-"153
-[; ;src/parse.c: 153:     return msg_ready != 0;
+"158
+[; ;src/parse.c: 158:     return msg_ready != 0;
 [e ) -> -> != -> _msg_ready `i -> 0 `i `i `a ]
-[e $UE 1188  ]
-"154
-[; ;src/parse.c: 154: }
-[e :UE 1188 ]
+[e $UE 1186  ]
+"159
+[; ;src/parse.c: 159: }
+[e :UE 1186 ]
 }
-"156
-[; ;src/parse.c: 156: _Bool UART_parser_GetMsg(UART_msg_t *msg)
-[v _UART_parser_GetMsg `(a ~T0 @X0 1 ef1`*S1159 ]
-"157
-[; ;src/parse.c: 157: {
+"161
+[; ;src/parse.c: 161: _Bool UART_parser_GetMsg(UART_msg_t *msg)
+[v _UART_parser_GetMsg `(a ~T0 @X0 1 ef1`*S1156 ]
+"162
+[; ;src/parse.c: 162: {
 {
 [e :U _UART_parser_GetMsg ]
-"156
-[; ;src/parse.c: 156: _Bool UART_parser_GetMsg(UART_msg_t *msg)
-[v _msg `*S1159 ~T0 @X0 1 r1 ]
-"157
-[; ;src/parse.c: 157: {
-[f ]
-"158
-[; ;src/parse.c: 158:     if(!msg_ready)
-[e $ ! ! != -> _msg_ready `i -> 0 `i 1190  ]
-"159
-[; ;src/parse.c: 159:     {
-{
-"160
-[; ;src/parse.c: 160:         return 0;
-[e ) -> -> 0 `i `a ]
-[e $UE 1189  ]
 "161
-[; ;src/parse.c: 161:     }
-}
-[e :U 1190 ]
+[; ;src/parse.c: 161: _Bool UART_parser_GetMsg(UART_msg_t *msg)
+[v _msg `*S1156 ~T0 @X0 1 r1 ]
 "162
-[; ;src/parse.c: 162:     *msg = rx_msg;
-[e = *U _msg _rx_msg ]
+[; ;src/parse.c: 162: {
+[f ]
 "163
-[; ;src/parse.c: 163:     msg_ready = 0;
-[e = _msg_ready -> -> 0 `i `uc ]
+[; ;src/parse.c: 163:     if(!msg_ready)
+[e $ ! ! != -> _msg_ready `i -> 0 `i 1188  ]
 "164
-[; ;src/parse.c: 164:     return 1;
-[e ) -> -> 1 `i `a ]
-[e $UE 1189  ]
+[; ;src/parse.c: 164:     {
+{
 "165
-[; ;src/parse.c: 165: }
-[e :UE 1189 ]
-}
+[; ;src/parse.c: 165:         return 0;
+[e ) -> -> 0 `i `a ]
+[e $UE 1187  ]
 "166
-[; ;src/parse.c: 166: uint8_t UART_CHKSUM(uint8_t cmd, uint8_t len, const uint8_t *payload)
-[v _UART_CHKSUM `(uc ~T0 @X0 1 ef3`uc`uc`*Cuc ]
+[; ;src/parse.c: 166:     }
+}
+[e :U 1188 ]
 "167
-[; ;src/parse.c: 167: {
+[; ;src/parse.c: 167:     *msg = rx_msg;
+[e = *U _msg _rx_msg ]
+"168
+[; ;src/parse.c: 168:     msg_ready = 0;
+[e = _msg_ready -> -> 0 `i `uc ]
+"169
+[; ;src/parse.c: 169:     return 1;
+[e ) -> -> 1 `i `a ]
+[e $UE 1187  ]
+"170
+[; ;src/parse.c: 170: }
+[e :UE 1187 ]
+}
+"171
+[; ;src/parse.c: 171: uint8_t UART_CHKSUM(uint8_t cmd, uint8_t len, const uint8_t *payload)
+[v _UART_CHKSUM `(uc ~T0 @X0 1 ef3`uc`uc`*Cuc ]
+"172
+[; ;src/parse.c: 172: {
 {
 [e :U _UART_CHKSUM ]
-"166
-[; ;src/parse.c: 166: uint8_t UART_CHKSUM(uint8_t cmd, uint8_t len, const uint8_t *payload)
+"171
+[; ;src/parse.c: 171: uint8_t UART_CHKSUM(uint8_t cmd, uint8_t len, const uint8_t *payload)
 [v _cmd `uc ~T0 @X0 1 r1 ]
 [v _len `uc ~T0 @X0 1 r2 ]
 [v _payload `*Cuc ~T0 @X0 1 r3 ]
-"167
-[; ;src/parse.c: 167: {
+"172
+[; ;src/parse.c: 172: {
 [f ]
-"168
-[; ;src/parse.c: 168:     uint8_t chk = 0;
+"173
+[; ;src/parse.c: 173:     uint8_t chk = 0;
 [v _chk `uc ~T0 @X0 1 a ]
 [e = _chk -> -> 0 `i `uc ]
-"169
-[; ;src/parse.c: 169:     chk ^= cmd;
+"174
+[; ;src/parse.c: 174:     chk ^= cmd;
 [e =^ _chk -> _cmd `uc ]
-"170
-[; ;src/parse.c: 170:     chk ^= len;
+"175
+[; ;src/parse.c: 175:     chk ^= len;
 [e =^ _chk -> _len `uc ]
-"172
-[; ;src/parse.c: 172:     for(uint8_t i = 0; i < len; i++)
+"177
+[; ;src/parse.c: 177:     for(uint8_t i = 0; i < len; i++)
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
-[e $U 1195  ]
-[e :U 1192 ]
-"173
-[; ;src/parse.c: 173:     {
+[e $U 1193  ]
+[e :U 1190 ]
+"178
+[; ;src/parse.c: 178:     {
 {
-"174
-[; ;src/parse.c: 174:         chk ^= payload[i];
+"179
+[; ;src/parse.c: 179:         chk ^= payload[i];
 [e =^ _chk -> *U + _payload * -> _i `ux -> -> # *U _payload `ui `ux `uc ]
-"175
-[; ;src/parse.c: 175:     }
+"180
+[; ;src/parse.c: 180:     }
 }
 [e ++ _i -> -> 1 `i `uc ]
-[e :U 1195 ]
-[e $ < -> _i `i -> _len `i 1192  ]
 [e :U 1193 ]
+[e $ < -> _i `i -> _len `i 1190  ]
+[e :U 1191 ]
 }
-"176
-[; ;src/parse.c: 176:     return chk;
+"181
+[; ;src/parse.c: 181:     return chk;
 [e ) _chk ]
-[e $UE 1191  ]
-"177
-[; ;src/parse.c: 177: }
-[e :UE 1191 ]
+[e $UE 1189  ]
+"182
+[; ;src/parse.c: 182: }
+[e :UE 1189 ]
 }

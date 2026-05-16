@@ -70,16 +70,24 @@ typedef enum{
     COMM_TX_DONE,
 }event_t;
 //states
+// typedef enum{
+//     ST_INIT = 0,
+//     ST_IDLE,
+//     ST_MEAS,
+//     ST_MEAS_FAN,
+//     ST_MEAS_F1,
+//     ST_MEAS_F2,
+//     ST_SET_FAN,
+//     ST_SET_F1,
+//     ST_SET_F2,
+//     ST_MEAS_ENS160,
+//     ST_COMM,
+//     ST_COUNT
+// }state_t;
+
 typedef enum{
-    ST_INIT = 0,
     ST_IDLE,
-    ST_MEAS,
     ST_MEAS_FAN,
-    ST_MEAS_F1,
-    ST_MEAS_F2,
-    ST_SET_FAN,
-    ST_SET_F1,
-    ST_SET_F2,
     ST_MEAS_ENS160,
     ST_COMM,
     ST_COUNT
@@ -252,6 +260,6 @@ typedef struct{
 void FSM_init(FSM_t *sm);
 void FSM_transition(FSM_t *sm, state_t next);
 void FSM_dispatch(FSM_t *sm, event_t ev);
-void FSM_UART_debug_transmission(context_t *CTX, state_t old, event_t ev, state_t next);
+//void FSM_UART_debug_transmission(context_t *CTX, state_t old, event_t ev, state_t next);
 
 #endif

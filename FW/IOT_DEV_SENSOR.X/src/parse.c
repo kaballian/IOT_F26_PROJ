@@ -31,14 +31,19 @@ static UART_rx_parser_t rx_parser;
 static volatile uint8_t msg_ready = 0;
 static volatile UART_msg_t rx_msg;
 
+void UART_RX_Parserinit(void){
+    rx_parser.state    = RX_WAIT_SOF; /*initial state of parser*/
+    rx_parser.cmd      = 0;
+    rx_parser.len      = 0;
+}
 void UART_RX_ParserReset()
 {
     /*resets entire PARSER mini statemachine*/
     rx_parser.state    = RX_WAIT_SOF; /*initial state of parser*/
     rx_parser.cmd      = 0;
     rx_parser.len      = 0;
-    rx_parser.idx      = 0;
-    rx_parser.CHKsum   = 0;
+    // rx_parser.idx      = 0;
+    // rx_parser.CHKsum   = 0;
      
     
 }

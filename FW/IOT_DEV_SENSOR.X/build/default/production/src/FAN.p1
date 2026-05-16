@@ -1,30 +1,26 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"9 ./include/utils.h
-[; ;./include/utils.h: 9: typedef struct {
-[s S1154 `*Vuc 1 `*Vuc 1 `uc 1 ]
-[n S1154 . lat tris bitmask ]
-"220 ./include/system.h
-[; ;./include/system.h: 220: static transition_t stay(state_t current){
-[c E8253 0 1 2 3 4 5 6 7 8 9 10 11 .. ]
-[n E8253 . ST_INIT ST_IDLE ST_MEAS ST_MEAS_FAN ST_MEAS_F1 ST_MEAS_F2 ST_SET_FAN ST_SET_F1 ST_SET_F2 ST_MEAS_ENS160 ST_COMM ST_COUNT  ]
-"215
-[; ;./include/system.h: 215: typedef struct {
-[s S1168 `a 1 `E8253 1 ]
-[n S1168 . changed next ]
+"228 ./include/system.h
+[; ;./include/system.h: 228: static transition_t stay(state_t current){
+[c E8236 0 1 2 3 4 .. ]
+[n E8236 . ST_IDLE ST_MEAS_FAN ST_MEAS_ENS160 ST_COMM ST_COUNT  ]
+"223
+[; ;./include/system.h: 223: typedef struct {
+[s S1165 `a 1 `E8236 1 ]
+[n S1165 . changed next ]
 "47 ./include/PWM.h
 [; ;./include/PWM.h: 47: {
-[s S1158 `*Vus 1 `*Vuc 1 `uc 1 `us 1 ]
-[n S1158 . pR con ld_mask period ]
+[s S1155 `*Vus 1 `*Vuc 1 `uc 1 `us 1 ]
+[n S1155 . pR con ld_mask period ]
 "16 ./include/FAN.h
 [; ;./include/FAN.h: 16: {
-[s S1159 `*S1158 1 `uc 1 `us 1 `uc 1 `us 1 ]
-[n S1159 . pwm duty_percent tach_count pulses_pr_rev RPM ]
+[s S1156 `*S1155 1 `uc 1 `us 1 `uc 1 `us 1 ]
+[n S1156 . pwm duty_percent tach_count pulses_pr_rev RPM ]
 "30
 [; ;./include/FAN.h: 30: void FAN_set_duty(fan_t *fan, uint8_t duty_percent);
-[v _FAN_set_duty `(v ~T0 @X0 0 ef2`*S1159`uc ]
+[v _FAN_set_duty `(v ~T0 @X0 0 ef2`*S1156`uc ]
 "57 ./include/PWM.h
 [; ;./include/PWM.h: 57: void PWM_set_percent(pwm_chan_t *chan, uint8_t percent);
-[v _PWM_set_percent `(v ~T0 @X0 0 ef2`*S1158`uc ]
+[v _PWM_set_percent `(v ~T0 @X0 0 ef2`*S1155`uc ]
 "11 ./include/TMR1.h
 [; ;./include/TMR1.h: 11: void TMR1_CNT_reset(void);
 [v _TMR1_CNT_reset `(v ~T0 @X0 0 ef ]
@@ -1240,39 +1236,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "23281
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 23281: __asm("TOSH equ 01FEFh");
 [; <" TOSH equ 01FEFh ;# ">
-[v F8049 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"23 ./include/utils.h
-[; ;./include/utils.h: 23: static __attribute__((inline)) void pin_set(const pin_t *p) {*p->lat |= p->bitmask;}
-[v _pin_set `TF8049 ~T0 @X0 1 s ]
-{
-[e :U _pin_set ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =| *U . *U _p 0 -> . *U _p 2 `uc ]
-[e :UE 1155 ]
-}
-[v F8053 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"25
-[; ;./include/utils.h: 25: static __attribute__((inline)) void pin_clear(const pin_t *p) {*p->lat &= (uint8_t)~p->bitmask;}
-[v _pin_clear `TF8053 ~T0 @X0 1 s ]
-{
-[e :U _pin_clear ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =& *U . *U _p 0 -> -> ~ -> . *U _p 2 `i `uc `uc ]
-[e :UE 1156 ]
-}
-[v F8057 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"28
-[; ;./include/utils.h: 28: static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uint8_t)~p->bitmask;}
-[v _pin_output `TF8057 ~T0 @X0 1 s ]
-{
-[e :U _pin_output ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =& *U . *U _p 1 -> -> ~ -> . *U _p 2 `i `uc `uc ]
-[e :UE 1157 ]
-}
 "22 ./include/eusart1.h
 [; ;./include/eusart1.h: 22: volatile uint8_t g_uart_rx_f;
 [v _g_uart_rx_f `Vuc ~T0 @X0 1 e ]
@@ -1282,78 +1245,78 @@ Version 4.0 HI-TECH Software Intermediate Code
 "26
 [; ;./include/eusart1.h: 26: volatile uint8_t END_REG;
 [v _END_REG `Vuc ~T0 @X0 1 e ]
-"220 ./include/system.h
-[; ;./include/system.h: 220: static transition_t stay(state_t current){
-[v _stay `(S1168 ~T0 @X0 1 sf1`E8253 ]
+"228 ./include/system.h
+[; ;./include/system.h: 228: static transition_t stay(state_t current){
+[v _stay `(S1165 ~T0 @X0 1 sf1`E8236 ]
 {
 [e :U _stay ]
-[v _current `E8253 ~T0 @X0 1 r1 ]
+[v _current `E8236 ~T0 @X0 1 r1 ]
 [f ]
-"221
-[; ;./include/system.h: 221:     transition_t t;
-[v _t `S1168 ~T0 @X0 1 a ]
-"222
-[; ;./include/system.h: 222:     t.changed = 0;
+"229
+[; ;./include/system.h: 229:     transition_t t;
+[v _t `S1165 ~T0 @X0 1 a ]
+"230
+[; ;./include/system.h: 230:     t.changed = 0;
 [e = . _t 0 -> -> 0 `i `a ]
-"223
-[; ;./include/system.h: 223:     t.next = current;
+"231
+[; ;./include/system.h: 231:     t.next = current;
 [e = . _t 1 _current ]
-"224
-[; ;./include/system.h: 224:     return t;
-[e ) _t ]
-[e $UE 1169  ]
-"225
-[; ;./include/system.h: 225: }
-[e :UE 1169 ]
-}
-"226
-[; ;./include/system.h: 226: static transition_t to(state_t s)
-[v _to `(S1168 ~T0 @X0 1 sf1`E8253 ]
-"227
-[; ;./include/system.h: 227: {
-{
-[e :U _to ]
-"226
-[; ;./include/system.h: 226: static transition_t to(state_t s)
-[v _s `E8253 ~T0 @X0 1 r1 ]
-"227
-[; ;./include/system.h: 227: {
-[f ]
-[v F8364 `S1168 ~T0 @X0 1 s ]
-[i F8364
-:U ..
-:U ..
-"228
-[; ;./include/system.h: 228:     transition_t t = {
--> -> 0 `i `a
--> -> 0 `i `E8253
-..
-..
-]
-[v _t `S1168 ~T0 @X0 1 a ]
-[e = _t F8364 ]
-[e ; = . _t 0 -> -> 1 `i `a = . _t 1 _s ]
 "232
 [; ;./include/system.h: 232:     return t;
 [e ) _t ]
-[e $UE 1170  ]
+[e $UE 1166  ]
+"233
+[; ;./include/system.h: 233: }
+[e :UE 1166 ]
+}
 "234
-[; ;./include/system.h: 234: }
-[e :UE 1170 ]
+[; ;./include/system.h: 234: static transition_t to(state_t s)
+[v _to `(S1165 ~T0 @X0 1 sf1`E8236 ]
+"235
+[; ;./include/system.h: 235: {
+{
+[e :U _to ]
+"234
+[; ;./include/system.h: 234: static transition_t to(state_t s)
+[v _s `E8236 ~T0 @X0 1 r1 ]
+"235
+[; ;./include/system.h: 235: {
+[f ]
+[v F8340 `S1165 ~T0 @X0 1 s ]
+[i F8340
+:U ..
+:U ..
+"236
+[; ;./include/system.h: 236:     transition_t t = {
+-> -> 0 `i `a
+-> -> 0 `i `E8236
+..
+..
+]
+[v _t `S1165 ~T0 @X0 1 a ]
+[e = _t F8340 ]
+[e ; = . _t 0 -> -> 1 `i `a = . _t 1 _s ]
+"240
+[; ;./include/system.h: 240:     return t;
+[e ) _t ]
+[e $UE 1167  ]
+"242
+[; ;./include/system.h: 242: }
+[e :UE 1167 ]
 }
 "5 src/FAN.c
 [; ;src/FAN.c: 5: void FAN_init(fan_t *fan,
-[v _FAN_init `(v ~T0 @X0 1 ef3`*S1159`*S1158`uc ]
+[v _FAN_init `(v ~T0 @X0 1 ef3`*S1156`*S1155`uc ]
 "8
 [; ;src/FAN.c: 8: {
 {
 [e :U _FAN_init ]
 "5
 [; ;src/FAN.c: 5: void FAN_init(fan_t *fan,
-[v _fan `*S1159 ~T0 @X0 1 r1 ]
+[v _fan `*S1156 ~T0 @X0 1 r1 ]
 "6
 [; ;src/FAN.c: 6:     pwm_chan_t *pwm,
-[v _pwm `*S1158 ~T0 @X0 1 r2 ]
+[v _pwm `*S1155 ~T0 @X0 1 r2 ]
 "7
 [; ;src/FAN.c: 7:     uint8_t duty_percent)
 [v _duty_percent `uc ~T0 @X0 1 r3 ]
@@ -1362,17 +1325,17 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "9
 [; ;src/FAN.c: 9:     if(fan == 0)
-[e $ ! == _fan -> -> 0 `i `*S1159 1174  ]
+[e $ ! == _fan -> -> 0 `i `*S1156 1171  ]
 "10
 [; ;src/FAN.c: 10:     {
 {
 "11
 [; ;src/FAN.c: 11:         return;
-[e $UE 1173  ]
+[e $UE 1170  ]
 "12
 [; ;src/FAN.c: 12:     }
 }
-[e :U 1174 ]
+[e :U 1171 ]
 "14
 [; ;src/FAN.c: 14:     fan->pwm = pwm;
 [e = . *U _fan 0 _pwm ]
@@ -1393,36 +1356,36 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _FAN_set_duty (2 , _fan _duty_percent ]
 "21
 [; ;src/FAN.c: 21: }
-[e :UE 1173 ]
+[e :UE 1170 ]
 }
 "23
 [; ;src/FAN.c: 23: void FAN_set_duty(fan_t *fan, uint8_t duty_percent)
-[v _FAN_set_duty `(v ~T0 @X0 1 ef2`*S1159`uc ]
+[v _FAN_set_duty `(v ~T0 @X0 1 ef2`*S1156`uc ]
 "24
 [; ;src/FAN.c: 24: {
 {
 [e :U _FAN_set_duty ]
 "23
 [; ;src/FAN.c: 23: void FAN_set_duty(fan_t *fan, uint8_t duty_percent)
-[v _fan `*S1159 ~T0 @X0 1 r1 ]
+[v _fan `*S1156 ~T0 @X0 1 r1 ]
 [v _duty_percent `uc ~T0 @X0 1 r2 ]
 "24
 [; ;src/FAN.c: 24: {
 [f ]
 "25
 [; ;src/FAN.c: 25:     if((fan == 0) ||(fan->pwm == 0))
-[e $ ! || == _fan -> -> 0 `i `*S1159 == . *U _fan 0 -> -> 0 `i `*S1158 1176  ]
+[e $ ! || == _fan -> -> 0 `i `*S1156 == . *U _fan 0 -> -> 0 `i `*S1155 1173  ]
 "26
 [; ;src/FAN.c: 26:         return;
-[e $UE 1175  ]
-[e :U 1176 ]
+[e $UE 1172  ]
+[e :U 1173 ]
 "28
 [; ;src/FAN.c: 28:     if(duty_percent >100)
-[e $ ! > -> _duty_percent `i -> 100 `i 1177  ]
+[e $ ! > -> _duty_percent `i -> 100 `i 1174  ]
 "29
 [; ;src/FAN.c: 29:         duty_percent = 100;
 [e = _duty_percent -> -> 100 `i `uc ]
-[e :U 1177 ]
+[e :U 1174 ]
 "31
 [; ;src/FAN.c: 31:     fan->duty_percent = duty_percent;
 [e = . *U _fan 1 _duty_percent ]
@@ -1431,7 +1394,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _PWM_set_percent (2 , . *U _fan 0 _duty_percent ]
 "34
 [; ;src/FAN.c: 34: }
-[e :UE 1175 ]
+[e :UE 1172 ]
 }
 "42
 [; ;src/FAN.c: 42: uint16_t FAN_RPM_CONV(uint16_t pulses,
@@ -1452,52 +1415,52 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "47
 [; ;src/FAN.c: 47:     if(gate_ms == 0 || pulses_pr_rev == 0)
-[e $ ! || == -> _gate_ms `ui -> -> 0 `i `ui == -> _pulses_pr_rev `i -> 0 `i 1179  ]
+[e $ ! || == -> _gate_ms `ui -> -> 0 `i `ui == -> _pulses_pr_rev `i -> 0 `i 1176  ]
 "48
 [; ;src/FAN.c: 48:     {
 {
 "49
 [; ;src/FAN.c: 49:         return 0;
 [e ) -> -> 0 `i `us ]
-[e $UE 1178  ]
+[e $UE 1175  ]
 "50
 [; ;src/FAN.c: 50:     }
 }
-[e :U 1179 ]
+[e :U 1176 ]
 "52
 [; ;src/FAN.c: 52:     return (uint16_t)(((uint32_t)pulses * 60000u) / ((uint32_t)gate_ms * pulses_pr_rev));
 [e ) -> / * -> _pulses `ul -> -> 60000 `ui `ul * -> _gate_ms `ul -> _pulses_pr_rev `ul `us ]
-[e $UE 1178  ]
+[e $UE 1175  ]
 "54
 [; ;src/FAN.c: 54: }
-[e :UE 1178 ]
+[e :UE 1175 ]
 }
 "56
 [; ;src/FAN.c: 56: void FAN_CNT_start(fan_t *fan)
-[v _FAN_CNT_start `(v ~T0 @X0 1 ef1`*S1159 ]
+[v _FAN_CNT_start `(v ~T0 @X0 1 ef1`*S1156 ]
 "57
 [; ;src/FAN.c: 57: {
 {
 [e :U _FAN_CNT_start ]
 "56
 [; ;src/FAN.c: 56: void FAN_CNT_start(fan_t *fan)
-[v _fan `*S1159 ~T0 @X0 1 r1 ]
+[v _fan `*S1156 ~T0 @X0 1 r1 ]
 "57
 [; ;src/FAN.c: 57: {
 [f ]
 "58
 [; ;src/FAN.c: 58:     if(fan == 0)
-[e $ ! == _fan -> -> 0 `i `*S1159 1181  ]
+[e $ ! == _fan -> -> 0 `i `*S1156 1178  ]
 "59
 [; ;src/FAN.c: 59:     {
 {
 "60
 [; ;src/FAN.c: 60:         return;
-[e $UE 1180  ]
+[e $UE 1177  ]
 "61
 [; ;src/FAN.c: 61:     }
 }
-[e :U 1181 ]
+[e :U 1178 ]
 "63
 [; ;src/FAN.c: 63:     fan->tach_count = 0;
 [e = . *U _fan 2 -> -> 0 `i `us ]
@@ -1512,34 +1475,34 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _TMR1_CNT_start ..  ]
 "67
 [; ;src/FAN.c: 67: }
-[e :UE 1180 ]
+[e :UE 1177 ]
 }
 "68
 [; ;src/FAN.c: 68: void FAN_CNT_stop(fan_t *fan)
-[v _FAN_CNT_stop `(v ~T0 @X0 1 ef1`*S1159 ]
+[v _FAN_CNT_stop `(v ~T0 @X0 1 ef1`*S1156 ]
 "69
 [; ;src/FAN.c: 69: {
 {
 [e :U _FAN_CNT_stop ]
 "68
 [; ;src/FAN.c: 68: void FAN_CNT_stop(fan_t *fan)
-[v _fan `*S1159 ~T0 @X0 1 r1 ]
+[v _fan `*S1156 ~T0 @X0 1 r1 ]
 "69
 [; ;src/FAN.c: 69: {
 [f ]
 "70
 [; ;src/FAN.c: 70:     if(fan == 0)
-[e $ ! == _fan -> -> 0 `i `*S1159 1183  ]
+[e $ ! == _fan -> -> 0 `i `*S1156 1180  ]
 "71
 [; ;src/FAN.c: 71:     {
 {
 "72
 [; ;src/FAN.c: 72:         return;
-[e $UE 1182  ]
+[e $UE 1179  ]
 "73
 [; ;src/FAN.c: 73:     }
 }
-[e :U 1183 ]
+[e :U 1180 ]
 "74
 [; ;src/FAN.c: 74:     TMR1_CNT_stop();
 [e ( _TMR1_CNT_stop ..  ]
@@ -1551,5 +1514,5 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . *U _fan 4 ( _FAN_RPM_CONV (3 , , . *U _fan 2 -> -> 500 `i `us . *U _fan 3 ]
 "79
 [; ;src/FAN.c: 79: }
-[e :UE 1182 ]
+[e :UE 1179 ]
 }

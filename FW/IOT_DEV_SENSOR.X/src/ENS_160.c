@@ -1,5 +1,6 @@
 #include "include/ENS_160.h"
 #include "include/I2C.h"
+#include <stdbool.h>
 
 
 
@@ -13,10 +14,10 @@ bool ENS160_probe(uint8_t addr, uint16_t *part_id)
 {
     /*probes the device for PART ID at register 0x00*/
     uint8_t buf[2];
-    if(part_id == 0) //check for nullptr
-    {
-        return false;
-    }
+    // if(part_id == 0) //check for nullptr
+    // {
+    //     return false;
+    // }
     /*read from device */
     if(!I2C2_read_reg(addr, ENS160_REG_PART_ID, buf, 2))
     {
@@ -34,10 +35,10 @@ bool ENS160_init(ENS160_t *dev, uint8_t addr)
     /*initialized the device, extracts the part id
     and leaves it in stardard mode*/
     uint16_t part_id;
-    if(dev == 0) //check for nullptr
-    {
-        return false;
-    }
+    // if(dev == 0) //check for nullptr
+    // {
+    //     return false;
+    // }
 
     dev->dev_addr       = addr;
     dev->present        = 0u;
@@ -77,10 +78,10 @@ bool ENS160_read_status(ENS160_t *dev)
     the device status location in memory*/
     uint8_t status;
 
-    if(dev == 0)
-    {
-        return false;
-    }
+    // if(dev == 0)
+    // {
+    //     return false;
+    // }
     if(!I2C2_read_reg(dev->dev_addr, ENS160_REG_STATUS, &status, 1))
     {
         return false;
@@ -108,10 +109,10 @@ bool ENS160_read_data(ENS160_t *dev)
 {
     uint8_t buf[5];
     
-    if(dev == 0)
-    {
-        return false;
-    }
+    // if(dev == 0)
+    // {
+    //     return false;
+    // }
     /*reads data from device.
     This makes use of the auto increment function implemented
     in device
@@ -137,7 +138,7 @@ bool ENS160_read_data(ENS160_t *dev)
     //set the validity flag
 
     dev->data_valid = (dev->validity_flag != 3u);
-
+    return true;
 }
 bool ENS160_set_opmode(ENS160_t *dev, uint8_t mode)
 {
@@ -151,33 +152,33 @@ bool ENS160_set_opmode(ENS160_t *dev, uint8_t mode)
     return I2C2_write_reg(dev->dev_addr, ENS160_REG_OPMODE, &mode, 1);
     /*expect a return true from function*/
 }
-bool ENS160_write_env(ENS160_t *dev, int16_t temp_c_x100, uint16_t rh_x100)
-{
-    /*
-    {
-    uint8_t buf[2];
-    int32_t temp_k_x64;
-    uint32_t rh_x512;
+// bool ENS160_write_env(ENS160_t *dev, int16_t temp_c_x100, uint16_t rh_x100)
+// {
+//     /*
+//     {
+//     uint8_t buf[2];
+//     int32_t temp_k_x64;
+//     uint32_t rh_x512;
 
-    if (dev == 0)
-        return false;
+//     if (dev == 0)
+//         return false;
 
-    temp_k_x64 = ((int32_t)temp_c_x100 + 27315) * 64 / 100;
-    rh_x512    = ((uint32_t)rh_x100 * 512u) / 100u;
+//     temp_k_x64 = ((int32_t)temp_c_x100 + 27315) * 64 / 100;
+//     rh_x512    = ((uint32_t)rh_x100 * 512u) / 100u;
 
-    buf[0] = (uint8_t)(temp_k_x64 & 0xFF);
-    buf[1] = (uint8_t)((temp_k_x64 >> 8) & 0xFF);
+//     buf[0] = (uint8_t)(temp_k_x64 & 0xFF);
+//     buf[1] = (uint8_t)((temp_k_x64 >> 8) & 0xFF);
 
-    if (!I2C2_write_reg(dev->addr, ENS160_REG_TEMP_IN, buf, 2))
-        return false;
+//     if (!I2C2_write_reg(dev->addr, ENS160_REG_TEMP_IN, buf, 2))
+//         return false;
 
-    buf[0] = (uint8_t)(rh_x512 & 0xFF);
-    buf[1] = (uint8_t)((rh_x512 >> 8) & 0xFF);
+//     buf[0] = (uint8_t)(rh_x512 & 0xFF);
+//     buf[1] = (uint8_t)((rh_x512 >> 8) & 0xFF);
 
-    if (!I2C2_write_reg(dev->addr, ENS160_REG_RH_IN, buf, 2))
-        return false;
+//     if (!I2C2_write_reg(dev->addr, ENS160_REG_RH_IN, buf, 2))
+//         return false;
 
-    return true;
-    }
-    */
-}
+//     return true;
+//     }
+//     */
+// }

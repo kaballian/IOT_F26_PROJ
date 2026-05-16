@@ -13672,13 +13672,6 @@ typedef struct {
     volatile uint8_t *tris;
     uint8_t bitmask;
 }pin_t;
-# 23 "./include/utils.h"
-static __attribute__((inline)) void pin_set(const pin_t *p) {*p->lat |= p->bitmask;}
-
-static __attribute__((inline)) void pin_clear(const pin_t *p) {*p->lat &= (uint8_t)~p->bitmask;}
-
-
-static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uint8_t)~p->bitmask;}
 # 6 "./include/system.h" 2
 # 1 "./include/clock.h" 1
 # 11 "./include/clock.h"
@@ -13791,7 +13784,6 @@ _Bool ENS160_init(ENS160_t *dev, uint8_t addr);
 _Bool ENS160_read_status(ENS160_t *dev);
 _Bool ENS160_read_data(ENS160_t *dev);
 _Bool ENS160_set_opmode(ENS160_t *dev, uint8_t mode);
-_Bool ENS160_write_env(ENS160_t *dev, int16_t temp_c_x100, uint16_t rh_x100);
 # 14 "./include/system.h" 2
 # 1 "./include/I2C.h" 1
 
@@ -13882,20 +13874,23 @@ void COMM_assemble_frame(UART_tx_msg_t *tx);
 void COMM_TX_start(UART_tx_msg_t *tx);
 # 18 "./include/system.h" 2
 # 1 "./include/ADG419BR.h" 1
-# 28 "./include/ADG419BR.h"
+# 32 "./include/ADG419BR.h"
 typedef enum {
     CHL_1 = 0,
     CHL_2 = 1
 }switch_chl_t;
 
 typedef struct{
-    pin_t channelSelector;
+
     switch_chl_t status;
 }ADG419_t;
 
 
 
-void ADG419_init(ADG419_t *dev, const pin_t select_pin);
+
+
+
+void ADG419_init(ADG419_t *dev);
 void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl);
 # 19 "./include/system.h" 2
 # 1 "./include/TMR0.h" 1
@@ -13913,7 +13908,7 @@ void TMR0_ISR(void);
 extern volatile uint8_t g_tmr0_1ms_flag;
 
 
-void ISR_init();
+void ISR_init(void);
 # 22 "./include/system.h" 2
 # 1 "./include/parse.h" 1
 # 12 "./include/parse.h"
@@ -13922,7 +13917,8 @@ typedef struct {
     uint8_t len;
     uint8_t payload[8];
 }UART_msg_t;
-# 46 "./include/parse.h"
+# 45 "./include/parse.h"
+void UART_RX_Parserinit(void);
 void UART_RX_ParserFeed(uint8_t byte);
 void UART_RX_ParserReset();
 _Bool UART_parser_MsgAvailable(void);
@@ -13964,17 +13960,10 @@ typedef enum{
     SET_DONE,
     COMM_TX_DONE,
 }event_t;
-
+# 88 "./include/system.h"
 typedef enum{
-    ST_INIT = 0,
     ST_IDLE,
-    ST_MEAS,
     ST_MEAS_FAN,
-    ST_MEAS_F1,
-    ST_MEAS_F2,
-    ST_SET_FAN,
-    ST_SET_F1,
-    ST_SET_F2,
     ST_MEAS_ENS160,
     ST_COMM,
     ST_COUNT
@@ -14147,7 +14136,6 @@ typedef struct{
 void FSM_init(FSM_t *sm);
 void FSM_transition(FSM_t *sm, state_t next);
 void FSM_dispatch(FSM_t *sm, event_t ev);
-void FSM_UART_debug_transmission(context_t *CTX, state_t old, event_t ev, state_t next);
 # 5 "./include/event_queue.h" 2
 
 
@@ -14165,8 +14153,6 @@ typedef struct {
 void EVENT_Q_init(event_q_t *q);
 _Bool EVENT_Q_push(event_q_t *q, event_t ev);
 _Bool EVENT_Q_pop(event_q_t *q, event_t *ev);
-_Bool EVENT_Q_is_empty(const event_q_t *q);
-_Bool EVENT_Q_is_full(const event_q_t *e);
 # 2 "src/event_queue.c" 2
 
 
@@ -14198,13 +14184,4 @@ _Bool EVENT_Q_pop(event_q_t *q, event_t *ev)
     q->tail = (uint8_t)((q->tail + 1) % 8);
     q->count--;
     return 1;
-}
-_Bool EVENT_Q_is_empty(const event_q_t *q)
-{
-    return (q->count == 0);
-}
-_Bool EVENT_Q_is_full(const event_q_t *q)
-
-{
-    return (q->count >= 8);
 }

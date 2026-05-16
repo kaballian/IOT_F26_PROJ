@@ -13660,13 +13660,6 @@ typedef struct {
     volatile uint8_t *tris;
     uint8_t bitmask;
 }pin_t;
-# 23 "./include/utils.h"
-static __attribute__((inline)) void pin_set(const pin_t *p) {*p->lat |= p->bitmask;}
-
-static __attribute__((inline)) void pin_clear(const pin_t *p) {*p->lat &= (uint8_t)~p->bitmask;}
-
-
-static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uint8_t)~p->bitmask;}
 # 6 "./include/I2C.h" 2
 _Bool I2C2_init(void);
 static _Bool I2C2_start(void);
@@ -13747,14 +13740,6 @@ static _Bool I2C2_stop(void)
     return (timeout > 0u);
 }
 
-static _Bool I2C2_write(uint8_t data)
-{
-    SSP2BUF = data;
-    while(SSP2STATbits.BF);
-    while(SSP2CON2bits.ACKSTAT);
-
-    return (SSP2CON2bits.ACKSTAT == 0);
-}
 static _Bool I2C2_write_byte(uint8_t byte)
 {
 

@@ -30,13 +30,13 @@ bool EVENT_Q_pop(event_q_t *q, event_t *ev)
     q->count--;
     return true;
 }
-bool EVENT_Q_is_empty(const event_q_t *q)
-{
-    return (q->count == 0);
-}
-bool EVENT_Q_is_full(const event_q_t *q)
+// bool EVENT_Q_is_empty(const event_q_t *q)
+// {
+//     return (q->count == 0);
+// }
+// bool EVENT_Q_is_full(const event_q_t *q)
 
-{
-    return (q->count >= EV_Q_SIZE);
-}
+// {
+//     return (q->count >= EV_Q_SIZE);
+// }
 

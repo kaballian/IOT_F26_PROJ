@@ -1,7 +1,7 @@
 #ifndef PARSE_H
 #define PARSE_H
 
-#include "xc.h"
+
 #include "eusart1.h"
 
 
@@ -42,7 +42,7 @@ CHK  = CMD ^ LEN ^ payload[0] ^ payload [1] ^...
 */
 
 
-
+void UART_RX_Parserinit(void);
 void UART_RX_ParserFeed(uint8_t byte);
 void UART_RX_ParserReset();
 bool UART_parser_MsgAvailable(void);

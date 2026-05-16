@@ -20,6 +20,8 @@ defined in system.h
 // CONFIG1
 
 
+
+#include "include/parse.h"
 #pragma config FEXTOSC = OFF    // External Oscillator Selection bits (Oscillator not enabled)
 #pragma config RSTOSC = HFINTOSC_1MHz// Reset Oscillator Selection bits (HFINTOSC (1MHz))
 #pragma config CLKOUTEN = OFF   // Clock Out Enable bit (CLKOUT function is disabled; i/o or oscillator function on OSC2)
@@ -66,8 +68,8 @@ defined in system.h
 
 
 #include "include/event_queue.h"
-
-// #include "include/parse.h"
+#include "include/ENS_160.h"
+#include "include/interrupt.h"
 #include "include/eusart1.h"
 #include "include/system.h"
 #include <pic16f18124.h>
@@ -118,9 +120,6 @@ volatile uint32_t g_fan_deadline   = 0; //fan deadline check
     
 // extern volatile uint8_t g_comm_tx_done_f; //ISR flag
 
-/*helper proto*/
-static void APP_handleUART(context_t *CTX);
-void APP_dispatch_events(void);
 
 /*handling wrapper*/
 // static inline void APP_post_event(event_t ev)
@@ -139,14 +138,22 @@ void APP_service(context_t *CTX, event_q_t *ev)
     static uint8_t step = 0;
     static uint32_t last_ms = 0;
     static UART_msg_t rx_msg;
+    
+    if(COMM_tx_done())
+    {
+        COMM_clear_tx_done();
+        EVENT_Q_push(ev, COMM_TX_DONE);
+    }
 
     if(UART_parser_GetMsg(&rx_msg))
     {
+        
         switch(rx_msg.cmd)
         {
             case CMD_SET_F1:
             case CMD_SET_F2:
             {
+                
                 fan_sel_t fan_id = (rx_msg.cmd == CMD_SET_F1) ? FAN_1 : FAN_2;
                 CTX->active_fan = fan_id;
                 CTX->FANS[fan_id].duty_percent = rx_msg.payload[1];
@@ -162,18 +169,41 @@ void APP_service(context_t *CTX, event_q_t *ev)
 
             case CMD_GET_F1:
             {
+                
                 CTX->comm_req.type = COMM_RESP_F1;
                 EVENT_Q_push(ev, UART_RESP);
                 break;
             }
             case CMD_GET_F2:
             {
+                
                 CTX->comm_req.type = COMM_RESP_F2;
                 EVENT_Q_push(ev, UART_RESP);
                 break;
             }
+            default:
+                break;
         }
     }
+
+    if(CTX->gate_active && (CTX->gate_owner == GATE_ENS160))
+    {
+        if(CTX->comm_i2c_flags == COMM_INIT)
+        {
+            CTX->comm_i2c_flags = READ_DATA;
+            //LATCbits.LATC5 ^= 1; works
+            EVENT_Q_push(ev, MEAS_ENS160_READ);
+        }
+        else if(CTX->comm_i2c_flags == COMM_COMP)
+        {
+            // LATCbits.LATC5 ^=1; works
+            EVENT_Q_push(ev, MEAS_ENS160_DONE);
+        }
+
+        return;
+    }
+
+
 
     if(CTX->gate_active && CTX->has_deadline)
     {
@@ -190,19 +220,12 @@ void APP_service(context_t *CTX, event_q_t *ev)
         return;
     }
 
-    if(CTX->gate_owner == GATE_ENS160)
+    
+    // if(CTX->gate_active)
+    if(CTX->gate_active || CTX->comm_req.type != COMM_RESP_NONE)
     {
-        if(CTX->comm_i2c_flags == COMM_INIT)
-        {
-            CTX->comm_i2c_flags = READ_DATA;
-            EVENT_Q_push(ev, MEAS_ENS160_READ);
-        }
-        else if(CTX->comm_i2c_flags == COMM_COMP)
-        {
-            EVENT_Q_push(ev, MEAS_ENS160_DONE);
-        }
+        return;
     }
-
 
     if((CTX->sys_ms - last_ms) < 2000)
     {
@@ -309,13 +332,41 @@ int main(void)
 {   
     CLOCK_init(); //works
     PIN_MANAGER_init(); //works
-    ISR_init(); // works
+    ISR_init();
     EUSART1_init(); //works
     TMR0_init(); //works
     TMR1_CNT_init(); // works
     PWM_init(); 
     I2C2_init(); // works
+    
+    //INITS from FSM init state
+    FAN_init(&sm.CTX.FANS[FAN_1], &PWM_FAN1_CH, 20);
+    FAN_init(&sm.CTX.FANS[FAN_2], &PWM_FAN2_CH, 30);
 
+    ADG419_init(&sm.CTX.FAN_selector);
+
+    ENS160_init(&sm.CTX.ENS160, ENS_160_ADDR0);
+
+    ENS160_set_opmode(&sm.CTX.ENS160, ENS160_OPMODE_STANDARD);
+    
+    UART_RX_Parserinit();
+    sm.CTX.comm_i2c_flags = NO_COMM;
+
+
+
+    /*
+    THE PLAN
+    REMOVE ST_INIT
+    MOVE FIRST STATE TO IDLE
+    THIS SHOULD LET THE APP_SERVICE RUN FROM IDLE
+    
+    MAYBE CONSIDER DITCHING THE QUEUE SYSTEM BUT
+    KEEP THE APP_SERVICE, SINCE EVERYTHING IS SCHEDULED
+    */
+
+
+
+    
     //WORKS
     // while(1)
     // {
@@ -391,19 +442,25 @@ int main(void)
     // __delay_ms(2000);
 
     // test -- 6 app_service without TMR
-    FSM_init(&sm);    
-    EVENT_Q_init(&ev_q);
-    FSM_dispatch(&sm, INIT_COMP);
+    // FSM_init(&sm);    
+    // EVENT_Q_init(&ev_q);
+    // FSM_dispatch(&sm, INIT_COMP);
     // __delay_ms(1000);
     
 
 
-
+    //ACTUAL IMPLEMENTATION
+    FSM_init(&sm);    
+    EVENT_Q_init(&ev_q);
+    // static UART_msg_t rx_msg;
+    // static UART_tx_msg_t tx_msg;
+    
     while(1)
     {
         //works
         // if(UART_parser_GetMsg(&rx_msg))
         // {
+        //     // LATCbits.LATC5 ^= 1;
         //     tx_msg.cmd = rx_msg.cmd;
         //     tx_msg.len = rx_msg.len;
 
@@ -596,6 +653,9 @@ int main(void)
         
         // __delay_ms(1000);
        
+
+        //ACTUAL MAIN program
+
         if(g_tmr0_1ms_flag)
         {
             g_tmr0_1ms_flag = 0;

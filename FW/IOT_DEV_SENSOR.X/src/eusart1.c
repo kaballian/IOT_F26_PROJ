@@ -26,7 +26,7 @@ volatile uint8_t END_REG = 0;
 static volatile const UART_tx_msg_t *g_tx_msg = 0;
 static volatile uint8_t g_tx_idx = 0;
 
-volatile bool g_comm_tx_done_f = true;
+volatile bool g_comm_tx_done_f = false;
 
 bool COMM_tx_done(void)
 {
@@ -79,13 +79,10 @@ void EUSART1_init(void)
     SP1BRGL = 0xA0; //~416
 
    
-    // rx_head = 0;
-    // rx_tail = 0;
-    // tx_head = 0;
-    // tx_tail = 0;
 
+    
 
-    UART_RX_ParserReset();
+    UART_RX_Parserinit();
 }
 
 
@@ -110,7 +107,7 @@ void EUSART1_ISR(void)
        
         volatile uint8_t byte = RC1REG;
 
-        
+        // LATCbits.LATC5 = 1;
 
         // static UART_tx_msg_t tx_msg;
         // tx_msg.cmd = CMD_PING;

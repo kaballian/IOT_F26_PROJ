@@ -1,19 +1,37 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"9 ./include/utils.h
-[; ;./include/utils.h: 9: typedef struct {
-[s S1154 `*Vuc 1 `*Vuc 1 `uc 1 ]
-[n S1154 . lat tris bitmask ]
-"15 src/ARG419BR.c
-[; ;src/ARG419BR.c: 15: void ADG419_init(ADG419_t *dev, const pin_t select_pin)
-[c E8060 0 1 .. ]
-[n E8060 . CHL_1 CHL_2  ]
-"33 ./include/ADG419BR.h
-[; ;./include/ADG419BR.h: 33: typedef struct{
-[s S1158 `S1154 1 `E8060 1 ]
-[n S1158 . channelSelector status ]
-"41
-[; ;./include/ADG419BR.h: 41: void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl);
-[v _ADG419_CHL_SELECT `(v ~T0 @X0 0 ef2`*S1158`E8060 ]
+"46 src/ARG419BR.c
+[; ;src/ARG419BR.c: 46: void ADG419_init(ADG419_t *dev)
+[c E8048 0 1 .. ]
+[n E8048 . CHL_1 CHL_2  ]
+"37 ./include/ADG419BR.h
+[; ;./include/ADG419BR.h: 37: typedef struct{
+[s S1155 `E8048 1 ]
+[n S1155 . status ]
+"480 D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h
+[; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 480:     struct {
+[s S37 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S37 . TRISA0 TRISA1 TRISA2 . TRISA4 TRISA5 ]
+"479
+[; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 479: typedef union {
+[u S36 `S37 1 ]
+[n S36 . . ]
+"489
+[; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 489: extern volatile TRISAbits_t TRISAbits __attribute__((address(0x012)));
+[v _TRISAbits `VS36 ~T0 @X0 0 e@18 ]
+"48 ./include/ADG419BR.h
+[; ;./include/ADG419BR.h: 48: void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl);
+[v _ADG419_CHL_SELECT `(v ~T0 @X0 0 ef2`*S1155`E8048 ]
+"575 D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h
+[; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 575:     struct {
+[s S41 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S41 . LATA0 LATA1 LATA2 . LATA4 LATA5 ]
+"574
+[; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 574: typedef union {
+[u S40 `S41 1 ]
+[n S40 . . ]
+"584
+[; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 584: extern volatile LATAbits_t LATAbits __attribute__((address(0x018)));
+[v _LATAbits `VS40 ~T0 @X0 0 e@24 ]
 "38 D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 38: __asm("INDF0 equ 00h");
 [; <" INDF0 equ 00h ;# ">
@@ -1217,136 +1235,86 @@ Version 4.0 HI-TECH Software Intermediate Code
 "23281
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 23281: __asm("TOSH equ 01FEFh");
 [; <" TOSH equ 01FEFh ;# ">
-[v F8049 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"23 ./include/utils.h
-[; ;./include/utils.h: 23: static __attribute__((inline)) void pin_set(const pin_t *p) {*p->lat |= p->bitmask;}
-[v _pin_set `TF8049 ~T0 @X0 1 s ]
-{
-[e :U _pin_set ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =| *U . *U _p 0 -> . *U _p 2 `uc ]
-[e :UE 1155 ]
-}
-[v F8053 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"25
-[; ;./include/utils.h: 25: static __attribute__((inline)) void pin_clear(const pin_t *p) {*p->lat &= (uint8_t)~p->bitmask;}
-[v _pin_clear `TF8053 ~T0 @X0 1 s ]
-{
-[e :U _pin_clear ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =& *U . *U _p 0 -> -> ~ -> . *U _p 2 `i `uc `uc ]
-[e :UE 1156 ]
-}
-[v F8057 `(v ~T0 @X0 1 tf1`*CS1154 ]
-"28
-[; ;./include/utils.h: 28: static __attribute__((inline)) void pin_output(const pin_t *p) {*p->tris &= (uint8_t)~p->bitmask;}
-[v _pin_output `TF8057 ~T0 @X0 1 s ]
-{
-[e :U _pin_output ]
-[v _p `*CS1154 ~T0 @X0 1 r1 ]
-[f ]
-[e =& *U . *U _p 1 -> -> ~ -> . *U _p 2 `i `uc `uc ]
-[e :UE 1157 ]
-}
-"15 src/ARG419BR.c
-[; ;src/ARG419BR.c: 15: void ADG419_init(ADG419_t *dev, const pin_t select_pin)
-[v _ADG419_init `(v ~T0 @X0 1 ef2`*S1158`CS1154 ]
-"16
-[; ;src/ARG419BR.c: 16: {
+"46 src/ARG419BR.c
+[; ;src/ARG419BR.c: 46: void ADG419_init(ADG419_t *dev)
+[v _ADG419_init `(v ~T0 @X0 1 ef1`*S1155 ]
+"47
+[; ;src/ARG419BR.c: 47: {
 {
 [e :U _ADG419_init ]
-"15
-[; ;src/ARG419BR.c: 15: void ADG419_init(ADG419_t *dev, const pin_t select_pin)
-[v _dev `*S1158 ~T0 @X0 1 r1 ]
-[v _select_pin `CS1154 ~T0 @X0 1 r2 ]
-"16
-[; ;src/ARG419BR.c: 16: {
+"46
+[; ;src/ARG419BR.c: 46: void ADG419_init(ADG419_t *dev)
+[v _dev `*S1155 ~T0 @X0 1 r1 ]
+"47
+[; ;src/ARG419BR.c: 47: {
 [f ]
-"17
-[; ;src/ARG419BR.c: 17:     if(dev == 0)
-[e $ ! == _dev -> -> 0 `i `*S1158 1160  ]
-"18
-[; ;src/ARG419BR.c: 18:     {
-{
-"19
-[; ;src/ARG419BR.c: 19:         return;
-[e $UE 1159  ]
-"20
-[; ;src/ARG419BR.c: 20:     }
+"48
+[; ;src/ARG419BR.c: 48:     dev->status = CHL_1;
+[e = . *U _dev 0 . `E8048 0 ]
+"49
+[; ;src/ARG419BR.c: 49:     (TRISAbits.TRISA2 = 0);
+[e = . . _TRISAbits 0 2 -> -> 0 `i `uc ]
+"50
+[; ;src/ARG419BR.c: 50:     ADG419_CHL_SELECT(dev, CHL_1);
+[e ( _ADG419_CHL_SELECT (2 , _dev . `E8048 0 ]
+"51
+[; ;src/ARG419BR.c: 51: }
+[e :UE 1156 ]
 }
-[e :U 1160 ]
-"22
-[; ;src/ARG419BR.c: 22:     dev->channelSelector = select_pin;
-[e = . *U _dev 0 _select_pin ]
-"23
-[; ;src/ARG419BR.c: 23:     dev->status = CHL_1;
-[e = . *U _dev 1 . `E8060 0 ]
-"25
-[; ;src/ARG419BR.c: 25:     pin_output(&dev->channelSelector);
-[e ( _pin_output (1 -> &U . *U _dev 0 `*CS1154 ]
-"26
-[; ;src/ARG419BR.c: 26:     ADG419_CHL_SELECT(dev, CHL_1);
-[e ( _ADG419_CHL_SELECT (2 , _dev . `E8060 0 ]
-"27
-[; ;src/ARG419BR.c: 27: }
-[e :UE 1159 ]
-}
-"29
-[; ;src/ARG419BR.c: 29: void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl)
-[v _ADG419_CHL_SELECT `(v ~T0 @X0 1 ef2`*S1158`E8060 ]
-"30
-[; ;src/ARG419BR.c: 30: {
+"54
+[; ;src/ARG419BR.c: 54: void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl)
+[v _ADG419_CHL_SELECT `(v ~T0 @X0 1 ef2`*S1155`E8048 ]
+"55
+[; ;src/ARG419BR.c: 55: {
 {
 [e :U _ADG419_CHL_SELECT ]
-"29
-[; ;src/ARG419BR.c: 29: void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl)
-[v _dev `*S1158 ~T0 @X0 1 r1 ]
-[v _chl `E8060 ~T0 @X0 1 r2 ]
-"30
-[; ;src/ARG419BR.c: 30: {
+"54
+[; ;src/ARG419BR.c: 54: void ADG419_CHL_SELECT(ADG419_t *dev, switch_chl_t chl)
+[v _dev `*S1155 ~T0 @X0 1 r1 ]
+[v _chl `E8048 ~T0 @X0 1 r2 ]
+"55
+[; ;src/ARG419BR.c: 55: {
 [f ]
-"31
-[; ;src/ARG419BR.c: 31:     switch (chl)
-[e $U 1163  ]
-"32
-[; ;src/ARG419BR.c: 32:     {
+"56
+[; ;src/ARG419BR.c: 56:     switch(chl)
+[e $U 1159  ]
+"57
+[; ;src/ARG419BR.c: 57:     {
 {
-"33
-[; ;src/ARG419BR.c: 33:     case CHL_1:
-[e :U 1164 ]
-"34
-[; ;src/ARG419BR.c: 34:         pin_clear(&dev->channelSelector);
-[e ( _pin_clear (1 -> &U . *U _dev 0 `*CS1154 ]
-"35
-[; ;src/ARG419BR.c: 35:         break;
-[e $U 1162  ]
-"37
-[; ;src/ARG419BR.c: 37:     case CHL_2:
-[e :U 1165 ]
-"38
-[; ;src/ARG419BR.c: 38:         pin_set(&dev->channelSelector);
-[e ( _pin_set (1 -> &U . *U _dev 0 `*CS1154 ]
-"39
-[; ;src/ARG419BR.c: 39:         break;
-[e $U 1162  ]
-"41
-[; ;src/ARG419BR.c: 41:     default:
-[e :U 1166 ]
-"42
-[; ;src/ARG419BR.c: 42:         break;
-[e $U 1162  ]
-"43
-[; ;src/ARG419BR.c: 43:     }
+"58
+[; ;src/ARG419BR.c: 58:         case CHL_1:
+[e :U 1160 ]
+"59
+[; ;src/ARG419BR.c: 59:             (LATAbits.LATA2 = 0);
+[e = . . _LATAbits 0 2 -> -> 0 `i `uc ]
+"60
+[; ;src/ARG419BR.c: 60:             dev->status = CHL_1;
+[e = . *U _dev 0 . `E8048 0 ]
+"61
+[; ;src/ARG419BR.c: 61:             break;
+[e $U 1158  ]
+"63
+[; ;src/ARG419BR.c: 63:         case CHL_2:
+[e :U 1161 ]
+"64
+[; ;src/ARG419BR.c: 64:             (LATAbits.LATA2 = 1);
+[e = . . _LATAbits 0 2 -> -> 1 `i `uc ]
+"65
+[; ;src/ARG419BR.c: 65:             dev->status = CHL_2;
+[e = . *U _dev 0 . `E8048 1 ]
+"66
+[; ;src/ARG419BR.c: 66:             break;
+[e $U 1158  ]
+"67
+[; ;src/ARG419BR.c: 67:     }
 }
-[e $U 1162  ]
-[e :U 1163 ]
-[e [\ -> _chl `ui , $ -> . `E8060 0 `ui 1164
- , $ -> . `E8060 1 `ui 1165
- 1166 ]
-[e :U 1162 ]
-"45
-[; ;src/ARG419BR.c: 45: }
-[e :UE 1161 ]
+[e $U 1158  ]
+[e :U 1159 ]
+[e [\ -> _chl `ui , $ -> . `E8048 0 `ui 1160
+ , $ -> . `E8048 1 `ui 1161
+ 1158 ]
+[e :U 1158 ]
+"68
+[; ;src/ARG419BR.c: 68: }
+[e :UE 1157 ]
 }

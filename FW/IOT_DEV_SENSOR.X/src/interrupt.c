@@ -2,7 +2,7 @@
 
 
 
-void ISR_init()
+void ISR_init(void)
 {
     INTCONbits.GIE = 0; //during setup, disable all interrupts
     INTCONbits.PEIE = 1; // enable peripheral interrupt 
