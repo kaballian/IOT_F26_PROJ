@@ -1,7 +1,7 @@
 
 16F18124 Memory Summary:
-    Program space        used   EE2h (  3810) of  1000h words   ( 93.0%)
-    Data space           used   158h (   344) of   200h bytes   ( 67.2%)
+    Program space        used   F43h (  3907) of  1000h words   ( 95.4%)
+    Data space           used   168h (   360) of   200h bytes   ( 70.3%)
     EEPROM space         used     0h (     0) of    80h bytes   (  0.0%)
     Configuration bits   used     5h (     5) of     5h words   (100.0%)
     ID Location space    used     0h (     0) of     4h bytes   (  0.0%)

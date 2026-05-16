@@ -1,10 +1,10 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"228 ./include/system.h
-[; ;./include/system.h: 228: static transition_t stay(state_t current){
+"241 ./include/system.h
+[; ;./include/system.h: 241: static transition_t stay(state_t current){
 [c E8236 0 1 2 3 4 .. ]
 [n E8236 . ST_IDLE ST_MEAS_FAN ST_MEAS_ENS160 ST_COMM ST_COUNT  ]
-"223
-[; ;./include/system.h: 223: typedef struct {
+"236
+[; ;./include/system.h: 236: typedef struct {
 [s S1165 `a 1 `E8236 1 ]
 [n S1165 . changed next ]
 "47 ./include/PWM.h
@@ -1245,49 +1245,49 @@ Version 4.0 HI-TECH Software Intermediate Code
 "26
 [; ;./include/eusart1.h: 26: volatile uint8_t END_REG;
 [v _END_REG `Vuc ~T0 @X0 1 e ]
-"228 ./include/system.h
-[; ;./include/system.h: 228: static transition_t stay(state_t current){
+"241 ./include/system.h
+[; ;./include/system.h: 241: static transition_t stay(state_t current){
 [v _stay `(S1165 ~T0 @X0 1 sf1`E8236 ]
 {
 [e :U _stay ]
 [v _current `E8236 ~T0 @X0 1 r1 ]
 [f ]
-"229
-[; ;./include/system.h: 229:     transition_t t;
+"242
+[; ;./include/system.h: 242:     transition_t t;
 [v _t `S1165 ~T0 @X0 1 a ]
-"230
-[; ;./include/system.h: 230:     t.changed = 0;
+"243
+[; ;./include/system.h: 243:     t.changed = 0;
 [e = . _t 0 -> -> 0 `i `a ]
-"231
-[; ;./include/system.h: 231:     t.next = current;
+"244
+[; ;./include/system.h: 244:     t.next = current;
 [e = . _t 1 _current ]
-"232
-[; ;./include/system.h: 232:     return t;
+"245
+[; ;./include/system.h: 245:     return t;
 [e ) _t ]
 [e $UE 1166  ]
-"233
-[; ;./include/system.h: 233: }
+"246
+[; ;./include/system.h: 246: }
 [e :UE 1166 ]
 }
-"234
-[; ;./include/system.h: 234: static transition_t to(state_t s)
+"247
+[; ;./include/system.h: 247: static transition_t to(state_t s)
 [v _to `(S1165 ~T0 @X0 1 sf1`E8236 ]
-"235
-[; ;./include/system.h: 235: {
+"248
+[; ;./include/system.h: 248: {
 {
 [e :U _to ]
-"234
-[; ;./include/system.h: 234: static transition_t to(state_t s)
+"247
+[; ;./include/system.h: 247: static transition_t to(state_t s)
 [v _s `E8236 ~T0 @X0 1 r1 ]
-"235
-[; ;./include/system.h: 235: {
+"248
+[; ;./include/system.h: 248: {
 [f ]
 [v F8340 `S1165 ~T0 @X0 1 s ]
 [i F8340
 :U ..
 :U ..
-"236
-[; ;./include/system.h: 236:     transition_t t = {
+"249
+[; ;./include/system.h: 249:     transition_t t = {
 -> -> 0 `i `a
 -> -> 0 `i `E8236
 ..
@@ -1296,12 +1296,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _t `S1165 ~T0 @X0 1 a ]
 [e = _t F8340 ]
 [e ; = . _t 0 -> -> 1 `i `a = . _t 1 _s ]
-"240
-[; ;./include/system.h: 240:     return t;
+"253
+[; ;./include/system.h: 253:     return t;
 [e ) _t ]
 [e $UE 1167  ]
-"242
-[; ;./include/system.h: 242: }
+"255
+[; ;./include/system.h: 255: }
 [e :UE 1167 ]
 }
 "5 src/FAN.c

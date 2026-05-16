@@ -1,10 +1,10 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"228 ./include/system.h
-[; ;./include/system.h: 228: static transition_t stay(state_t current){
+"241 ./include/system.h
+[; ;./include/system.h: 241: static transition_t stay(state_t current){
 [c E8236 0 1 2 3 4 .. ]
 [n E8236 . ST_IDLE ST_MEAS_FAN ST_MEAS_ENS160 ST_COMM ST_COUNT  ]
-"223
-[; ;./include/system.h: 223: typedef struct {
+"236
+[; ;./include/system.h: 236: typedef struct {
 [s S1165 `a 1 `E8236 1 ]
 [n S1165 . changed next ]
 "4 src/event_queue.c
@@ -13,7 +13,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E8206 . None TMRTick UARTTIMEOUT UART UART_RESP MEAS_FAN_START MEAS_FAN1_START MEAS_FAN2_START MEAS_FAN_DONE MEAS_FAN1_DONE MEAS_FAN2_DONE MEAS_ENS160_START MEAS_ENS160_PROBE MEAS_ENS160_STAT MEAS_ENS160_READ MEAS_ENS160_DONE MEAS_BME280 I2C_ERR INIT_COMP TMR_START CONV_START CONV_DONE PWM_SET UART_PARSE_RX SET_F1 SET_FAN SET_DONE COMM_TX_DONE  ]
 "11 ./include/event_queue.h
 [; ;./include/event_queue.h: 11: typedef struct {
-[s S1170 `E8206 -> 8 `i `uc 1 `uc 1 `uc 1 ]
+[s S1170 `E8206 -> 16 `i `uc 1 `uc 1 `uc 1 ]
 [n S1170 . buf head tail count ]
 "38 D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 38: __asm("INDF0 equ 00h");
@@ -1227,49 +1227,49 @@ Version 4.0 HI-TECH Software Intermediate Code
 "26
 [; ;./include/eusart1.h: 26: volatile uint8_t END_REG;
 [v _END_REG `Vuc ~T0 @X0 1 e ]
-"228 ./include/system.h
-[; ;./include/system.h: 228: static transition_t stay(state_t current){
+"241 ./include/system.h
+[; ;./include/system.h: 241: static transition_t stay(state_t current){
 [v _stay `(S1165 ~T0 @X0 1 sf1`E8236 ]
 {
 [e :U _stay ]
 [v _current `E8236 ~T0 @X0 1 r1 ]
 [f ]
-"229
-[; ;./include/system.h: 229:     transition_t t;
+"242
+[; ;./include/system.h: 242:     transition_t t;
 [v _t `S1165 ~T0 @X0 1 a ]
-"230
-[; ;./include/system.h: 230:     t.changed = 0;
+"243
+[; ;./include/system.h: 243:     t.changed = 0;
 [e = . _t 0 -> -> 0 `i `a ]
-"231
-[; ;./include/system.h: 231:     t.next = current;
+"244
+[; ;./include/system.h: 244:     t.next = current;
 [e = . _t 1 _current ]
-"232
-[; ;./include/system.h: 232:     return t;
+"245
+[; ;./include/system.h: 245:     return t;
 [e ) _t ]
 [e $UE 1166  ]
-"233
-[; ;./include/system.h: 233: }
+"246
+[; ;./include/system.h: 246: }
 [e :UE 1166 ]
 }
-"234
-[; ;./include/system.h: 234: static transition_t to(state_t s)
+"247
+[; ;./include/system.h: 247: static transition_t to(state_t s)
 [v _to `(S1165 ~T0 @X0 1 sf1`E8236 ]
-"235
-[; ;./include/system.h: 235: {
+"248
+[; ;./include/system.h: 248: {
 {
 [e :U _to ]
-"234
-[; ;./include/system.h: 234: static transition_t to(state_t s)
+"247
+[; ;./include/system.h: 247: static transition_t to(state_t s)
 [v _s `E8236 ~T0 @X0 1 r1 ]
-"235
-[; ;./include/system.h: 235: {
+"248
+[; ;./include/system.h: 248: {
 [f ]
 [v F8340 `S1165 ~T0 @X0 1 s ]
 [i F8340
 :U ..
 :U ..
-"236
-[; ;./include/system.h: 236:     transition_t t = {
+"249
+[; ;./include/system.h: 249:     transition_t t = {
 -> -> 0 `i `a
 -> -> 0 `i `E8236
 ..
@@ -1278,12 +1278,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _t `S1165 ~T0 @X0 1 a ]
 [e = _t F8340 ]
 [e ; = . _t 0 -> -> 1 `i `a = . _t 1 _s ]
-"240
-[; ;./include/system.h: 240:     return t;
+"253
+[; ;./include/system.h: 253:     return t;
 [e ) _t ]
 [e $UE 1167  ]
-"242
-[; ;./include/system.h: 242: }
+"255
+[; ;./include/system.h: 255: }
 [e :UE 1167 ]
 }
 "4 src/event_queue.c
@@ -1327,8 +1327,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;src/event_queue.c: 11: {
 [f ]
 "12
-[; ;src/event_queue.c: 12:     if(q->count >= 8)
-[e $ ! >= -> . *U _q 3 `i -> 8 `i 1173  ]
+[; ;src/event_queue.c: 12:     if(q->count >= 16)
+[e $ ! >= -> . *U _q 3 `i -> 16 `i 1173  ]
 "13
 [; ;src/event_queue.c: 13:     {
 {
@@ -1344,8 +1344,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;src/event_queue.c: 17:     q->buf[q->head] = ev;
 [e = *U + &U . *U _q 0 * -> . *U _q 1 `ux -> -> # *U &U . *U _q 0 `ui `ux _ev ]
 "18
-[; ;src/event_queue.c: 18:     q->head = (uint8_t)((q->head + 1) % 8);
-[e = . *U _q 1 -> % + -> . *U _q 1 `i -> 1 `i -> 8 `i `uc ]
+[; ;src/event_queue.c: 18:     q->head = (uint8_t)((q->head + 1) % 16);
+[e = . *U _q 1 -> % + -> . *U _q 1 `i -> 1 `i -> 16 `i `uc ]
 "19
 [; ;src/event_queue.c: 19:     q->count++;
 [e ++ . *U _q 3 -> -> 1 `i `uc ]
@@ -1389,8 +1389,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;src/event_queue.c: 28:     *ev = q->buf[q->tail];
 [e = *U _ev *U + &U . *U _q 0 * -> . *U _q 2 `ux -> -> # *U &U . *U _q 0 `ui `ux ]
 "29
-[; ;src/event_queue.c: 29:     q->tail = (uint8_t)((q->tail + 1) % 8);
-[e = . *U _q 2 -> % + -> . *U _q 2 `i -> 1 `i -> 8 `i `uc ]
+[; ;src/event_queue.c: 29:     q->tail = (uint8_t)((q->tail + 1) % 16);
+[e = . *U _q 2 -> % + -> . *U _q 2 `i -> 1 `i -> 16 `i `uc ]
 "30
 [; ;src/event_queue.c: 30:     q->count--;
 [e -- . *U _q 3 -> -> 1 `i `uc ]

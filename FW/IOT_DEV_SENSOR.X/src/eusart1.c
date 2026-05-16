@@ -107,7 +107,7 @@ void EUSART1_ISR(void)
        
         volatile uint8_t byte = RC1REG;
 
-        // LATCbits.LATC5 = 1;
+        //LATCbits.LATC5 = 1;
 
         // static UART_tx_msg_t tx_msg;
         // tx_msg.cmd = CMD_PING;
@@ -131,7 +131,7 @@ void EUSART1_ISR(void)
             g_tx_msg = 0; /*reset message*/
             g_tx_idx = 0; /*reset index counter for payload*/
         
-            g_comm_tx_done_f = 1; /*indicate that transmission is done*/
+            g_comm_tx_done_f = true; /*indicate that transmission is done*/
         }
     }
 }

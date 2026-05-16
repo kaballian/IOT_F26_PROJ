@@ -80,8 +80,7 @@ defined in system.h
 
 
 
-
-
+#define gate_test 1
 
 
 
@@ -139,14 +138,28 @@ void APP_service(context_t *CTX, event_q_t *ev)
     static uint32_t last_ms = 0;
     static UART_msg_t rx_msg;
     
-    if(COMM_tx_done())
+    if(COMM_tx_done() && CTX->gate_owner == GATE_COMM)
     {
         COMM_clear_tx_done();
-        EVENT_Q_push(ev, COMM_TX_DONE);
+        #if DEBUG_UART_TRACE
+        {
+            if(!EVENT_Q_push(ev, COMM_TX_DONE))
+            {
+                CTX->dbg_q_fail++;
+            }else{
+                CTX->dbg_tx_done_push++;
+            }
+        }
+        #else
+            EVENT_Q_push(ev, COMM_TX_DONE);
+        #endif
     }
 
     if(UART_parser_GetMsg(&rx_msg))
     {
+        #if DEBUG_UART_TRACE
+            CTX->dbg_rx_msg++;
+        #endif
         
         switch(rx_msg.cmd)
         {
@@ -161,24 +174,79 @@ void APP_service(context_t *CTX, event_q_t *ev)
                 break;
             }
 
-            case CMD_GET_SENSOR:{
-                CTX->comm_req.type = COMM_RESP_SENSOR;
-                EVENT_Q_push(ev, UART_RESP);
+            case CMD_GET_SENSOR:
+            {
+
+                #if gate_test
+                if(CTX->comm_req.type == COMM_RESP_NONE)
+                #else
+                if(CTX->comm_req.type == COMM_RESP_NONE && !CTX->gate_active)
+                #endif
+                {    
+                    CTX->comm_req.type = COMM_RESP_SENSOR;
+                    #if DEBUG_UART_TRACE
+                        if(!EVENT_Q_push(ev,UART_RESP))
+                        {
+                            CTX->dbg_q_fail++;
+                        }else{
+                            CTX->dbg_uart_resp_push++;
+                        }
+                    #else
+                        CTX->comm_req.type = COMM_RESP_SENSOR;
+                        EVENT_Q_push(ev, UART_RESP);
+                    #endif
+                    
+                }
                 break;
+                
             }
 
             case CMD_GET_F1:
             {
-                
-                CTX->comm_req.type = COMM_RESP_F1;
-                EVENT_Q_push(ev, UART_RESP);
+                // if(CTX->comm_req.type == COMM_RESP_NONE && !CTX->gate_active)
+                #if gate_test
+                if(CTX->comm_req.type == COMM_RESP_NONE)
+                #else
+                if(CTX->comm_req.type == COMM_RESP_NONE && !CTX->gate_active)
+                #endif
+                {
+                    CTX->comm_req.type = COMM_RESP_F1;
+                    #if DEBUG_UART_TRACE
+                        if(!EVENT_Q_push(ev,UART_RESP))
+                        {
+                            CTX->dbg_q_fail++;
+                        }else{
+                            CTX->dbg_uart_resp_push++;
+                        }
+                    #else
+                        CTX->comm_req.type = COMM_RESP_F1;
+                        EVENT_Q_push(ev, UART_RESP);
+                    #endif
+                }
                 break;
             }
             case CMD_GET_F2:
             {
-                
-                CTX->comm_req.type = COMM_RESP_F2;
-                EVENT_Q_push(ev, UART_RESP);
+                #if gate_test
+                if(CTX->comm_req.type == COMM_RESP_NONE)
+                // if(CTX->comm_req.type == COMM_RESP_NONE && !CTX->gate_active)
+                #else
+                if(CTX->comm_req.type == COMM_RESP_NONE && !CTX->gate_active)
+                #endif
+                {
+                    CTX->comm_req.type = COMM_RESP_F2;
+                    #if DEBUG_UART_TRACE
+                        if(!EVENT_Q_push(ev, UART_RESP))
+                        {
+                            CTX->dbg_q_fail++;
+                        }else{
+                            CTX->dbg_uart_resp_push++;
+                        }
+                    #else
+                        CTX->comm_req.type = COMM_RESP_F2;
+                        EVENT_Q_push(ev, UART_RESP);
+                    #endif
+                }
                 break;
             }
             default:
@@ -220,12 +288,26 @@ void APP_service(context_t *CTX, event_q_t *ev)
         return;
     }
 
-    
+    #if gate_test
     // if(CTX->gate_active)
-    if(CTX->gate_active || CTX->comm_req.type != COMM_RESP_NONE)
+    if(CTX->comm_req.type != COMM_RESP_NONE)
+    {
+        if(!CTX->gate_active)
+        {
+            EVENT_Q_push(ev, UART_RESP);
+        }
+    }
+    if(CTX->gate_active)
     {
         return;
     }
+    #else
+        if(CTX->gate_active || CTX->comm_req.type != COMM_RESP_NONE)
+            {
+                return;
+            }
+    #endif
+
 
     if((CTX->sys_ms - last_ms) < 2000)
     {

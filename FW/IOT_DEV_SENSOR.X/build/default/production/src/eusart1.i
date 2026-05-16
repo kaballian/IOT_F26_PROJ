@@ -13695,7 +13695,7 @@ typedef enum{
 typedef struct{
     uint8_t cmd;
     uint8_t len;
-    uint8_t payload[8];
+    uint8_t payload[16];
     uint8_t frame[16];
     uint8_t frame_len;
 }UART_tx_msg_t;

@@ -3,7 +3,7 @@
 
 #include "system.h"
 
-#define EV_Q_SIZE 8
+#define EV_Q_SIZE 16
 
 
 

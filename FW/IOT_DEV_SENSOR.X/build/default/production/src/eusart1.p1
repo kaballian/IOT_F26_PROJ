@@ -1,7 +1,7 @@
 Version 4.0 HI-TECH Software Intermediate Code
 "51 ./include/eusart1.h
 [; ;./include/eusart1.h: 51: typedef struct{
-[s S1155 `uc 1 `uc 1 `uc -> 8 `i `uc -> 16 `i `uc 1 ]
+[s S1155 `uc 1 `uc 1 `uc -> 16 `i `uc -> 16 `i `uc 1 ]
 [n S1155 . cmd len payload frame frame_len ]
 "10950 D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h
 [; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 10950: extern volatile unsigned char TX1REG __attribute__((address(0x70D)));

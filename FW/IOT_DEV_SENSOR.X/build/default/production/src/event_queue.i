@@ -13848,7 +13848,7 @@ typedef enum{
 typedef struct{
     uint8_t cmd;
     uint8_t len;
-    uint8_t payload[8];
+    uint8_t payload[16];
     uint8_t frame[16];
     uint8_t frame_len;
 }UART_tx_msg_t;
@@ -13925,7 +13925,7 @@ _Bool UART_parser_MsgAvailable(void);
 _Bool UART_parser_GetMsg(UART_msg_t *msg);
 uint8_t UART_CHKSUM(uint8_t cmd, uint8_t len, const uint8_t *payload);
 # 23 "./include/system.h" 2
-# 38 "./include/system.h"
+# 40 "./include/system.h"
 void SYSTEM_init(void);
 
 
@@ -13960,7 +13960,7 @@ typedef enum{
     SET_DONE,
     COMM_TX_DONE,
 }event_t;
-# 88 "./include/system.h"
+# 90 "./include/system.h"
 typedef enum{
     ST_IDLE,
     ST_MEAS_FAN,
@@ -14063,14 +14063,13 @@ typedef struct {
     uint32_t gate_deadline;
     uint8_t gate_active;
     uint8_t has_deadline;
-
     flag8_t init_flags;
     flag8_t fault_flags;
     uint16_t F1_meas[8];
     uint16_t F2_meas[8];
     BME280_meas room_meas[8];
     ENS160_meas AQI_meas[8];
-
+# 211 "./include/system.h"
     uint8_t meas_head;
     uint8_t meas_count;
 
@@ -14144,7 +14143,7 @@ void FSM_dispatch(FSM_t *sm, event_t ev);
 
 
 typedef struct {
-    event_t buf[8];
+    event_t buf[16];
     uint8_t head;
     uint8_t tail;
     uint8_t count;
@@ -14164,13 +14163,13 @@ void EVENT_Q_init(event_q_t *q)
 }
 _Bool EVENT_Q_push(event_q_t *q, event_t ev)
 {
-    if(q->count >= 8)
+    if(q->count >= 16)
     {
         return 0;
     }
 
     q->buf[q->head] = ev;
-    q->head = (uint8_t)((q->head + 1) % 8);
+    q->head = (uint8_t)((q->head + 1) % 16);
     q->count++;
     return 1;
 }
@@ -14181,7 +14180,7 @@ _Bool EVENT_Q_pop(event_q_t *q, event_t *ev)
         return 0;
     }
     *ev = q->buf[q->tail];
-    q->tail = (uint8_t)((q->tail + 1) % 8);
+    q->tail = (uint8_t)((q->tail + 1) % 16);
     q->count--;
     return 1;
 }

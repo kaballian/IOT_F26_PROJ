@@ -13844,7 +13844,7 @@ typedef enum{
 typedef struct{
     uint8_t cmd;
     uint8_t len;
-    uint8_t payload[8];
+    uint8_t payload[16];
     uint8_t frame[16];
     uint8_t frame_len;
 }UART_tx_msg_t;
@@ -13921,7 +13921,7 @@ _Bool UART_parser_MsgAvailable(void);
 _Bool UART_parser_GetMsg(UART_msg_t *msg);
 uint8_t UART_CHKSUM(uint8_t cmd, uint8_t len, const uint8_t *payload);
 # 23 "src/../include/system.h" 2
-# 38 "src/../include/system.h"
+# 40 "src/../include/system.h"
 void SYSTEM_init(void);
 
 
@@ -13956,7 +13956,7 @@ typedef enum{
     SET_DONE,
     COMM_TX_DONE,
 }event_t;
-# 88 "src/../include/system.h"
+# 90 "src/../include/system.h"
 typedef enum{
     ST_IDLE,
     ST_MEAS_FAN,
@@ -14059,14 +14059,13 @@ typedef struct {
     uint32_t gate_deadline;
     uint8_t gate_active;
     uint8_t has_deadline;
-
     flag8_t init_flags;
     flag8_t fault_flags;
     uint16_t F1_meas[8];
     uint16_t F2_meas[8];
     BME280_meas room_meas[8];
     ENS160_meas AQI_meas[8];
-
+# 211 "src/../include/system.h"
     uint8_t meas_head;
     uint8_t meas_count;
 
@@ -14278,12 +14277,16 @@ static transition_t st_meas_ens160_handle(context_t *CTX, event_t ev, state_t cu
 
 static void st_comm_entry(context_t *CTX)
 {
+
+
+
+
     CTX->gate_owner = GATE_COMM;
     CTX->gate_active = 1;
-# 262 "src/system.c"
+# 268 "src/system.c"
     switch(CTX->comm_req.type)
     {
-# 273 "src/system.c"
+# 279 "src/system.c"
         case COMM_RESP_F1:
         case COMM_RESP_F2:
         {
@@ -14300,7 +14303,12 @@ static void st_comm_entry(context_t *CTX)
         }
         case COMM_RESP_SENSOR:{
             CTX->tx_msg.cmd = CMD_GET_SENSOR;
-            CTX->tx_msg.len = 7;
+
+
+
+                CTX->tx_msg.len = 7;
+
+
             CTX->tx_msg.payload[0] = CTX->ENS160.dev_addr;
             CTX->tx_msg.payload[1] = CTX->ENS160.aqi;
             CTX->tx_msg.payload[2] = (uint8_t)(CTX->ENS160.tvoc_ppb>>8);
@@ -14308,6 +14316,7 @@ static void st_comm_entry(context_t *CTX)
             CTX->tx_msg.payload[4] = (uint8_t)(CTX->ENS160.eco2_ppm>>8);
             CTX->tx_msg.payload[5] = (uint8_t)(CTX->ENS160.eco2_ppm);
             CTX->tx_msg.payload[6] = CTX->ENS160.dev_status;
+# 319 "src/system.c"
             break;
         }
 
@@ -14320,6 +14329,11 @@ static void st_comm_entry(context_t *CTX)
 
     COMM_assemble_frame(&CTX->tx_msg);
 
+
+
+
+
+    COMM_clear_tx_done();
     COMM_TX_start(&CTX->tx_msg);
 }
 static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
@@ -14328,6 +14342,7 @@ static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
     switch(ev)
     {
         case COMM_TX_DONE: {
+            LATCbits.LATC5 ^= 1;
             CTX->comm_req.type = COMM_RESP_NONE;
             CTX->gate_active = 0;
             CTX->has_deadline = 0;

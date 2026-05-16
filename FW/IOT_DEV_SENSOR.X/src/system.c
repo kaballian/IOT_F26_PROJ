@@ -248,8 +248,14 @@ static transition_t st_meas_ens160_handle(context_t *CTX, event_t ev, state_t cu
 
 static void st_comm_entry(context_t *CTX)
 {
+    #if DEBUG_UART_TRACE
+        CTX->dbg_comm_entry++;
+    #endif
+    
     CTX->gate_owner     = GATE_COMM;
     CTX->gate_active    = 1;
+
+    
 
 
 
@@ -286,7 +292,12 @@ static void st_comm_entry(context_t *CTX)
         }
         case COMM_RESP_SENSOR:{
             CTX->tx_msg.cmd = CMD_GET_SENSOR;
-            CTX->tx_msg.len = 7; /* dev addr(8) + aqi(8) + tvoc_ppb(16) + eco2_ppm(16)*/
+            #if DEBUG_UART_TRACE
+                CTX->tx_msg.len = 13;
+            #else
+                CTX->tx_msg.len = 7; /* dev addr(8) + aqi(8) + tvoc_ppb(16) + eco2_ppm(16)*/
+            #endif
+            
             CTX->tx_msg.payload[0] = CTX->ENS160.dev_addr;
             CTX->tx_msg.payload[1] = CTX->ENS160.aqi;
             CTX->tx_msg.payload[2] = (uint8_t)(CTX->ENS160.tvoc_ppb>>8);
@@ -294,6 +305,17 @@ static void st_comm_entry(context_t *CTX)
             CTX->tx_msg.payload[4] = (uint8_t)(CTX->ENS160.eco2_ppm>>8);
             CTX->tx_msg.payload[5] = (uint8_t)(CTX->ENS160.eco2_ppm);
             CTX->tx_msg.payload[6] = CTX->ENS160.dev_status;
+            
+            #if DEBUG_UART_TRACE
+                CTX->tx_msg.payload[7]  = CTX->dbg_rx_msg;
+                CTX->tx_msg.payload[8]  = CTX->dbg_uart_resp_push;
+                CTX->tx_msg.payload[9]  = CTX->dbg_comm_entry;
+                CTX->tx_msg.payload[10] = CTX->dbg_tx_start;
+                CTX->tx_msg.payload[11] = CTX->dbg_tx_done_push;
+                CTX->tx_msg.payload[12] = CTX->dbg_q_fail;
+            #endif
+            
+            
             break;
         }
 
@@ -305,7 +327,12 @@ static void st_comm_entry(context_t *CTX)
 
     /*assemble frame - add SOF, CMD, checksum, END1,END2 and so on*/
     COMM_assemble_frame(&CTX->tx_msg);
-    /*start TX*/
+    
+    #if DEBUG_UART_TRACE
+        CTX->dbg_tx_start++;
+    #endif
+    
+    COMM_clear_tx_done();
     COMM_TX_start(&CTX->tx_msg);
 }
 static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
@@ -314,6 +341,7 @@ static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
     switch(ev)
     {
         case COMM_TX_DONE: {
+            LATCbits.LATC5 ^= 1;
             CTX->comm_req.type      = COMM_RESP_NONE;
             CTX->gate_active        = 0;
             CTX->has_deadline       = 0;

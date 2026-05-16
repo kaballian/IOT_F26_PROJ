@@ -1,18 +1,18 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"228 src/../include/system.h
-[; ;src/../include/system.h: 228: static transition_t stay(state_t current){
+"241 src/../include/system.h
+[; ;src/../include/system.h: 241: static transition_t stay(state_t current){
 [c E8236 0 1 2 3 4 .. ]
 [n E8236 . ST_IDLE ST_MEAS_FAN ST_MEAS_ENS160 ST_COMM ST_COUNT  ]
-"223
-[; ;src/../include/system.h: 223: typedef struct {
+"236
+[; ;src/../include/system.h: 236: typedef struct {
 [s S1165 `a 1 `E8236 1 ]
 [n S1165 . changed next ]
-"136
-[; ;src/../include/system.h: 136: typedef struct {
+"138
+[; ;src/../include/system.h: 138: typedef struct {
 [s S1161 `us 1 `us 1 ]
 [n S1161 . humidity pressure ]
-"141
-[; ;src/../include/system.h: 141: typedef struct{
+"143
+[; ;src/../include/system.h: 143: typedef struct{
 [s S1162 `us 1 ]
 [n S1162 . AQI ]
 "87 src/system.c
@@ -23,13 +23,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E8143 . CMD_PING CMD_STAT CMD_SET_F1 CMD_SET_F2 CMD_GET_F1 CMD_GET_F2 CMD_GET_SENSOR UART_CMD_ACK UART_CMD_NACK CMD_DBG_ST  ]
 [c E8291 0 1 2 3 4 5 6 .. ]
 [n E8291 . COMM_RESP_NONE COMM_RESP_PING COMM_RESP_STAT COMM_RESP_F1 COMM_RESP_F2 COMM_RESP_SENSOR COMM_RESP_ERROR  ]
-"178 src/../include/system.h
-[; ;src/../include/system.h: 178: typedef struct{
+"180 src/../include/system.h
+[; ;src/../include/system.h: 180: typedef struct{
 [s S1163 `E8291 1 `uc 1 ]
 [n S1163 . type arg ]
 "51 ./include/eusart1.h
 [; ;./include/eusart1.h: 51: typedef struct{
-[s S1158 `uc 1 `uc 1 `uc -> 8 `i `uc -> 16 `i `uc 1 ]
+[s S1158 `uc 1 `uc 1 `uc -> 16 `i `uc -> 16 `i `uc 1 ]
 [n S1158 . cmd len payload frame frame_len ]
 "87 src/system.c
 [; ;src/system.c: 87: static void st_idle_entry(context_t *CTX)
@@ -59,8 +59,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;src/system.c: 87: static void st_idle_entry(context_t *CTX)
 [c E8286 0 1 2 .. ]
 [n E8286 . FAN_1 FAN_2 FAN_COUNT  ]
-"183 src/../include/system.h
-[; ;src/../include/system.h: 183: typedef struct {
+"185 src/../include/system.h
+[; ;src/../include/system.h: 185: typedef struct {
 [s S1164 `ul 1 `ul 1 `us 1 `ul 1 `uc 1 `uc 1 `uc 1 `uc 1 `us -> 8 `i `us -> 8 `i `S1161 -> 8 `i `S1162 -> 8 `i `uc 1 `uc 1 `E8275 1 `E8143 1 `S1163 1 `S1158 1 `E8262 1 `S1157 1 `S1156 1 `S1156 1 `S1156 -> 2 `i `S1159 1 `E8286 1 ]
 [n S1164 . sys_ms fsm_tick fan_gate_div gate_deadline gate_active has_deadline init_flags fault_flags F1_meas F2_meas room_meas AQI_meas meas_head meas_count gate_owner UART_CMD comm_req tx_msg comm_i2c_flags ENS160 FAN1 FAN2 FANS FAN_selector active_fan ]
 "92 src/system.c
@@ -95,17 +95,31 @@ Version 4.0 HI-TECH Software Intermediate Code
 "76 ./include/eusart1.h
 [; ;./include/eusart1.h: 76: void COMM_assemble_frame(UART_tx_msg_t *tx);
 [v _COMM_assemble_frame `(v ~T0 @X0 0 ef1`*S1158 ]
+"75
+[; ;./include/eusart1.h: 75: void COMM_clear_tx_done(void);
+[v _COMM_clear_tx_done `(v ~T0 @X0 0 ef ]
 "77
 [; ;./include/eusart1.h: 77: void COMM_TX_start(UART_tx_msg_t *tx);
 [v _COMM_TX_start `(v ~T0 @X0 0 ef1`*S1158 ]
+"620 D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h
+[; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 620:     struct {
+[s S43 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S43 . LATC0 LATC1 LATC2 LATC3 LATC4 LATC5 ]
+"619
+[; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 619: typedef union {
+[u S42 `S43 1 ]
+[n S42 . . ]
+"629
+[; ;D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\include\proc/pic16f18124.h: 629: extern volatile LATCbits_t LATCbits __attribute__((address(0x01A)));
+[v _LATCbits `VS42 ~T0 @X0 0 e@26 ]
 [v F8352 `(v ~T0 @X0 0 tf1`*S1164 ]
 [v F8355 `(S1165 ~T0 @X0 0 tf3`*S1164`E8206`E8236 ]
-"248 src/../include/system.h
-[; ;src/../include/system.h: 248: typedef struct {
+"261 src/../include/system.h
+[; ;src/../include/system.h: 261: typedef struct {
 [s S1168 `*F8352 1 `*F8355 1 ]
 [n S1168 . entry handle ]
-"254
-[; ;src/../include/system.h: 254: typedef struct{
+"267
+[; ;src/../include/system.h: 267: typedef struct{
 [s S1169 `S1164 1 `E8236 1 ]
 [n S1169 . CTX state ]
 [v F8433 `(v ~T0 @X0 0 tf1`*S1164 ]
@@ -1322,49 +1336,49 @@ Version 4.0 HI-TECH Software Intermediate Code
 "26
 [; ;./include/eusart1.h: 26: volatile uint8_t END_REG;
 [v _END_REG `Vuc ~T0 @X0 1 e ]
-"228 src/../include/system.h
-[; ;src/../include/system.h: 228: static transition_t stay(state_t current){
+"241 src/../include/system.h
+[; ;src/../include/system.h: 241: static transition_t stay(state_t current){
 [v _stay `(S1165 ~T0 @X0 1 sf1`E8236 ]
 {
 [e :U _stay ]
 [v _current `E8236 ~T0 @X0 1 r1 ]
 [f ]
-"229
-[; ;src/../include/system.h: 229:     transition_t t;
+"242
+[; ;src/../include/system.h: 242:     transition_t t;
 [v _t `S1165 ~T0 @X0 1 a ]
-"230
-[; ;src/../include/system.h: 230:     t.changed = 0;
+"243
+[; ;src/../include/system.h: 243:     t.changed = 0;
 [e = . _t 0 -> -> 0 `i `a ]
-"231
-[; ;src/../include/system.h: 231:     t.next = current;
+"244
+[; ;src/../include/system.h: 244:     t.next = current;
 [e = . _t 1 _current ]
-"232
-[; ;src/../include/system.h: 232:     return t;
+"245
+[; ;src/../include/system.h: 245:     return t;
 [e ) _t ]
 [e $UE 1166  ]
-"233
-[; ;src/../include/system.h: 233: }
+"246
+[; ;src/../include/system.h: 246: }
 [e :UE 1166 ]
 }
-"234
-[; ;src/../include/system.h: 234: static transition_t to(state_t s)
+"247
+[; ;src/../include/system.h: 247: static transition_t to(state_t s)
 [v _to `(S1165 ~T0 @X0 1 sf1`E8236 ]
-"235
-[; ;src/../include/system.h: 235: {
+"248
+[; ;src/../include/system.h: 248: {
 {
 [e :U _to ]
-"234
-[; ;src/../include/system.h: 234: static transition_t to(state_t s)
+"247
+[; ;src/../include/system.h: 247: static transition_t to(state_t s)
 [v _s `E8236 ~T0 @X0 1 r1 ]
-"235
-[; ;src/../include/system.h: 235: {
+"248
+[; ;src/../include/system.h: 248: {
 [f ]
 [v F8340 `S1165 ~T0 @X0 1 s ]
 [i F8340
 :U ..
 :U ..
-"236
-[; ;src/../include/system.h: 236:     transition_t t = {
+"249
+[; ;src/../include/system.h: 249:     transition_t t = {
 -> -> 0 `i `a
 -> -> 0 `i `E8236
 ..
@@ -1373,12 +1387,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _t `S1165 ~T0 @X0 1 a ]
 [e = _t F8340 ]
 [e ; = . _t 0 -> -> 1 `i `a = . _t 1 _s ]
-"240
-[; ;src/../include/system.h: 240:     return t;
+"253
+[; ;src/../include/system.h: 253:     return t;
 [e ) _t ]
 [e $UE 1167  ]
-"242
-[; ;src/../include/system.h: 242: }
+"255
+[; ;src/../include/system.h: 255: }
 [e :UE 1167 ]
 }
 "87 src/system.c
@@ -1770,104 +1784,104 @@ Version 4.0 HI-TECH Software Intermediate Code
 "250
 [; ;src/system.c: 250: {
 [f ]
-"251
-[; ;src/system.c: 251:     CTX->gate_owner = GATE_COMM;
+"255
+[; ;src/system.c: 255:     CTX->gate_owner = GATE_COMM;
 [e = . *U _CTX 14 . `E8275 8 ]
-"252
-[; ;src/system.c: 252:     CTX->gate_active = 1;
+"256
+[; ;src/system.c: 256:     CTX->gate_active = 1;
 [e = . *U _CTX 4 -> -> 1 `i `uc ]
-"262
-[; ;src/system.c: 262:     switch(CTX->comm_req.type)
+"268
+[; ;src/system.c: 268:     switch(CTX->comm_req.type)
 [e $U 1200  ]
-"263
-[; ;src/system.c: 263:     {
+"269
+[; ;src/system.c: 269:     {
 {
-"273
-[; ;src/system.c: 273:         case COMM_RESP_F1:
+"279
+[; ;src/system.c: 279:         case COMM_RESP_F1:
 [e :U 1201 ]
-"274
-[; ;src/system.c: 274:         case COMM_RESP_F2:
+"280
+[; ;src/system.c: 280:         case COMM_RESP_F2:
 [e :U 1202 ]
-"275
-[; ;src/system.c: 275:         {
+"281
+[; ;src/system.c: 281:         {
 {
-"277
-[; ;src/system.c: 277:             fan_sel_t fan_id = (CTX->comm_req.type == COMM_RESP_F1) ? FAN_1 : FAN_2;
+"283
+[; ;src/system.c: 283:             fan_sel_t fan_id = (CTX->comm_req.type == COMM_RESP_F1) ? FAN_1 : FAN_2;
 [v _fan_id `E8286 ~T0 @X0 1 a ]
 [e = _fan_id -> ? == -> . . *U _CTX 16 0 `ui -> . `E8291 3 `ui : . `E8286 0 . `E8286 1 `E8286 ]
-"278
-[; ;src/system.c: 278:             fan_t *fan = &CTX->FANS[fan_id];
+"284
+[; ;src/system.c: 284:             fan_t *fan = &CTX->FANS[fan_id];
 [v _fan `*S1156 ~T0 @X0 1 a ]
 [e = _fan &U *U + &U . *U _CTX 22 * -> _fan_id `ux -> -> # *U &U . *U _CTX 22 `ui `ux ]
-"280
-[; ;src/system.c: 280:             CTX->tx_msg.cmd = (fan_id == FAN_1) ? CMD_GET_F1 : CMD_GET_F2;
-[e = . . *U _CTX 17 0 -> ? == -> _fan_id `ui -> . `E8286 0 `ui : . `E8143 4 . `E8143 5 `uc ]
-"281
-[; ;src/system.c: 281:             CTX->tx_msg.len = 3;
-[e = . . *U _CTX 17 1 -> -> 3 `i `uc ]
-"282
-[; ;src/system.c: 282:             CTX->tx_msg.payload[0] = fan->duty_percent;
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux . *U _fan 1 ]
-"283
-[; ;src/system.c: 283:             CTX->tx_msg.payload[1] = (uint8_t)(fan->RPM >> 8);
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 1 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> >> -> . *U _fan 4 `ui -> 8 `i `uc ]
-"284
-[; ;src/system.c: 284:             CTX->tx_msg.payload[2] = (uint8_t)(fan->RPM);
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 2 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> . *U _fan 4 `uc ]
-"285
-[; ;src/system.c: 285:             break;
-[e $U 1199  ]
 "286
-[; ;src/system.c: 286:         }
-}
+[; ;src/system.c: 286:             CTX->tx_msg.cmd = (fan_id == FAN_1) ? CMD_GET_F1 : CMD_GET_F2;
+[e = . . *U _CTX 17 0 -> ? == -> _fan_id `ui -> . `E8286 0 `ui : . `E8143 4 . `E8143 5 `uc ]
 "287
-[; ;src/system.c: 287:         case COMM_RESP_SENSOR:{
+[; ;src/system.c: 287:             CTX->tx_msg.len = 3;
+[e = . . *U _CTX 17 1 -> -> 3 `i `uc ]
+"288
+[; ;src/system.c: 288:             CTX->tx_msg.payload[0] = fan->duty_percent;
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux . *U _fan 1 ]
+"289
+[; ;src/system.c: 289:             CTX->tx_msg.payload[1] = (uint8_t)(fan->RPM >> 8);
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 1 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> >> -> . *U _fan 4 `ui -> 8 `i `uc ]
+"290
+[; ;src/system.c: 290:             CTX->tx_msg.payload[2] = (uint8_t)(fan->RPM);
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 2 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> . *U _fan 4 `uc ]
+"291
+[; ;src/system.c: 291:             break;
+[e $U 1199  ]
+"292
+[; ;src/system.c: 292:         }
+}
+"293
+[; ;src/system.c: 293:         case COMM_RESP_SENSOR:{
 [e :U 1203 ]
 {
-"288
-[; ;src/system.c: 288:             CTX->tx_msg.cmd = CMD_GET_SENSOR;
-[e = . . *U _CTX 17 0 -> . `E8143 6 `uc ]
-"289
-[; ;src/system.c: 289:             CTX->tx_msg.len = 7;
-[e = . . *U _CTX 17 1 -> -> 7 `i `uc ]
-"290
-[; ;src/system.c: 290:             CTX->tx_msg.payload[0] = CTX->ENS160.dev_addr;
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux . . *U _CTX 19 0 ]
-"291
-[; ;src/system.c: 291:             CTX->tx_msg.payload[1] = CTX->ENS160.aqi;
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 1 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux . . *U _CTX 19 7 ]
-"292
-[; ;src/system.c: 292:             CTX->tx_msg.payload[2] = (uint8_t)(CTX->ENS160.tvoc_ppb>>8);
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 2 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> >> -> . . *U _CTX 19 8 `ui -> 8 `i `uc ]
-"293
-[; ;src/system.c: 293:             CTX->tx_msg.payload[3] = (uint8_t)(CTX->ENS160.tvoc_ppb);
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 3 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> . . *U _CTX 19 8 `uc ]
 "294
-[; ;src/system.c: 294:             CTX->tx_msg.payload[4] = (uint8_t)(CTX->ENS160.eco2_ppm>>8);
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 4 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> >> -> . . *U _CTX 19 9 `ui -> 8 `i `uc ]
-"295
-[; ;src/system.c: 295:             CTX->tx_msg.payload[5] = (uint8_t)(CTX->ENS160.eco2_ppm);
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 5 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> . . *U _CTX 19 9 `uc ]
-"296
-[; ;src/system.c: 296:             CTX->tx_msg.payload[6] = CTX->ENS160.dev_status;
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 6 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux . . *U _CTX 19 2 ]
-"297
-[; ;src/system.c: 297:             break;
-[e $U 1199  ]
+[; ;src/system.c: 294:             CTX->tx_msg.cmd = CMD_GET_SENSOR;
+[e = . . *U _CTX 17 0 -> . `E8143 6 `uc ]
 "298
-[; ;src/system.c: 298:         }
-}
+[; ;src/system.c: 298:                 CTX->tx_msg.len = 7;
+[e = . . *U _CTX 17 1 -> -> 7 `i `uc ]
 "301
-[; ;src/system.c: 301:         case COMM_RESP_NONE:
-[e :U 1204 ]
+[; ;src/system.c: 301:             CTX->tx_msg.payload[0] = CTX->ENS160.dev_addr;
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux . . *U _CTX 19 0 ]
 "302
-[; ;src/system.c: 302:         default:
-[e :U 1205 ]
+[; ;src/system.c: 302:             CTX->tx_msg.payload[1] = CTX->ENS160.aqi;
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 1 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux . . *U _CTX 19 7 ]
 "303
-[; ;src/system.c: 303:             break;
-[e $U 1199  ]
+[; ;src/system.c: 303:             CTX->tx_msg.payload[2] = (uint8_t)(CTX->ENS160.tvoc_ppb>>8);
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 2 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> >> -> . . *U _CTX 19 8 `ui -> 8 `i `uc ]
 "304
-[; ;src/system.c: 304:     }
+[; ;src/system.c: 304:             CTX->tx_msg.payload[3] = (uint8_t)(CTX->ENS160.tvoc_ppb);
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 3 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> . . *U _CTX 19 8 `uc ]
+"305
+[; ;src/system.c: 305:             CTX->tx_msg.payload[4] = (uint8_t)(CTX->ENS160.eco2_ppm>>8);
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 4 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> >> -> . . *U _CTX 19 9 `ui -> 8 `i `uc ]
+"306
+[; ;src/system.c: 306:             CTX->tx_msg.payload[5] = (uint8_t)(CTX->ENS160.eco2_ppm);
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 5 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> . . *U _CTX 19 9 `uc ]
+"307
+[; ;src/system.c: 307:             CTX->tx_msg.payload[6] = CTX->ENS160.dev_status;
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 6 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux . . *U _CTX 19 2 ]
+"319
+[; ;src/system.c: 319:             break;
+[e $U 1199  ]
+"320
+[; ;src/system.c: 320:         }
+}
+"323
+[; ;src/system.c: 323:         case COMM_RESP_NONE:
+[e :U 1204 ]
+"324
+[; ;src/system.c: 324:         default:
+[e :U 1205 ]
+"325
+[; ;src/system.c: 325:             break;
+[e $U 1199  ]
+"326
+[; ;src/system.c: 326:     }
 }
 [e $U 1199  ]
 [e :U 1200 ]
@@ -1877,81 +1891,87 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> . `E8291 0 `ui 1204
  1205 ]
 [e :U 1199 ]
-"307
-[; ;src/system.c: 307:     COMM_assemble_frame(&CTX->tx_msg);
+"329
+[; ;src/system.c: 329:     COMM_assemble_frame(&CTX->tx_msg);
 [e ( _COMM_assemble_frame (1 &U . *U _CTX 17 ]
-"309
-[; ;src/system.c: 309:     COMM_TX_start(&CTX->tx_msg);
+"335
+[; ;src/system.c: 335:     COMM_clear_tx_done();
+[e ( _COMM_clear_tx_done ..  ]
+"336
+[; ;src/system.c: 336:     COMM_TX_start(&CTX->tx_msg);
 [e ( _COMM_TX_start (1 &U . *U _CTX 17 ]
-"310
-[; ;src/system.c: 310: }
+"337
+[; ;src/system.c: 337: }
 [e :UE 1198 ]
 }
-"311
-[; ;src/system.c: 311: static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
+"338
+[; ;src/system.c: 338: static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
 [v _st_comm_handle `(S1165 ~T0 @X0 1 sf3`*S1164`E8206`E8236 ]
-"312
-[; ;src/system.c: 312: {
+"339
+[; ;src/system.c: 339: {
 {
 [e :U _st_comm_handle ]
-"311
-[; ;src/system.c: 311: static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
+"338
+[; ;src/system.c: 338: static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
 [v _CTX `*S1164 ~T0 @X0 1 r1 ]
 [v _ev `E8206 ~T0 @X0 1 r2 ]
 [v _current `E8236 ~T0 @X0 1 r3 ]
-"312
-[; ;src/system.c: 312: {
+"339
+[; ;src/system.c: 339: {
 [f ]
-"314
-[; ;src/system.c: 314:     switch(ev)
+"341
+[; ;src/system.c: 341:     switch(ev)
 [e $U 1208  ]
-"315
-[; ;src/system.c: 315:     {
+"342
+[; ;src/system.c: 342:     {
 {
-"316
-[; ;src/system.c: 316:         case COMM_TX_DONE: {
+"343
+[; ;src/system.c: 343:         case COMM_TX_DONE: {
 [e :U 1209 ]
 {
-"317
-[; ;src/system.c: 317:             CTX->comm_req.type = COMM_RESP_NONE;
+"344
+[; ;src/system.c: 344:             LATCbits.LATC5 ^= 1;
+[e =^ . . _LATCbits 0 5 -> -> 1 `i `Vuc ]
+"345
+[; ;src/system.c: 345:             CTX->comm_req.type = COMM_RESP_NONE;
 [e = . . *U _CTX 16 0 . `E8291 0 ]
-"318
-[; ;src/system.c: 318:             CTX->gate_active = 0;
+"346
+[; ;src/system.c: 346:             CTX->gate_active = 0;
 [e = . *U _CTX 4 -> -> 0 `i `uc ]
-"319
-[; ;src/system.c: 319:             CTX->has_deadline = 0;
+"347
+[; ;src/system.c: 347:             CTX->has_deadline = 0;
 [e = . *U _CTX 5 -> -> 0 `i `uc ]
-"320
-[; ;src/system.c: 320:             CTX->gate_owner = GATE_NONE;
+"348
+[; ;src/system.c: 348:             CTX->gate_owner = GATE_NONE;
 [e = . *U _CTX 14 . `E8275 0 ]
-"321
-[; ;src/system.c: 321:             return to(ST_IDLE);
+"349
+[; ;src/system.c: 349:             return to(ST_IDLE);
 [e ) ( _to (1 . `E8236 0 ]
 [e $UE 1206  ]
-"322
-[; ;src/system.c: 322:         }
+"350
+[; ;src/system.c: 350:         }
 }
-"323
-[; ;src/system.c: 323:         default:
+"351
+[; ;src/system.c: 351:         default:
 [e :U 1210 ]
-"324
-[; ;src/system.c: 324:             return stay(current);
+"352
+[; ;src/system.c: 352:             return stay(current);
 [e ) ( _stay (1 _current ]
 [e $UE 1206  ]
-"325
-[; ;src/system.c: 325:     }
+"353
+[; ;src/system.c: 353:     }
 }
 [e $U 1207  ]
 [e :U 1208 ]
 [e [\ -> _ev `ui , $ -> . `E8206 27 `ui 1209
  1210 ]
 [e :U 1207 ]
-"326
-[; ;src/system.c: 326: }
+"354
+[; ;src/system.c: 354: }
 [e :UE 1206 ]
 }
-"330
-[; ;src/system.c: 330: static const state_ops_t OPS[ST_COUNT] =
+"358
+[; ;src/system.c: 358: static const state_ops_t OPS[ST_COUNT] =
 [v _OPS `CS1168 ~T0 @X0 -> 4 `i s ]
 [i _OPS
 :U ..
@@ -1973,129 +1993,129 @@ Version 4.0 HI-TECH Software Intermediate Code
 ..
 ..
 ]
-"341
-[; ;src/system.c: 341: void FSM_transition(FSM_t *sm, state_t next)
+"369
+[; ;src/system.c: 369: void FSM_transition(FSM_t *sm, state_t next)
 [v _FSM_transition `(v ~T0 @X0 1 ef2`*S1169`E8236 ]
-"342
-[; ;src/system.c: 342: {
+"370
+[; ;src/system.c: 370: {
 {
 [e :U _FSM_transition ]
-"341
-[; ;src/system.c: 341: void FSM_transition(FSM_t *sm, state_t next)
+"369
+[; ;src/system.c: 369: void FSM_transition(FSM_t *sm, state_t next)
 [v _sm `*S1169 ~T0 @X0 1 r1 ]
 [v _next `E8236 ~T0 @X0 1 r2 ]
-"342
-[; ;src/system.c: 342: {
+"370
+[; ;src/system.c: 370: {
 [f ]
-"343
-[; ;src/system.c: 343:     if(next==sm->state) return;
+"371
+[; ;src/system.c: 371:     if(next==sm->state) return;
 [e $ ! == -> _next `ui -> . *U _sm 1 `ui 1212  ]
 [e $UE 1211  ]
 [e :U 1212 ]
-"346
-[; ;src/system.c: 346:     sm->state = next;
+"374
+[; ;src/system.c: 374:     sm->state = next;
 [e = . *U _sm 1 _next ]
-"349
-[; ;src/system.c: 349:     if(OPS[sm->state].entry)
+"377
+[; ;src/system.c: 377:     if(OPS[sm->state].entry)
 [e $ ! != . *U + &U _OPS * -> . *U _sm 1 `ux -> -> # *U &U _OPS `ui `ux 0 -> -> 0 `i `*F8433 1213  ]
-"350
-[; ;src/system.c: 350:     {
+"378
+[; ;src/system.c: 378:     {
 {
-"351
-[; ;src/system.c: 351:         OPS[sm->state].entry(&sm->CTX);
+"379
+[; ;src/system.c: 379:         OPS[sm->state].entry(&sm->CTX);
 [e ( *U . *U + &U _OPS * -> . *U _sm 1 `ux -> -> # *U &U _OPS `ui `ux 0 (1 &U . *U _sm 0 ]
-"352
-[; ;src/system.c: 352:     }
+"380
+[; ;src/system.c: 380:     }
 }
 [e :U 1213 ]
-"353
-[; ;src/system.c: 353: }
+"381
+[; ;src/system.c: 381: }
 [e :UE 1211 ]
 }
-"355
-[; ;src/system.c: 355: void FSM_init(FSM_t *sm)
+"383
+[; ;src/system.c: 383: void FSM_init(FSM_t *sm)
 [v _FSM_init `(v ~T0 @X0 1 ef1`*S1169 ]
-"356
-[; ;src/system.c: 356: {
+"384
+[; ;src/system.c: 384: {
 {
 [e :U _FSM_init ]
-"355
-[; ;src/system.c: 355: void FSM_init(FSM_t *sm)
+"383
+[; ;src/system.c: 383: void FSM_init(FSM_t *sm)
 [v _sm `*S1169 ~T0 @X0 1 r1 ]
-"356
-[; ;src/system.c: 356: {
+"384
+[; ;src/system.c: 384: {
 [f ]
-"358
-[; ;src/system.c: 358:     sm->state = ST_IDLE;
+"386
+[; ;src/system.c: 386:     sm->state = ST_IDLE;
 [e = . *U _sm 1 . `E8236 0 ]
-"359
-[; ;src/system.c: 359:     sm->CTX.sys_ms = 0;
+"387
+[; ;src/system.c: 387:     sm->CTX.sys_ms = 0;
 [e = . . *U _sm 0 0 -> -> -> 0 `i `l `ul ]
-"360
-[; ;src/system.c: 360:     sm->CTX.fault_flags = 0;
+"388
+[; ;src/system.c: 388:     sm->CTX.fault_flags = 0;
 [e = . . *U _sm 0 7 -> -> 0 `i `uc ]
-"361
-[; ;src/system.c: 361:     sm->CTX.init_flags = 0;
+"389
+[; ;src/system.c: 389:     sm->CTX.init_flags = 0;
 [e = . . *U _sm 0 6 -> -> 0 `i `uc ]
-"362
-[; ;src/system.c: 362:     sm->CTX.meas_head = 0;
+"390
+[; ;src/system.c: 390:     sm->CTX.meas_head = 0;
 [e = . . *U _sm 0 12 -> -> 0 `i `uc ]
-"363
-[; ;src/system.c: 363:     sm->CTX.meas_count = 0;
+"391
+[; ;src/system.c: 391:     sm->CTX.meas_count = 0;
 [e = . . *U _sm 0 13 -> -> 0 `i `uc ]
-"368
-[; ;src/system.c: 368:     if(OPS[sm->state].entry)
+"396
+[; ;src/system.c: 396:     if(OPS[sm->state].entry)
 [e $ ! != . *U + &U _OPS * -> . *U _sm 1 `ux -> -> # *U &U _OPS `ui `ux 0 -> -> 0 `i `*F8446 1215  ]
-"369
-[; ;src/system.c: 369:     {
+"397
+[; ;src/system.c: 397:     {
 {
-"370
-[; ;src/system.c: 370:         OPS[sm->state].entry(&sm->CTX);
+"398
+[; ;src/system.c: 398:         OPS[sm->state].entry(&sm->CTX);
 [e ( *U . *U + &U _OPS * -> . *U _sm 1 `ux -> -> # *U &U _OPS `ui `ux 0 (1 &U . *U _sm 0 ]
-"371
-[; ;src/system.c: 371:     }
+"399
+[; ;src/system.c: 399:     }
 }
 [e :U 1215 ]
-"374
-[; ;src/system.c: 374: }
+"402
+[; ;src/system.c: 402: }
 [e :UE 1214 ]
 }
-"376
-[; ;src/system.c: 376: void FSM_dispatch(FSM_t *sm, event_t ev)
+"404
+[; ;src/system.c: 404: void FSM_dispatch(FSM_t *sm, event_t ev)
 [v _FSM_dispatch `(v ~T0 @X0 1 ef2`*S1169`E8206 ]
-"377
-[; ;src/system.c: 377: {
+"405
+[; ;src/system.c: 405: {
 {
 [e :U _FSM_dispatch ]
-"376
-[; ;src/system.c: 376: void FSM_dispatch(FSM_t *sm, event_t ev)
+"404
+[; ;src/system.c: 404: void FSM_dispatch(FSM_t *sm, event_t ev)
 [v _sm `*S1169 ~T0 @X0 1 r1 ]
 [v _ev `E8206 ~T0 @X0 1 r2 ]
-"377
-[; ;src/system.c: 377: {
+"405
+[; ;src/system.c: 405: {
 [f ]
-"378
-[; ;src/system.c: 378:     state_t old_state = sm->state;
+"406
+[; ;src/system.c: 406:     state_t old_state = sm->state;
 [v _old_state `E8236 ~T0 @X0 1 a ]
 [e = _old_state . *U _sm 1 ]
-"379
-[; ;src/system.c: 379:     transition_t tr = OPS[sm->state].handle(&sm->CTX, ev, old_state);
+"407
+[; ;src/system.c: 407:     transition_t tr = OPS[sm->state].handle(&sm->CTX, ev, old_state);
 [v _tr `S1165 ~T0 @X0 1 a ]
 [e = _tr ( *U . *U + &U _OPS * -> . *U _sm 1 `ux -> -> # *U &U _OPS `ui `ux 1 (3 , , &U . *U _sm 0 _ev _old_state ]
-"382
-[; ;src/system.c: 382:     if(tr.changed)
+"410
+[; ;src/system.c: 410:     if(tr.changed)
 [e $ ! != -> . _tr 0 `i -> 0 `i 1217  ]
-"383
-[; ;src/system.c: 383:     {
+"411
+[; ;src/system.c: 411:     {
 {
-"385
-[; ;src/system.c: 385:         FSM_transition(sm, tr.next);
+"413
+[; ;src/system.c: 413:         FSM_transition(sm, tr.next);
 [e ( _FSM_transition (2 , _sm . _tr 1 ]
-"386
-[; ;src/system.c: 386:     }
+"414
+[; ;src/system.c: 414:     }
 }
 [e :U 1217 ]
-"387
-[; ;src/system.c: 387: }
+"415
+[; ;src/system.c: 415: }
 [e :UE 1216 ]
 }

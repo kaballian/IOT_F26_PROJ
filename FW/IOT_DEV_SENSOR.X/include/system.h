@@ -21,6 +21,8 @@
 #include "include/interrupt.h"
 #include "include/parse.h"
 
+//DEBUG UART FLAG
+#define DEBUG_UART_TRACE 0
 
 
 #define FAN_TO_CHL(fan) ((switch_chl_t)(fan)) //casts fan_sel_t -> switch_chl_t
@@ -187,7 +189,6 @@ typedef struct {
     uint32_t    gate_deadline;
     uint8_t     gate_active;
     uint8_t     has_deadline;
-    
     flag8_t     init_flags;
     flag8_t     fault_flags;
     uint16_t    F1_meas[FAN_BUF_LEN];
@@ -195,6 +196,18 @@ typedef struct {
     BME280_meas room_meas[BME280_BUF_LEN];
     ENS160_meas AQI_meas[ENS160_BUF_LEN];
     
+
+
+    //DEBUG STUFF
+    #if DEBUG_UART_TRACE
+        uint8_t     dbg_rx_msg;
+        uint8_t     dbg_uart_resp_push;
+        uint8_t     dbg_comm_entry;
+        uint8_t     dbg_tx_start;
+        uint8_t     dbg_tx_done_push;
+        uint8_t     dbg_q_fail;
+    #endif
+
     uint8_t     meas_head;
     uint8_t     meas_count;
 

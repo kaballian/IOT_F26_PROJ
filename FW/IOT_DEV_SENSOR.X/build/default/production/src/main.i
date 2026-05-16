@@ -13701,7 +13701,7 @@ typedef enum{
 typedef struct{
     uint8_t cmd;
     uint8_t len;
-    uint8_t payload[8];
+    uint8_t payload[16];
     uint8_t frame[16];
     uint8_t frame_len;
 }UART_tx_msg_t;
@@ -13979,7 +13979,7 @@ extern volatile uint8_t g_tmr0_1ms_flag;
 
 void ISR_init(void);
 # 22 "./include/system.h" 2
-# 38 "./include/system.h"
+# 40 "./include/system.h"
 void SYSTEM_init(void);
 
 
@@ -14014,7 +14014,7 @@ typedef enum{
     SET_DONE,
     COMM_TX_DONE,
 }event_t;
-# 88 "./include/system.h"
+# 90 "./include/system.h"
 typedef enum{
     ST_IDLE,
     ST_MEAS_FAN,
@@ -14117,14 +14117,13 @@ typedef struct {
     uint32_t gate_deadline;
     uint8_t gate_active;
     uint8_t has_deadline;
-
     flag8_t init_flags;
     flag8_t fault_flags;
     uint16_t F1_meas[8];
     uint16_t F2_meas[8];
     BME280_meas room_meas[8];
     ENS160_meas AQI_meas[8];
-
+# 211 "./include/system.h"
     uint8_t meas_head;
     uint8_t meas_count;
 
@@ -14198,7 +14197,7 @@ void FSM_dispatch(FSM_t *sm, event_t ev);
 
 
 typedef struct {
-    event_t buf[8];
+    event_t buf[16];
     uint8_t head;
     uint8_t tail;
     uint8_t count;
@@ -14208,7 +14207,7 @@ void EVENT_Q_init(event_q_t *q);
 _Bool EVENT_Q_push(event_q_t *q, event_t ev);
 _Bool EVENT_Q_pop(event_q_t *q, event_t *ev);
 # 71 "src/main.c" 2
-# 96 "src/main.c"
+# 95 "src/main.c"
 typedef enum{
     STEP_F1 = 0,
     STEP_F2,
@@ -14233,7 +14232,7 @@ volatile uint8_t g_fan_f = 0;
 volatile uint8_t g_ENS160_f = 0;
 
 volatile uint32_t g_fan_deadline = 0;
-# 135 "src/main.c"
+# 134 "src/main.c"
 void APP_service(context_t *CTX, event_q_t *ev)
 {
 
@@ -14241,14 +14240,19 @@ void APP_service(context_t *CTX, event_q_t *ev)
     static uint32_t last_ms = 0;
     static UART_msg_t rx_msg;
 
-    if(COMM_tx_done())
+    if(COMM_tx_done() && CTX->gate_owner == GATE_COMM)
     {
         COMM_clear_tx_done();
-        EVENT_Q_push(ev, COMM_TX_DONE);
+# 154 "src/main.c"
+            EVENT_Q_push(ev, COMM_TX_DONE);
+
     }
 
     if(UART_parser_GetMsg(&rx_msg))
     {
+
+
+
 
         switch(rx_msg.cmd)
         {
@@ -14263,24 +14267,58 @@ void APP_service(context_t *CTX, event_q_t *ev)
                 break;
             }
 
-            case CMD_GET_SENSOR:{
-                CTX->comm_req.type = COMM_RESP_SENSOR;
-                EVENT_Q_push(ev, UART_RESP);
+            case CMD_GET_SENSOR:
+            {
+
+
+                if(CTX->comm_req.type == COMM_RESP_NONE)
+
+
+
+                {
+                    CTX->comm_req.type = COMM_RESP_SENSOR;
+# 195 "src/main.c"
+                        CTX->comm_req.type = COMM_RESP_SENSOR;
+                        EVENT_Q_push(ev, UART_RESP);
+
+
+                }
                 break;
+
             }
 
             case CMD_GET_F1:
             {
 
-                CTX->comm_req.type = COMM_RESP_F1;
-                EVENT_Q_push(ev, UART_RESP);
+
+                if(CTX->comm_req.type == COMM_RESP_NONE)
+
+
+
+                {
+                    CTX->comm_req.type = COMM_RESP_F1;
+# 222 "src/main.c"
+                        CTX->comm_req.type = COMM_RESP_F1;
+                        EVENT_Q_push(ev, UART_RESP);
+
+                }
                 break;
             }
             case CMD_GET_F2:
             {
 
-                CTX->comm_req.type = COMM_RESP_F2;
-                EVENT_Q_push(ev, UART_RESP);
+                if(CTX->comm_req.type == COMM_RESP_NONE)
+
+
+
+
+                {
+                    CTX->comm_req.type = COMM_RESP_F2;
+# 246 "src/main.c"
+                        CTX->comm_req.type = COMM_RESP_F2;
+                        EVENT_Q_push(ev, UART_RESP);
+
+                }
                 break;
             }
             default:
@@ -14324,11 +14362,18 @@ void APP_service(context_t *CTX, event_q_t *ev)
 
 
 
-    if(CTX->gate_active || CTX->comm_req.type != COMM_RESP_NONE)
+    if(CTX->comm_req.type != COMM_RESP_NONE)
+    {
+        if(!CTX->gate_active)
+        {
+            EVENT_Q_push(ev, UART_RESP);
+        }
+    }
+    if(CTX->gate_active)
     {
         return;
     }
-
+# 312 "src/main.c"
     if((CTX->sys_ms - last_ms) < 2000)
     {
         return;
@@ -14363,7 +14408,7 @@ void APP_service(context_t *CTX, event_q_t *ev)
         }
     }
 }
-# 331 "src/main.c"
+# 413 "src/main.c"
 int main(void)
 {
     CLOCK_init();
@@ -14387,7 +14432,7 @@ int main(void)
 
     UART_RX_Parserinit();
     sm.CTX.comm_i2c_flags = NO_COMM;
-# 453 "src/main.c"
+# 535 "src/main.c"
     FSM_init(&sm);
     EVENT_Q_init(&ev_q);
 
@@ -14395,7 +14440,7 @@ int main(void)
 
     while(1)
     {
-# 659 "src/main.c"
+# 741 "src/main.c"
         if(g_tmr0_1ms_flag)
         {
             g_tmr0_1ms_flag = 0;
@@ -14415,6 +14460,6 @@ int main(void)
 
 
     }
-# 695 "src/main.c"
+# 777 "src/main.c"
     return 1;
 }
