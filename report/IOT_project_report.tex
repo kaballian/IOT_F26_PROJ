@@ -1,0 +1,71 @@
+
+
+
+
+
+
+\documentclass[conference]{IEEEtran}
+
+
+\usepackage{graphicx}   % images
+\usepackage{amsmath}    % math
+\usepackage{cite}       % compressed citations
+\usepackage{siunitx}    % SI units
+\usepackage{booktabs}   % nicer tables
+\title{My IEEE Paper}
+
+\author{
+    \IEEEauthorblockN{Alexander Thomsen}
+    \IEEEauthorblockA{
+        Aarhus University\\
+        Email: 201911329@post.au.dk
+    }
+}
+
+\begin{document}
+\input{forside.tex}
+
+\maketitle
+
+\begin{abstract}
+In this article, design considerations, implementation, construction and demonstation 
+of a low-cost embedded sensing platform, which can be integrated into a scaleable IOT
+telemetry architecture. Relying on industry standard technology such as MQTT, influxDB and 
+Grafana for real-time envionmental monitoring and visualization.  
+\end{abstract}
+
+\section{Introduction}
+
+\input{introduction.tex}
+
+\section{background}
+\input{background.tex}
+
+\section{implementation}
+
+\input{sys_arch.tex}
+\section{results}
+\input{results.tex}
+\section{conclusion}
+\input{conclusion.tex}
+
+
+
+\[
+V = IR
+\]
+
+
+
+
+
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
+
+
+
+
