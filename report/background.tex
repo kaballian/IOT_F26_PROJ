@@ -1,1 +1,37 @@
-background
+\subsection{MQTT communication protocol}
+Message queuing telemetry transport \textit{(MQTT)} is a lightweight communication protocol,
+designed for transmissions between IoT systems. It implements a subscribe/publish model, in which
+devices communicate through a broker, instead of directly to one another. A device publish
+a specific topic, while other devices can subscribe to that particular topic. This enables
+increased scalability between distributed systems. This is a particular model is well suited
+for embedded solutions with low bandwidth requirements and minimal overhead, due to ie. power
+contrains or simple processor overhead.\\ 
+In IoT environments MQTT topocs are commonly organized into hierarchies in order to separate 
+different types of data, whether it be measurements or other types of information. 
+
+\subsection{Time-Series Databases and InfluxDB}
+Environmental monitoring systems continuously generates timestamped data. This data must be 
+stored to create a log of both current and post behavior. Conventional relational databases
+are not optimized for this, due to ingestion speed at scale. For this task, time-series databases
+are designed to handle timestamped data efficiently.\\
+InfluxDB is an open-source time-series database commonly used in IoT. 
+
+\subsection{Grafana data visualization}
+visualization platforms are important tools in modern IoT systems. They provice intuitive
+access to telemtry gathered from embedded devices. And real-time dashboards allows users to 
+observe system behavior. Grafana is an open-source visualization platform commonly used 
+together with influxDB.
+
+\subsection{Embedded systems and microcontrollers}
+Embedded systems are smaller specialized computing systems designed to perform
+smaller tasks within larger electronic systems. The operation is deterministic, which
+results in predictible behavior and low-power consumption. They main purpose is to interface
+to hardware, to bridge the communication to sensors, format data and pass it along.\\
+microcontrollers also feature deditcated hardware, which can be repurposed to control 
+external hardware such as fans and do voltagem measurements. 
+
+\subsection{Air quiality and ENS160 sensor}
+Indoor air quality monitoring has become increasingly important in residential, industrial and 
+commercial environments. Poor air quality maybe negatively impact comfort, productivity and
+health. This is a partularly apparent in enclosed spaces.\\
+The ENS160 is a digital gas sensor made by ScioSense [INDSÆT LINK].

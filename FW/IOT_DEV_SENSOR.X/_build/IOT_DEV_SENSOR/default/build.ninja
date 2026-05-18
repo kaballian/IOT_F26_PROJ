@@ -51,8 +51,6 @@ build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\D
   INCLUDES = -IC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\..\..\..
   OBJECT_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir
   OBJECT_FILE_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src
-  TARGET_COMPILE_PDB = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\
-  TARGET_PDB = ""
 
 build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\ENS_160.c.p1: C_COMPILER__IOT_DEV_SENSOR_default_default_XC8_compile_unscanned_ C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\ENS_160.c || cmake_object_order_depends_target_IOT_DEV_SENSOR_default_default_XC8_compile
   DEFINES = -DXPRJ_default=default -D__16F18124__ -D__DEBUG=1
@@ -61,8 +59,6 @@ build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\D
   INCLUDES = -IC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\..\..\..
   OBJECT_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir
   OBJECT_FILE_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src
-  TARGET_COMPILE_PDB = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\
-  TARGET_PDB = ""
 
 build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\FAN.c.p1: C_COMPILER__IOT_DEV_SENSOR_default_default_XC8_compile_unscanned_ C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\FAN.c || cmake_object_order_depends_target_IOT_DEV_SENSOR_default_default_XC8_compile
   DEFINES = -DXPRJ_default=default -D__16F18124__ -D__DEBUG=1
@@ -71,8 +67,6 @@ build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\D
   INCLUDES = -IC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\..\..\..
   OBJECT_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir
   OBJECT_FILE_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src
-  TARGET_COMPILE_PDB = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\
-  TARGET_PDB = ""
 
 build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\I2C.c.p1: C_COMPILER__IOT_DEV_SENSOR_default_default_XC8_compile_unscanned_ C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\I2C.c || cmake_object_order_depends_target_IOT_DEV_SENSOR_default_default_XC8_compile
   DEFINES = -DXPRJ_default=default -D__16F18124__ -D__DEBUG=1
@@ -81,8 +75,6 @@ build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\D
   INCLUDES = -IC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\..\..\..
   OBJECT_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir
   OBJECT_FILE_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src
-  TARGET_COMPILE_PDB = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\
-  TARGET_PDB = ""
 
 build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\PWM.c.p1: C_COMPILER__IOT_DEV_SENSOR_default_default_XC8_compile_unscanned_ C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\PWM.c || cmake_object_order_depends_target_IOT_DEV_SENSOR_default_default_XC8_compile
   DEFINES = -DXPRJ_default=default -D__16F18124__ -D__DEBUG=1
@@ -91,8 +83,6 @@ build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\D
   INCLUDES = -IC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\..\..\..
   OBJECT_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir
   OBJECT_FILE_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src
-  TARGET_COMPILE_PDB = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\
-  TARGET_PDB = ""
 
 build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\TMR0.c.p1: C_COMPILER__IOT_DEV_SENSOR_default_default_XC8_compile_unscanned_ C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\TMR0.c || cmake_object_order_depends_target_IOT_DEV_SENSOR_default_default_XC8_compile
   DEFINES = -DXPRJ_default=default -D__16F18124__ -D__DEBUG=1
@@ -101,8 +91,6 @@ build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\D
   INCLUDES = -IC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\..\..\..
   OBJECT_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir
   OBJECT_FILE_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src
-  TARGET_COMPILE_PDB = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\
-  TARGET_PDB = ""
 
 build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\TMR1.c.p1: C_COMPILER__IOT_DEV_SENSOR_default_default_XC8_compile_unscanned_ C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\TMR1.c || cmake_object_order_depends_target_IOT_DEV_SENSOR_default_default_XC8_compile
   DEFINES = -DXPRJ_default=default -D__16F18124__ -D__DEBUG=1
@@ -111,8 +99,6 @@ build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\D
   INCLUDES = -IC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\..\..\..
   OBJECT_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir
   OBJECT_FILE_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src
-  TARGET_COMPILE_PDB = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\
-  TARGET_PDB = ""
 
 build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\event_queue.c.p1: C_COMPILER__IOT_DEV_SENSOR_default_default_XC8_compile_unscanned_ C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\event_queue.c || cmake_object_order_depends_target_IOT_DEV_SENSOR_default_default_XC8_compile
   DEFINES = -DXPRJ_default=default -D__16F18124__ -D__DEBUG=1
@@ -121,8 +107,6 @@ build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\D
   INCLUDES = -IC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\..\..\..
   OBJECT_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir
   OBJECT_FILE_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src
-  TARGET_COMPILE_PDB = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\
-  TARGET_PDB = ""
 
 build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\interrupt.c.p1: C_COMPILER__IOT_DEV_SENSOR_default_default_XC8_compile_unscanned_ C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\interrupt.c || cmake_object_order_depends_target_IOT_DEV_SENSOR_default_default_XC8_compile
   DEFINES = -DXPRJ_default=default -D__16F18124__ -D__DEBUG=1
@@ -131,8 +115,6 @@ build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\D
   INCLUDES = -IC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\..\..\..
   OBJECT_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir
   OBJECT_FILE_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src
-  TARGET_COMPILE_PDB = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\
-  TARGET_PDB = ""
 
 build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\main.c.p1: C_COMPILER__IOT_DEV_SENSOR_default_default_XC8_compile_unscanned_ C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\main.c || cmake_object_order_depends_target_IOT_DEV_SENSOR_default_default_XC8_compile
   DEFINES = -DXPRJ_default=default -D__16F18124__ -D__DEBUG=1
@@ -141,8 +123,6 @@ build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\D
   INCLUDES = -IC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\..\..\..
   OBJECT_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir
   OBJECT_FILE_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src
-  TARGET_COMPILE_PDB = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\
-  TARGET_PDB = ""
 
 build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\parse.c.p1: C_COMPILER__IOT_DEV_SENSOR_default_default_XC8_compile_unscanned_ C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\parse.c || cmake_object_order_depends_target_IOT_DEV_SENSOR_default_default_XC8_compile
   DEFINES = -DXPRJ_default=default -D__16F18124__ -D__DEBUG=1
@@ -151,8 +131,6 @@ build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\D
   INCLUDES = -IC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\..\..\..
   OBJECT_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir
   OBJECT_FILE_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src
-  TARGET_COMPILE_PDB = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\
-  TARGET_PDB = ""
 
 build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\system.c.p1: C_COMPILER__IOT_DEV_SENSOR_default_default_XC8_compile_unscanned_ C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src\system.c || cmake_object_order_depends_target_IOT_DEV_SENSOR_default_default_XC8_compile
   DEFINES = -DXPRJ_default=default -D__16F18124__ -D__DEBUG=1
@@ -161,8 +139,6 @@ build CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\D
   INCLUDES = -IC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\..\..\..
   OBJECT_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir
   OBJECT_FILE_DIR = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\C_\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src
-  TARGET_COMPILE_PDB = CMakeFiles\IOT_DEV_SENSOR_default_default_XC8_compile.dir\
-  TARGET_PDB = ""
 
 
 
@@ -193,16 +169,15 @@ build C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\out\IOT_DEV_
   OBJECT_DIR = CMakeFiles\IOT_DEV_SENSOR_default_image_V6VrMKlC.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_COMPILE_PDB = CMakeFiles\IOT_DEV_SENSOR_default_image_V6VrMKlC.dir\
   TARGET_FILE = C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\out\IOT_DEV_SENSOR\default.elf
-  TARGET_PDB = C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\out\IOT_DEV_SENSOR\default.pdb
+  TARGET_PDB = default.elf.dbg
 
 
 #############################################
 # Utility command for edit_cache
 
 build CMakeFiles\edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\_build\IOT_DEV_SENSOR\default && C:\Strawberry\c\bin\cmake.exe -E echo "No interactive CMake dialog available.""
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\_build\IOT_DEV_SENSOR\default && C:\Strawberry\c\bin\cmake.exe -E echo "No interactive CMake dialog available.""
   DESC = No interactive CMake dialog available...
   restat = 1
 
@@ -213,7 +188,7 @@ build edit_cache: phony CMakeFiles\edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles\rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\_build\IOT_DEV_SENSOR\default && C:\Strawberry\c\bin\cmake.exe --regenerate-during-build -SC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default -BC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\_build\IOT_DEV_SENSOR\default"
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\_build\IOT_DEV_SENSOR\default && C:\Strawberry\c\bin\cmake.exe --regenerate-during-build -SC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default -BC:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\_build\IOT_DEV_SENSOR\default"
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -244,14 +219,14 @@ build all: phony IOT_DEV_SENSOR_default_default_XC8_compile C$:\Users\alext\Docu
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeASMCompiler.cmake.in C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeASMInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeCCompiler.cmake.in C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeCInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeCompilerIdDetection.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineASMCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineCCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineCompileFeatures.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineCompilerABI.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineCompilerId.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineSystem.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeFindBinUtils.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeGenericSystem.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeNinjaFindMake.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeParseImplicitIncludeInfo.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeParseImplicitLinkInfo.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeParseLibraryArchitecture.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeSystem.cmake.in C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeTestASMCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeTestCCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeTestCompilerCommon.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\ADSP-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\ARMCC-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\ARMClang-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\AppleClang-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Borland-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Bruce-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Clang-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Clang-DetermineCompilerInternal.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Compaq-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Cray-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\CrayClang-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Embarcadero-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Fujitsu-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\GHS-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\GNU-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\HP-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\IAR-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Intel-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\LCC-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\MSVC-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\NVHPC-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\NVIDIA-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\OrangeC-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\PGI-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\PathScale-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\SCO-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\SDCC-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\SunPro-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\TI-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\TIClang-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Tasking-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Watcom-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\XL-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\XLClang-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\zOS-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Internal\CMakeDetermineLinkerId.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Platform\Generic.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\file.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\main.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\overrides.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\rule.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\toolchain.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\CMakeLists.txt CMakeCache.txt CMakeFiles\3.29.2\CMakeCCompiler.cmake CMakeFiles\3.29.2\CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeASMCompiler.cmake.in C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeASMInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeCInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeCompilerIdDetection.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineASMCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineCompilerId.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeFindBinUtils.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeGenericSystem.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeTestASMCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Platform\Generic.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\file.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\main.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\overrides.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\rule.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\toolchain.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\CMakeLists.txt CMakeCache.txt CMakeFiles\3.29.2\CMakeCCompiler.cmake CMakeFiles\3.29.2\CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeASMCompiler.cmake.in C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeASMInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeCCompiler.cmake.in C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeCInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeCompilerIdDetection.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineASMCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineCCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineCompileFeatures.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineCompilerABI.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineCompilerId.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineSystem.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeFindBinUtils.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeGenericSystem.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeNinjaFindMake.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeParseImplicitIncludeInfo.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeParseImplicitLinkInfo.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeParseLibraryArchitecture.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeSystem.cmake.in C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeTestASMCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeTestCCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeTestCompilerCommon.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\ADSP-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\ARMCC-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\ARMClang-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\AppleClang-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Borland-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Bruce-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Clang-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Clang-DetermineCompilerInternal.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Compaq-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Cray-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\CrayClang-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Embarcadero-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Fujitsu-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\GHS-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\GNU-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\HP-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\IAR-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Intel-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\LCC-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\MSVC-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\NVHPC-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\NVIDIA-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\OrangeC-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\PGI-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\PathScale-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\SCO-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\SDCC-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\SunPro-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\TI-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\TIClang-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Tasking-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\Watcom-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\XL-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\XLClang-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Compiler\zOS-C-DetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Internal\CMakeDetermineLinkerId.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Platform\Generic.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\file.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\main.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\overrides.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\rule.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\toolchain.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\CMakeLists.txt CMakeCache.txt CMakeFiles\3.29.2\CMakeCCompiler.cmake CMakeFiles\3.29.2\CMakeSystem.cmake: phony
+build C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeASMCompiler.cmake.in C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeASMInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeCInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeCompilerIdDetection.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineASMCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeDetermineCompilerId.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeFindBinUtils.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeGenericSystem.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\CMakeTestASMCompiler.cmake C$:\Strawberry\c\share\cmake-3.29\Modules\Platform\Generic.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\file.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\main.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\overrides.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\rule.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\.generated\toolchain.cmake C$:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\cmake\IOT_DEV_SENSOR\default\CMakeLists.txt CMakeCache.txt CMakeFiles\3.29.2\CMakeCCompiler.cmake CMakeFiles\3.29.2\CMakeSystem.cmake: phony
 
 
 #############################################

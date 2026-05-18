@@ -9,10 +9,24 @@ this very problem. However, a common denominator for these solutions is that the
 very expensive or tie the user down in complicated software eco-systems, and often the cases
 is a combination of both.\\
 With the increasing availability of low-cost embedded systems and wireless communication technologies,
-the adoption of IoT solutions has accelerated the application in envionmental monitoring.
+the adoption of IoT solutions has accelerated the application in envionmental monitoring.\\
 %why iot systems are useful
-IOT OMEGALUL
+IoT based monitoring platforms can be implemented to use lightweight communication protocols 
+and scaleable data-processing architectures. MQTT is one such protocol. Its low overhead and 
+subscribe/publish communication model has made a widely adopted model for IoT applications. 
+This makes it attractive when combining it with time-series databases suchs as InfluxDB and
+visualization platorms such as grafana.\\
 
 %project solution
+This project presents a design and implementation of a IoT-enabled envionmental monitoring 
+and fan-control system based on a newer PIC16 microcontroller and a Rasbperry PI gateway.
+The embedded subsystem aquires air quiality measurements from an ENS160 gas sensor, while 
+simultaneously monitoring multiple PWM-controlled fans. Telemetry is transmitted through
+a custom UART communications protocol to the Raspbery Pi, where data is published to MQTT, 
+processing using Telegraf, stored in InfluxDb and visualized in Grafana dashboards.
 
 %paper overview
+The purpose of this paper is to demonstrate a low-cost, lightweight, embedded platform,
+that can be integrated into larger, modular IoT architectures, for monitoring and Telemetry
+visualization. The remainder of this reports describes the theoretical background, system
+architecture, implementation details, experimental verification and future improvements.

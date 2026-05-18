@@ -1,1 +1,20 @@
-sys arch
+\subsection{Overall System Architecture}
+The system proposed in the paper is designed as a modular IoT-based Environmental
+monitoring platform, consisting of an embedded sensing processor subsystem and a higher-level
+telemetry processor. The embedded subsystem is responsible for sensor data acquisition, fan control
+and monitoring, aswell as low-level hardware interaction.\\
+
+The sensing subsystem is based on a PIC16F18124[INDSÆT REF] microcontroller, with its own
+auxillary supply, connected to an ENS160 air-quality sensor and multiple PWM-controlled fans. 
+The microcontroller continuously acquires environmental measurements and fan telemetry while
+simultaneously regulating the fan speed. System information is transmitted to the Raspberry PI
+through the UART communication interface.\\
+
+The Raspberry Pi acts a edge gateway between the embedded hardware and the IoT infrastructure.
+Incoming UART telemetry is processed by a python application and published to MQTT topics.
+This telemetry is subsequently collected by telegraf to be stored in an InfluxDB time-series 
+databased, later to be visualized by grafana. It is the handling done by telegraf that 
+timestamps the data, as the microcontroller system, effectively can't determine absolute 
+time, only that which have passed since boot. 
+
+\subsection{PIC Firmware architecture}

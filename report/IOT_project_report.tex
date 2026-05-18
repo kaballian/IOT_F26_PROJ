@@ -12,14 +12,23 @@
 \usepackage{cite}       % compressed citations
 \usepackage{siunitx}    % SI units
 \usepackage{booktabs}   % nicer tables
-\title{My IEEE Paper}
+\title{Web-of-things: Smart Air Filter}
 
 \author{
-    \IEEEauthorblockN{Alexander Thomsen}
-    \IEEEauthorblockA{
-        Aarhus University\\
-        Email: 201911329@post.au.dk
-    }
+    \makebox[.5\linewidth]{Alexander Thomsen}\\Aarhus university\\201911329@post.au.dk\\
+    \and \makebox[.5\linewidth]{Jeppe Bangshaab}\\Aarhus university\\202106888@post.au.dk\\
+    % \IEEEauthorblockN{Alexander Thomsen}
+    % \IEEEauthorblockA{
+    %     Aarhus University\\
+    %     Email: 201911329@post.au.dk
+    % }
+
+    % \IEEEauthorblockN{Jeppe Bangshaab}
+    % \IEEEauthosblockN{
+    %     Aarhus University\\
+    %     Email: 202106888@post.au.adk
+    % }
+    
 }
 
 \begin{document}
@@ -38,12 +47,12 @@ Grafana for real-time envionmental monitoring and visualization.
 
 \input{introduction.tex}
 
-\section{background}
+\section{Background}
 \input{background.tex}
 
-\section{implementation}
-
+\section{System design and Implementation}
 \input{sys_arch.tex}
+
 \section{results}
 \input{results.tex}
 \section{conclusion}

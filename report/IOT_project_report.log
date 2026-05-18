@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.10.19)  17 MAY 2026 22:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2025.10.19)  18 MAY 2026 22:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -264,7 +264,7 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@lastruleclass=\count298
 \@thisrulewidth=\dimen194
 )
-Package translations Info: No language package found. I am going to use `english' as default language. on input line 25.
+Package translations Info: No language package found. I am going to use `english' as default language. on input line 34.
  (C:\Users\alext\AppData\Local\Programs\MiKTeX\tex/latex/graphics\color.sty
 Package: color 2022/01/06 v1.3d Standard LaTeX Color (DPC)
  (C:\Users\alext\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg
@@ -278,20 +278,20 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 ) (IOT_project_report.aux)
 \openout1 = `IOT_project_report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
 
 -- Lines per column: 56 (exact).
 (C:\Users\alext\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
@@ -315,7 +315,7 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 )) (C:\Users\alext\AppData\Local\Programs\MiKTeX\tex/latex/translations/dicts\translations-basic-dictionary-english.trsl
 File: translations-basic-dictionary-english.trsl (english translation file `translations-basic-dictionary')
 )
-Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 25.
+Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 34.
  (forside.tex
 <logo.png, id=1, 803.0pt x 168.63pt>
 File: logo.png Graphic file (type png)
@@ -325,7 +325,50 @@ Package pdftex.def Info: logo.png  used on input line 6.
  [0
 
 
-{C:/Users/alext/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc} <./logo.png>]) (introduction.tex) (background.tex) (sys_arch.tex) (results.tex) (conclusion.tex)
+{C:/Users/alext/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc} <./logo.png>]) (introduction.tex
+Underfull \hbox (badness 3735) in paragraph at lines 2--19
+\OT1/ptm/m/n/10 use lightweight com-mu-ni-ca-tion pro-to-cols and scaleable
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--19
+
+ []
+
+) (background.tex
+Underfull \hbox (badness 6412) in paragraph at lines 2--11
+[]\OT1/ptm/m/n/10 Message queu-ing teleme-try trans-port \OT1/ptm/m/it/10 (MQTT) \OT1/ptm/m/n/10 is a
+ []
+
+[1
+
+
+]) (sys_arch.tex
+Underfull \hbox (badness 10000) in paragraph at lines 2--6
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--12
+[]\OT1/ptm/m/n/10 The sens-ing sub-sys-tem is based on a
+ []
+
+
+Underfull \hbox (badness 2564) in paragraph at lines 7--12
+\OT1/ptm/m/n/10 and mul-ti-ple PWM-controlled fans. The mi-cro-con-troller
+ []
+
+
+Underfull \hbox (badness 6380) in paragraph at lines 7--12
+\OT1/ptm/m/n/10 con-tin-u-ously ac-quires en-vi-ron-men-tal mea-sure-ments and
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--12
+
+ []
+
+) (results.tex) (conclusion.tex)
 No file IOT_project_report.bbl.
 
 ** Conference Paper **
@@ -338,9 +381,7 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[1
-
-
+[2
 
 ] (IOT_project_report.aux)
  ***********
@@ -349,17 +390,17 @@ L3 programming layer <2024-01-04>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 7586 strings out of 474486
- 183742 string characters out of 5743754
- 1931542 words of memory out of 5000000
+ 7587 strings out of 474486
+ 183749 string characters out of 5743754
+ 1939542 words of memory out of 5000000
  29816 multiletter control sequences out of 15000+600000
- 592179 words of font info for 91 fonts, out of 8000000 for 9000
+ 593315 words of font info for 92 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,8n,80p,308b,530s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb>
-Output written on IOT_project_report.pdf (2 pages, 93904 bytes).
+<C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/alext/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
+Output written on IOT_project_report.pdf (3 pages, 115552 bytes).
 PDF statistics:
- 38 PDF objects out of 1000 (max. 8388607)
+ 46 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
