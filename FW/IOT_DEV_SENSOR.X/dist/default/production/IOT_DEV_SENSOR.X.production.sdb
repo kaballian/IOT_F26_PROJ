@@ -301,9 +301,9 @@ FAULT_UART 16
 [v _EUSART1_init EUSART1_init `(v  1 e 1 0 ]
 "90
 [v _EUSART1_ISR EUSART1_ISR `(v  1 e 1 0 ]
-"206
+"140
 [v _COMM_assemble_frame COMM_assemble_frame `(v  1 e 1 0 ]
-"223
+"157
 [v _COMM_TX_start COMM_TX_start `(v  1 e 1 0 ]
 "4 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/event_queue.c
 [v _EVENT_Q_init EVENT_Q_init `(v  1 e 1 0 ]
@@ -387,13 +387,13 @@ FAULT_UART 16
 [v _st_comm_entry st_comm_entry `(v  1 s 1 st_comm_entry ]
 "236 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X/include/system.h
 [s S28 . 2 `a 1 changed 1 0 `E8236 1 next 1 1 ]
-"338 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/system.c
+"339 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/system.c
 [v _st_comm_handle st_comm_handle `(S28  1 s 2 st_comm_handle ]
-"369
+"370
 [v _FSM_transition FSM_transition `(v  1 e 1 0 ]
-"383
+"384
 [v _FSM_init FSM_init `(v  1 e 1 0 ]
-"404
+"405
 [v _FSM_dispatch FSM_dispatch `(v  1 e 1 0 ]
 "18 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/TMR0.c
 [v _TMR0_init TMR0_init `(v  1 e 1 0 ]
@@ -1058,7 +1058,7 @@ FAULT_UART 16
 "11
 [v _PWM_FAN2_CH PWM_FAN2_CH `S90  1 e 7 0 ]
 [s S28 . 2 `a 1 changed 1 0 `E8236 1 next 1 1 ]
-"358 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/system.c
+"359 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/system.c
 [s S2380 . 4 `*.37(v 1 entry 2 0 `*.37(S28 1 handle 2 2 ]
 [v _OPS OPS `DC[4]S2380  1 s 16 OPS ]
 "12 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/TMR0.c
@@ -1104,7 +1104,7 @@ FAULT_UART 16
 {
 "26
 } 0
-"383 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/system.c
+"384 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/system.c
 [v _FSM_init FSM_init `(v  1 e 1 0 ]
 {
 [s S31 . 4 `us 1 humidity 2 0 `us 1 pressure 2 2 ]
@@ -1117,19 +1117,19 @@ FAULT_UART 16
 [s S104 . 1 `E8186 1 status 1 0 ]
 [s S110 . 187 `ul 1 sys_ms 4 0 `ul 1 fsm_tick 4 4 `us 1 fan_gate_div 2 8 `ul 1 gate_deadline 4 10 `uc 1 gate_active 1 14 `uc 1 has_deadline 1 15 `uc 1 init_flags 1 16 `uc 1 fault_flags 1 17 `[8]us 1 F1_meas 16 18 `[8]us 1 F2_meas 16 34 `[8]S31 1 room_meas 32 50 `[8]S34 1 AQI_meas 16 82 `uc 1 meas_head 1 98 `uc 1 meas_count 1 99 `E8275 1 gate_owner 1 100 `E8051 1 UART_CMD 1 101 `S65 1 comm_req 2 102 `S68 1 tx_msg 35 104 `E8262 1 comm_i2c_flags 1 139 `S79 1 ENS160 13 140 `S95 1 FAN1 8 153 `S95 1 FAN2 8 161 `[2]S95 1 FANS 16 169 `S104 1 FAN_selector 1 185 `E8286 1 active_fan 1 186 ]
 [s S136 . 188 `S110 1 CTX 187 0 `E8236 1 state 1 187 ]
-[v FSM_init@sm sm `*.39S136  1 p 2 29 ]
-"402
+[v FSM_init@sm sm `*.39S136  1 p 2 28 ]
+"403
 } 0
-"404
+"405
 [v _FSM_dispatch FSM_dispatch `(v  1 e 1 0 ]
 {
 [s S28 . 2 `a 1 changed 1 0 `E8236 1 next 1 1 ]
-"407
+"408
 [v FSM_dispatch@tr tr `S28  1 a 2 1 ]
-"406
+"407
 [v FSM_dispatch@old_state old_state `E8236  1 a 1 0 ]
 [s S31 . 4 `us 1 humidity 2 0 `us 1 pressure 2 2 ]
-"404
+"405
 [s S34 . 2 `us 1 AQI 2 0 ]
 [s S65 . 2 `E8291 1 type 1 0 `uc 1 arg 1 1 ]
 [s S68 . 35 `uc 1 cmd 1 0 `uc 1 len 1 1 `[16]uc 1 payload 16 2 `[16]uc 1 frame 16 18 `uc 1 frame_len 1 34 ]
@@ -1141,11 +1141,11 @@ FAULT_UART 16
 [s S136 . 188 `S110 1 CTX 187 0 `E8236 1 state 1 187 ]
 [v FSM_dispatch@sm sm `*.39S136  1 p 2 53 ]
 [v FSM_dispatch@ev ev `E8206  1 p 1 55 ]
-"415
+"416
 } 0
 "236 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X/include/system.h
 [s S28 . 2 `a 1 changed 1 0 `E8236 1 next 1 1 ]
-"338 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/system.c
+"339 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/system.c
 [v _st_comm_handle st_comm_handle `(S28  1 s 2 st_comm_handle ]
 {
 [s S31 . 4 `us 1 humidity 2 0 `us 1 pressure 2 2 ]
@@ -1160,7 +1160,7 @@ FAULT_UART 16
 [v st_comm_handle@CTX CTX `*.39S110  1 p 2 43 ]
 [v st_comm_handle@ev ev `E8206  1 p 1 45 ]
 [v st_comm_handle@current current `E8236  1 p 1 46 ]
-"354
+"355
 } 0
 "236 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X/include/system.h
 [s S28 . 2 `a 1 changed 1 0 `E8236 1 next 1 1 ]
@@ -1312,7 +1312,7 @@ FAULT_UART 16
 [v stay@system$F2401@current current `E8236  1 p 1 4 ]
 "246
 } 1
-"369 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/system.c
+"370 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/system.c
 [v _FSM_transition FSM_transition `(v  1 e 1 0 ]
 {
 [s S31 . 4 `us 1 humidity 2 0 `us 1 pressure 2 2 ]
@@ -1325,9 +1325,9 @@ FAULT_UART 16
 [s S104 . 1 `E8186 1 status 1 0 ]
 [s S110 . 187 `ul 1 sys_ms 4 0 `ul 1 fsm_tick 4 4 `us 1 fan_gate_div 2 8 `ul 1 gate_deadline 4 10 `uc 1 gate_active 1 14 `uc 1 has_deadline 1 15 `uc 1 init_flags 1 16 `uc 1 fault_flags 1 17 `[8]us 1 F1_meas 16 18 `[8]us 1 F2_meas 16 34 `[8]S31 1 room_meas 32 50 `[8]S34 1 AQI_meas 16 82 `uc 1 meas_head 1 98 `uc 1 meas_count 1 99 `E8275 1 gate_owner 1 100 `E8051 1 UART_CMD 1 101 `S65 1 comm_req 2 102 `S68 1 tx_msg 35 104 `E8262 1 comm_i2c_flags 1 139 `S79 1 ENS160 13 140 `S95 1 FAN1 8 153 `S95 1 FAN2 8 161 `[2]S95 1 FANS 16 169 `S104 1 FAN_selector 1 185 `E8286 1 active_fan 1 186 ]
 [s S136 . 188 `S110 1 CTX 187 0 `E8236 1 state 1 187 ]
-[v FSM_transition@sm sm `*.39S136  1 p 2 29 ]
-[v FSM_transition@next next `E8236  1 p 1 31 ]
-"381
+[v FSM_transition@sm sm `*.39S136  1 p 2 28 ]
+[v FSM_transition@next next `E8236  1 p 1 30 ]
+"382
 } 0
 "249
 [v _st_comm_entry st_comm_entry `(v  1 s 1 st_comm_entry ]
@@ -1335,9 +1335,9 @@ FAULT_UART 16
 [s S90 . 7 `*.39VEus 1 pR 2 0 `*.39VEuc 1 con 2 2 `uc 1 ld_mask 1 4 `us 1 period 2 5 ]
 "284
 [s S95 . 8 `*.39S90 1 pwm 2 0 `uc 1 duty_percent 1 2 `us 1 tach_count 2 3 `uc 1 pulses_pr_rev 1 5 `us 1 RPM 2 6 ]
-[v st_comm_entry@fan fan `*.39S95  1 a 2 27 ]
+[v st_comm_entry@fan fan `*.39S95  1 a 2 26 ]
 "283
-[v st_comm_entry@fan_id fan_id `E8286  1 a 1 26 ]
+[v st_comm_entry@fan_id fan_id `E8286  1 a 1 25 ]
 [s S31 . 4 `us 1 humidity 2 0 `us 1 pressure 2 2 ]
 "249
 [s S34 . 2 `us 1 AQI 2 0 ]
@@ -1349,7 +1349,7 @@ FAULT_UART 16
 [s S104 . 1 `E8186 1 status 1 0 ]
 [s S110 . 187 `ul 1 sys_ms 4 0 `ul 1 fsm_tick 4 4 `us 1 fan_gate_div 2 8 `ul 1 gate_deadline 4 10 `uc 1 gate_active 1 14 `uc 1 has_deadline 1 15 `uc 1 init_flags 1 16 `uc 1 fault_flags 1 17 `[8]us 1 F1_meas 16 18 `[8]us 1 F2_meas 16 34 `[8]S31 1 room_meas 32 50 `[8]S34 1 AQI_meas 16 82 `uc 1 meas_head 1 98 `uc 1 meas_count 1 99 `E8275 1 gate_owner 1 100 `E8051 1 UART_CMD 1 101 `S65 1 comm_req 2 102 `S68 1 tx_msg 35 104 `E8262 1 comm_i2c_flags 1 139 `S79 1 ENS160 13 140 `S95 1 FAN1 8 153 `S95 1 FAN2 8 161 `[2]S95 1 FANS 16 169 `S104 1 FAN_selector 1 185 `E8286 1 active_fan 1 186 ]
 [v st_comm_entry@CTX CTX `*.39S110  1 p 2 19 ]
-"337
+"338
 } 0
 "184
 [v _st_meas_ens160_entry st_meas_ens160_entry `(v  1 s 1 st_meas_ens160_entry ]
@@ -1404,17 +1404,17 @@ FAULT_UART 16
 {
 "60
 } 0
-"206 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/eusart1.c
+"140 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/eusart1.c
 [v _COMM_assemble_frame COMM_assemble_frame `(v  1 e 1 0 ]
 {
-"213
+"147
 [v COMM_assemble_frame@j j `uc  1 a 1 17 ]
-"208
+"142
 [v COMM_assemble_frame@i i `uc  1 a 1 18 ]
 [s S68 . 35 `uc 1 cmd 1 0 `uc 1 len 1 1 `[16]uc 1 payload 16 2 `[16]uc 1 frame 16 18 `uc 1 frame_len 1 34 ]
-"206
+"140
 [v COMM_assemble_frame@tx tx `*.39S68  1 p 2 8 ]
-"222
+"156
 } 0
 "171 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/parse.c
 [v _UART_CHKSUM UART_CHKSUM `(uc  1 e 1 0 ]
@@ -1432,12 +1432,12 @@ FAULT_UART 16
 [v UART_CHKSUM@cmd cmd `uc  1 p 1 5 ]
 "182
 } 1
-"223 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/eusart1.c
+"157 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/eusart1.c
 [v _COMM_TX_start COMM_TX_start `(v  1 e 1 0 ]
 {
 [s S68 . 35 `uc 1 cmd 1 0 `uc 1 len 1 1 `[16]uc 1 payload 16 2 `[16]uc 1 frame 16 18 `uc 1 frame_len 1 34 ]
 [v COMM_TX_start@tx tx `*.39S68  1 p 2 2 ]
-"229
+"163
 } 0
 "5 C:\Users\alext\Documents\AU\IOT_F26_PROJ\FW\IOT_DEV_SENSOR.X\src/FAN.c
 [v _FAN_init FAN_init `(v  1 e 1 0 ]

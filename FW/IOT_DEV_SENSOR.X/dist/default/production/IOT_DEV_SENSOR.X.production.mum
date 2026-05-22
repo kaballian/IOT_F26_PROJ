@@ -1,6 +1,6 @@
 
 16F18124 Memory Summary:
-    Program space        used   F43h (  3907) of  1000h words   ( 95.4%)
+    Program space        used   F3Ch (  3900) of  1000h words   ( 95.2%)
     Data space           used   168h (   360) of   200h bytes   ( 70.3%)
     EEPROM space         used     0h (     0) of    80h bytes   (  0.0%)
     Configuration bits   used     5h (     5) of     5h words   (100.0%)

@@ -14294,7 +14294,8 @@ static void st_comm_entry(context_t *CTX)
             fan_sel_t fan_id = (CTX->comm_req.type == COMM_RESP_F1) ? FAN_1 : FAN_2;
             fan_t *fan = &CTX->FANS[fan_id];
 
-            CTX->tx_msg.cmd = (fan_id == FAN_1) ? CMD_GET_F1 : CMD_GET_F2;
+
+            CTX->tx_msg.cmd = UART_CMD_ACK;
             CTX->tx_msg.len = 3;
             CTX->tx_msg.payload[0] = fan->duty_percent;
             CTX->tx_msg.payload[1] = (uint8_t)(fan->RPM >> 8);
@@ -14316,7 +14317,7 @@ static void st_comm_entry(context_t *CTX)
             CTX->tx_msg.payload[4] = (uint8_t)(CTX->ENS160.eco2_ppm>>8);
             CTX->tx_msg.payload[5] = (uint8_t)(CTX->ENS160.eco2_ppm);
             CTX->tx_msg.payload[6] = CTX->ENS160.dev_status;
-# 319 "src/system.c"
+# 320 "src/system.c"
             break;
         }
 

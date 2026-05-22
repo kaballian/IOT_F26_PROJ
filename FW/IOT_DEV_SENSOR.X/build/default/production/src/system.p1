@@ -1813,75 +1813,75 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;src/system.c: 284:             fan_t *fan = &CTX->FANS[fan_id];
 [v _fan `*S1156 ~T0 @X0 1 a ]
 [e = _fan &U *U + &U . *U _CTX 22 * -> _fan_id `ux -> -> # *U &U . *U _CTX 22 `ui `ux ]
-"286
-[; ;src/system.c: 286:             CTX->tx_msg.cmd = (fan_id == FAN_1) ? CMD_GET_F1 : CMD_GET_F2;
-[e = . . *U _CTX 17 0 -> ? == -> _fan_id `ui -> . `E8286 0 `ui : . `E8143 4 . `E8143 5 `uc ]
 "287
-[; ;src/system.c: 287:             CTX->tx_msg.len = 3;
-[e = . . *U _CTX 17 1 -> -> 3 `i `uc ]
+[; ;src/system.c: 287:             CTX->tx_msg.cmd = UART_CMD_ACK;
+[e = . . *U _CTX 17 0 -> . `E8143 7 `uc ]
 "288
-[; ;src/system.c: 288:             CTX->tx_msg.payload[0] = fan->duty_percent;
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux . *U _fan 1 ]
+[; ;src/system.c: 288:             CTX->tx_msg.len = 3;
+[e = . . *U _CTX 17 1 -> -> 3 `i `uc ]
 "289
-[; ;src/system.c: 289:             CTX->tx_msg.payload[1] = (uint8_t)(fan->RPM >> 8);
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 1 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> >> -> . *U _fan 4 `ui -> 8 `i `uc ]
+[; ;src/system.c: 289:             CTX->tx_msg.payload[0] = fan->duty_percent;
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux . *U _fan 1 ]
 "290
-[; ;src/system.c: 290:             CTX->tx_msg.payload[2] = (uint8_t)(fan->RPM);
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 2 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> . *U _fan 4 `uc ]
+[; ;src/system.c: 290:             CTX->tx_msg.payload[1] = (uint8_t)(fan->RPM >> 8);
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 1 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> >> -> . *U _fan 4 `ui -> 8 `i `uc ]
 "291
-[; ;src/system.c: 291:             break;
-[e $U 1199  ]
+[; ;src/system.c: 291:             CTX->tx_msg.payload[2] = (uint8_t)(fan->RPM);
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 2 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> . *U _fan 4 `uc ]
 "292
-[; ;src/system.c: 292:         }
-}
+[; ;src/system.c: 292:             break;
+[e $U 1199  ]
 "293
-[; ;src/system.c: 293:         case COMM_RESP_SENSOR:{
+[; ;src/system.c: 293:         }
+}
+"294
+[; ;src/system.c: 294:         case COMM_RESP_SENSOR:{
 [e :U 1203 ]
 {
-"294
-[; ;src/system.c: 294:             CTX->tx_msg.cmd = CMD_GET_SENSOR;
+"295
+[; ;src/system.c: 295:             CTX->tx_msg.cmd = CMD_GET_SENSOR;
 [e = . . *U _CTX 17 0 -> . `E8143 6 `uc ]
-"298
-[; ;src/system.c: 298:                 CTX->tx_msg.len = 7;
+"299
+[; ;src/system.c: 299:                 CTX->tx_msg.len = 7;
 [e = . . *U _CTX 17 1 -> -> 7 `i `uc ]
-"301
-[; ;src/system.c: 301:             CTX->tx_msg.payload[0] = CTX->ENS160.dev_addr;
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux . . *U _CTX 19 0 ]
 "302
-[; ;src/system.c: 302:             CTX->tx_msg.payload[1] = CTX->ENS160.aqi;
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 1 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux . . *U _CTX 19 7 ]
+[; ;src/system.c: 302:             CTX->tx_msg.payload[0] = CTX->ENS160.dev_addr;
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 0 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux . . *U _CTX 19 0 ]
 "303
-[; ;src/system.c: 303:             CTX->tx_msg.payload[2] = (uint8_t)(CTX->ENS160.tvoc_ppb>>8);
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 2 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> >> -> . . *U _CTX 19 8 `ui -> 8 `i `uc ]
+[; ;src/system.c: 303:             CTX->tx_msg.payload[1] = CTX->ENS160.aqi;
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 1 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux . . *U _CTX 19 7 ]
 "304
-[; ;src/system.c: 304:             CTX->tx_msg.payload[3] = (uint8_t)(CTX->ENS160.tvoc_ppb);
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 3 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> . . *U _CTX 19 8 `uc ]
+[; ;src/system.c: 304:             CTX->tx_msg.payload[2] = (uint8_t)(CTX->ENS160.tvoc_ppb>>8);
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 2 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> >> -> . . *U _CTX 19 8 `ui -> 8 `i `uc ]
 "305
-[; ;src/system.c: 305:             CTX->tx_msg.payload[4] = (uint8_t)(CTX->ENS160.eco2_ppm>>8);
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 4 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> >> -> . . *U _CTX 19 9 `ui -> 8 `i `uc ]
+[; ;src/system.c: 305:             CTX->tx_msg.payload[3] = (uint8_t)(CTX->ENS160.tvoc_ppb);
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 3 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> . . *U _CTX 19 8 `uc ]
 "306
-[; ;src/system.c: 306:             CTX->tx_msg.payload[5] = (uint8_t)(CTX->ENS160.eco2_ppm);
-[e = *U + &U . . *U _CTX 17 2 * -> -> -> 5 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> . . *U _CTX 19 9 `uc ]
+[; ;src/system.c: 306:             CTX->tx_msg.payload[4] = (uint8_t)(CTX->ENS160.eco2_ppm>>8);
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 4 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> >> -> . . *U _CTX 19 9 `ui -> 8 `i `uc ]
 "307
-[; ;src/system.c: 307:             CTX->tx_msg.payload[6] = CTX->ENS160.dev_status;
+[; ;src/system.c: 307:             CTX->tx_msg.payload[5] = (uint8_t)(CTX->ENS160.eco2_ppm);
+[e = *U + &U . . *U _CTX 17 2 * -> -> -> 5 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux -> . . *U _CTX 19 9 `uc ]
+"308
+[; ;src/system.c: 308:             CTX->tx_msg.payload[6] = CTX->ENS160.dev_status;
 [e = *U + &U . . *U _CTX 17 2 * -> -> -> 6 `i `ui `ux -> -> # *U &U . . *U _CTX 17 2 `ui `ux . . *U _CTX 19 2 ]
-"319
-[; ;src/system.c: 319:             break;
-[e $U 1199  ]
 "320
-[; ;src/system.c: 320:         }
-}
-"323
-[; ;src/system.c: 323:         case COMM_RESP_NONE:
-[e :U 1204 ]
-"324
-[; ;src/system.c: 324:         default:
-[e :U 1205 ]
-"325
-[; ;src/system.c: 325:             break;
+[; ;src/system.c: 320:             break;
 [e $U 1199  ]
+"321
+[; ;src/system.c: 321:         }
+}
+"324
+[; ;src/system.c: 324:         case COMM_RESP_NONE:
+[e :U 1204 ]
+"325
+[; ;src/system.c: 325:         default:
+[e :U 1205 ]
 "326
-[; ;src/system.c: 326:     }
+[; ;src/system.c: 326:             break;
+[e $U 1199  ]
+"327
+[; ;src/system.c: 327:     }
 }
 [e $U 1199  ]
 [e :U 1200 ]
@@ -1891,87 +1891,87 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> . `E8291 0 `ui 1204
  1205 ]
 [e :U 1199 ]
-"329
-[; ;src/system.c: 329:     COMM_assemble_frame(&CTX->tx_msg);
+"330
+[; ;src/system.c: 330:     COMM_assemble_frame(&CTX->tx_msg);
 [e ( _COMM_assemble_frame (1 &U . *U _CTX 17 ]
-"335
-[; ;src/system.c: 335:     COMM_clear_tx_done();
-[e ( _COMM_clear_tx_done ..  ]
 "336
-[; ;src/system.c: 336:     COMM_TX_start(&CTX->tx_msg);
-[e ( _COMM_TX_start (1 &U . *U _CTX 17 ]
+[; ;src/system.c: 336:     COMM_clear_tx_done();
+[e ( _COMM_clear_tx_done ..  ]
 "337
-[; ;src/system.c: 337: }
+[; ;src/system.c: 337:     COMM_TX_start(&CTX->tx_msg);
+[e ( _COMM_TX_start (1 &U . *U _CTX 17 ]
+"338
+[; ;src/system.c: 338: }
 [e :UE 1198 ]
 }
-"338
-[; ;src/system.c: 338: static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
-[v _st_comm_handle `(S1165 ~T0 @X0 1 sf3`*S1164`E8206`E8236 ]
 "339
-[; ;src/system.c: 339: {
+[; ;src/system.c: 339: static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
+[v _st_comm_handle `(S1165 ~T0 @X0 1 sf3`*S1164`E8206`E8236 ]
+"340
+[; ;src/system.c: 340: {
 {
 [e :U _st_comm_handle ]
-"338
-[; ;src/system.c: 338: static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
+"339
+[; ;src/system.c: 339: static transition_t st_comm_handle(context_t *CTX, event_t ev, state_t current)
 [v _CTX `*S1164 ~T0 @X0 1 r1 ]
 [v _ev `E8206 ~T0 @X0 1 r2 ]
 [v _current `E8236 ~T0 @X0 1 r3 ]
-"339
-[; ;src/system.c: 339: {
+"340
+[; ;src/system.c: 340: {
 [f ]
-"341
-[; ;src/system.c: 341:     switch(ev)
-[e $U 1208  ]
 "342
-[; ;src/system.c: 342:     {
-{
+[; ;src/system.c: 342:     switch(ev)
+[e $U 1208  ]
 "343
-[; ;src/system.c: 343:         case COMM_TX_DONE: {
-[e :U 1209 ]
+[; ;src/system.c: 343:     {
 {
 "344
-[; ;src/system.c: 344:             LATCbits.LATC5 ^= 1;
-[e =^ . . _LATCbits 0 5 -> -> 1 `i `Vuc ]
+[; ;src/system.c: 344:         case COMM_TX_DONE: {
+[e :U 1209 ]
+{
 "345
-[; ;src/system.c: 345:             CTX->comm_req.type = COMM_RESP_NONE;
-[e = . . *U _CTX 16 0 . `E8291 0 ]
+[; ;src/system.c: 345:             LATCbits.LATC5 ^= 1;
+[e =^ . . _LATCbits 0 5 -> -> 1 `i `Vuc ]
 "346
-[; ;src/system.c: 346:             CTX->gate_active = 0;
-[e = . *U _CTX 4 -> -> 0 `i `uc ]
+[; ;src/system.c: 346:             CTX->comm_req.type = COMM_RESP_NONE;
+[e = . . *U _CTX 16 0 . `E8291 0 ]
 "347
-[; ;src/system.c: 347:             CTX->has_deadline = 0;
-[e = . *U _CTX 5 -> -> 0 `i `uc ]
+[; ;src/system.c: 347:             CTX->gate_active = 0;
+[e = . *U _CTX 4 -> -> 0 `i `uc ]
 "348
-[; ;src/system.c: 348:             CTX->gate_owner = GATE_NONE;
-[e = . *U _CTX 14 . `E8275 0 ]
+[; ;src/system.c: 348:             CTX->has_deadline = 0;
+[e = . *U _CTX 5 -> -> 0 `i `uc ]
 "349
-[; ;src/system.c: 349:             return to(ST_IDLE);
+[; ;src/system.c: 349:             CTX->gate_owner = GATE_NONE;
+[e = . *U _CTX 14 . `E8275 0 ]
+"350
+[; ;src/system.c: 350:             return to(ST_IDLE);
 [e ) ( _to (1 . `E8236 0 ]
 [e $UE 1206  ]
-"350
-[; ;src/system.c: 350:         }
-}
 "351
-[; ;src/system.c: 351:         default:
-[e :U 1210 ]
+[; ;src/system.c: 351:         }
+}
 "352
-[; ;src/system.c: 352:             return stay(current);
+[; ;src/system.c: 352:         default:
+[e :U 1210 ]
+"353
+[; ;src/system.c: 353:             return stay(current);
 [e ) ( _stay (1 _current ]
 [e $UE 1206  ]
-"353
-[; ;src/system.c: 353:     }
+"354
+[; ;src/system.c: 354:     }
 }
 [e $U 1207  ]
 [e :U 1208 ]
 [e [\ -> _ev `ui , $ -> . `E8206 27 `ui 1209
  1210 ]
 [e :U 1207 ]
-"354
-[; ;src/system.c: 354: }
+"355
+[; ;src/system.c: 355: }
 [e :UE 1206 ]
 }
-"358
-[; ;src/system.c: 358: static const state_ops_t OPS[ST_COUNT] =
+"359
+[; ;src/system.c: 359: static const state_ops_t OPS[ST_COUNT] =
 [v _OPS `CS1168 ~T0 @X0 -> 4 `i s ]
 [i _OPS
 :U ..
@@ -1993,129 +1993,129 @@ Version 4.0 HI-TECH Software Intermediate Code
 ..
 ..
 ]
-"369
-[; ;src/system.c: 369: void FSM_transition(FSM_t *sm, state_t next)
-[v _FSM_transition `(v ~T0 @X0 1 ef2`*S1169`E8236 ]
 "370
-[; ;src/system.c: 370: {
+[; ;src/system.c: 370: void FSM_transition(FSM_t *sm, state_t next)
+[v _FSM_transition `(v ~T0 @X0 1 ef2`*S1169`E8236 ]
+"371
+[; ;src/system.c: 371: {
 {
 [e :U _FSM_transition ]
-"369
-[; ;src/system.c: 369: void FSM_transition(FSM_t *sm, state_t next)
+"370
+[; ;src/system.c: 370: void FSM_transition(FSM_t *sm, state_t next)
 [v _sm `*S1169 ~T0 @X0 1 r1 ]
 [v _next `E8236 ~T0 @X0 1 r2 ]
-"370
-[; ;src/system.c: 370: {
-[f ]
 "371
-[; ;src/system.c: 371:     if(next==sm->state) return;
+[; ;src/system.c: 371: {
+[f ]
+"372
+[; ;src/system.c: 372:     if(next==sm->state) return;
 [e $ ! == -> _next `ui -> . *U _sm 1 `ui 1212  ]
 [e $UE 1211  ]
 [e :U 1212 ]
-"374
-[; ;src/system.c: 374:     sm->state = next;
+"375
+[; ;src/system.c: 375:     sm->state = next;
 [e = . *U _sm 1 _next ]
-"377
-[; ;src/system.c: 377:     if(OPS[sm->state].entry)
-[e $ ! != . *U + &U _OPS * -> . *U _sm 1 `ux -> -> # *U &U _OPS `ui `ux 0 -> -> 0 `i `*F8433 1213  ]
 "378
-[; ;src/system.c: 378:     {
-{
+[; ;src/system.c: 378:     if(OPS[sm->state].entry)
+[e $ ! != . *U + &U _OPS * -> . *U _sm 1 `ux -> -> # *U &U _OPS `ui `ux 0 -> -> 0 `i `*F8433 1213  ]
 "379
-[; ;src/system.c: 379:         OPS[sm->state].entry(&sm->CTX);
-[e ( *U . *U + &U _OPS * -> . *U _sm 1 `ux -> -> # *U &U _OPS `ui `ux 0 (1 &U . *U _sm 0 ]
+[; ;src/system.c: 379:     {
+{
 "380
-[; ;src/system.c: 380:     }
+[; ;src/system.c: 380:         OPS[sm->state].entry(&sm->CTX);
+[e ( *U . *U + &U _OPS * -> . *U _sm 1 `ux -> -> # *U &U _OPS `ui `ux 0 (1 &U . *U _sm 0 ]
+"381
+[; ;src/system.c: 381:     }
 }
 [e :U 1213 ]
-"381
-[; ;src/system.c: 381: }
+"382
+[; ;src/system.c: 382: }
 [e :UE 1211 ]
 }
-"383
-[; ;src/system.c: 383: void FSM_init(FSM_t *sm)
-[v _FSM_init `(v ~T0 @X0 1 ef1`*S1169 ]
 "384
-[; ;src/system.c: 384: {
+[; ;src/system.c: 384: void FSM_init(FSM_t *sm)
+[v _FSM_init `(v ~T0 @X0 1 ef1`*S1169 ]
+"385
+[; ;src/system.c: 385: {
 {
 [e :U _FSM_init ]
-"383
-[; ;src/system.c: 383: void FSM_init(FSM_t *sm)
-[v _sm `*S1169 ~T0 @X0 1 r1 ]
 "384
-[; ;src/system.c: 384: {
+[; ;src/system.c: 384: void FSM_init(FSM_t *sm)
+[v _sm `*S1169 ~T0 @X0 1 r1 ]
+"385
+[; ;src/system.c: 385: {
 [f ]
-"386
-[; ;src/system.c: 386:     sm->state = ST_IDLE;
-[e = . *U _sm 1 . `E8236 0 ]
 "387
-[; ;src/system.c: 387:     sm->CTX.sys_ms = 0;
-[e = . . *U _sm 0 0 -> -> -> 0 `i `l `ul ]
+[; ;src/system.c: 387:     sm->state = ST_IDLE;
+[e = . *U _sm 1 . `E8236 0 ]
 "388
-[; ;src/system.c: 388:     sm->CTX.fault_flags = 0;
-[e = . . *U _sm 0 7 -> -> 0 `i `uc ]
+[; ;src/system.c: 388:     sm->CTX.sys_ms = 0;
+[e = . . *U _sm 0 0 -> -> -> 0 `i `l `ul ]
 "389
-[; ;src/system.c: 389:     sm->CTX.init_flags = 0;
-[e = . . *U _sm 0 6 -> -> 0 `i `uc ]
+[; ;src/system.c: 389:     sm->CTX.fault_flags = 0;
+[e = . . *U _sm 0 7 -> -> 0 `i `uc ]
 "390
-[; ;src/system.c: 390:     sm->CTX.meas_head = 0;
-[e = . . *U _sm 0 12 -> -> 0 `i `uc ]
+[; ;src/system.c: 390:     sm->CTX.init_flags = 0;
+[e = . . *U _sm 0 6 -> -> 0 `i `uc ]
 "391
-[; ;src/system.c: 391:     sm->CTX.meas_count = 0;
+[; ;src/system.c: 391:     sm->CTX.meas_head = 0;
+[e = . . *U _sm 0 12 -> -> 0 `i `uc ]
+"392
+[; ;src/system.c: 392:     sm->CTX.meas_count = 0;
 [e = . . *U _sm 0 13 -> -> 0 `i `uc ]
-"396
-[; ;src/system.c: 396:     if(OPS[sm->state].entry)
-[e $ ! != . *U + &U _OPS * -> . *U _sm 1 `ux -> -> # *U &U _OPS `ui `ux 0 -> -> 0 `i `*F8446 1215  ]
 "397
-[; ;src/system.c: 397:     {
-{
+[; ;src/system.c: 397:     if(OPS[sm->state].entry)
+[e $ ! != . *U + &U _OPS * -> . *U _sm 1 `ux -> -> # *U &U _OPS `ui `ux 0 -> -> 0 `i `*F8446 1215  ]
 "398
-[; ;src/system.c: 398:         OPS[sm->state].entry(&sm->CTX);
-[e ( *U . *U + &U _OPS * -> . *U _sm 1 `ux -> -> # *U &U _OPS `ui `ux 0 (1 &U . *U _sm 0 ]
+[; ;src/system.c: 398:     {
+{
 "399
-[; ;src/system.c: 399:     }
+[; ;src/system.c: 399:         OPS[sm->state].entry(&sm->CTX);
+[e ( *U . *U + &U _OPS * -> . *U _sm 1 `ux -> -> # *U &U _OPS `ui `ux 0 (1 &U . *U _sm 0 ]
+"400
+[; ;src/system.c: 400:     }
 }
 [e :U 1215 ]
-"402
-[; ;src/system.c: 402: }
+"403
+[; ;src/system.c: 403: }
 [e :UE 1214 ]
 }
-"404
-[; ;src/system.c: 404: void FSM_dispatch(FSM_t *sm, event_t ev)
-[v _FSM_dispatch `(v ~T0 @X0 1 ef2`*S1169`E8206 ]
 "405
-[; ;src/system.c: 405: {
+[; ;src/system.c: 405: void FSM_dispatch(FSM_t *sm, event_t ev)
+[v _FSM_dispatch `(v ~T0 @X0 1 ef2`*S1169`E8206 ]
+"406
+[; ;src/system.c: 406: {
 {
 [e :U _FSM_dispatch ]
-"404
-[; ;src/system.c: 404: void FSM_dispatch(FSM_t *sm, event_t ev)
+"405
+[; ;src/system.c: 405: void FSM_dispatch(FSM_t *sm, event_t ev)
 [v _sm `*S1169 ~T0 @X0 1 r1 ]
 [v _ev `E8206 ~T0 @X0 1 r2 ]
-"405
-[; ;src/system.c: 405: {
-[f ]
 "406
-[; ;src/system.c: 406:     state_t old_state = sm->state;
+[; ;src/system.c: 406: {
+[f ]
+"407
+[; ;src/system.c: 407:     state_t old_state = sm->state;
 [v _old_state `E8236 ~T0 @X0 1 a ]
 [e = _old_state . *U _sm 1 ]
-"407
-[; ;src/system.c: 407:     transition_t tr = OPS[sm->state].handle(&sm->CTX, ev, old_state);
+"408
+[; ;src/system.c: 408:     transition_t tr = OPS[sm->state].handle(&sm->CTX, ev, old_state);
 [v _tr `S1165 ~T0 @X0 1 a ]
 [e = _tr ( *U . *U + &U _OPS * -> . *U _sm 1 `ux -> -> # *U &U _OPS `ui `ux 1 (3 , , &U . *U _sm 0 _ev _old_state ]
-"410
-[; ;src/system.c: 410:     if(tr.changed)
-[e $ ! != -> . _tr 0 `i -> 0 `i 1217  ]
 "411
-[; ;src/system.c: 411:     {
+[; ;src/system.c: 411:     if(tr.changed)
+[e $ ! != -> . _tr 0 `i -> 0 `i 1217  ]
+"412
+[; ;src/system.c: 412:     {
 {
-"413
-[; ;src/system.c: 413:         FSM_transition(sm, tr.next);
-[e ( _FSM_transition (2 , _sm . _tr 1 ]
 "414
-[; ;src/system.c: 414:     }
+[; ;src/system.c: 414:         FSM_transition(sm, tr.next);
+[e ( _FSM_transition (2 , _sm . _tr 1 ]
+"415
+[; ;src/system.c: 415:     }
 }
 [e :U 1217 ]
-"415
-[; ;src/system.c: 415: }
+"416
+[; ;src/system.c: 416: }
 [e :UE 1216 ]
 }
