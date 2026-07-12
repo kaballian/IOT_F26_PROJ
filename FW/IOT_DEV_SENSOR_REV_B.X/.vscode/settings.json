@@ -1,0 +1,11 @@
+{
+    "mplab.clangd.path": "c:\\Program Files\\Microchip\\xc8\\v3.10\\bin\\xc8-clangd.exe",
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "C_Cpp.errorSquiggles": "disabled",
+    "mplab.clangd.compileCommandsDir": "${workspaceFolder}\\_build\\IOT_DEV_SENSOR_REV_B\\default",
+    "cmake.sourceDirectory": "C:/Users/alext/Documents/AU/IOT_F26_PROJ/FW/IOT_DEV_SENSOR_REV_B.X/cmake/IOT_DEV_SENSOR_REV_B/default",
+    "mplab.project.workspace.addNewSourceFiles": "Always",
+    "mplab.clangd.arguments": [
+        "--header-insertion=never"
+    ]
+}

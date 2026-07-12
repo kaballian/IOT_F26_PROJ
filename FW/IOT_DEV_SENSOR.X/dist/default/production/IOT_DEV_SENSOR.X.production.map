@@ -6,10 +6,10 @@ Linker command line:
   --edf=D:/packs/Microchip/PIC16F1xxxx_DFP/1.29.444/xc8\pic\dat\20251218141021_en.msgs \
   -cn -h+dist/default/production\IOT_DEV_SENSOR.X.production.sym \
   --cmf=dist/default/production\IOT_DEV_SENSOR.X.production.cmf -z \
-  -Q16F18124 -oC:\Users\alext\AppData\Local\Temp\xcAsnn0.0\driver_tmp_3.o \
+  -Q16F18124 -oC:\Users\alext\AppData\Local\Temp\xcAs9lc.0\driver_tmp_3.o \
   --defsym=__MPLAB_BUILD=1 --fixupoverflow=error \
   -Mdist/default/production/IOT_DEV_SENSOR.X.production.map \
-  --md=C:\Users\alext\AppData\Local\Temp\xcAsnn0.0\driver_tmp_0.dat -E1 \
+  --md=C:\Users\alext\AppData\Local\Temp\xcAs9lc.0\driver_tmp_0.dat -E1 \
   -ver=XC8 Compiler -ACODE=00h-07FFhx2 -ASTRCODE=00h-0FFFh \
   -ASTRING=00h-0FFhx16 -ACONST=00h-0FFhx16 -AENTRY=00h-0FFhx16 \
   -ACOMMON=070h-07Fh -ABANK0=020h-06Fh -ABANK1=0A0h-0EFh \
@@ -43,7 +43,7 @@ Linker command line:
   -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 \
   -preset_vec=00h,intentry=04h,sivt,init,end_init -ppowerup=CODE \
   -pcinit=CODE -pfunctab=ENTRY -k \
-  C:\Users\alext\AppData\Local\Temp\xcAsnn0.0\driver_tmp_15.o \
+  C:\Users\alext\AppData\Local\Temp\xcAs9lc.0\driver_tmp_15.o \
   dist/default/production\IOT_DEV_SENSOR.X.production.o 
 
 Object code version is 3.11
@@ -53,7 +53,7 @@ Machine type is 16F18124
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\alext\AppData\Local\Temp\xcAsnn0.0\driver_tmp_15.o
+C:\Users\alext\AppData\Local\Temp\xcAs9lc.0\driver_tmp_15.o
                 end_init                             1D       1D        2        8       0
                 reset_vec                             0        0        2        0       0
                 config                             8007     8007        5        0       4

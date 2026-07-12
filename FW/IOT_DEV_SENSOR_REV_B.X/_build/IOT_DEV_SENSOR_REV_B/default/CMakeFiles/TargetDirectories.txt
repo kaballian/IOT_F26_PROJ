@@ -1,0 +1,4 @@
+C:/Users/alext/Documents/AU/IOT_F26_PROJ/FW/IOT_DEV_SENSOR_REV_B.X/_build/IOT_DEV_SENSOR_REV_B/default/CMakeFiles/IOT_DEV_SENSOR_REV_B_default_default_XC8_compile.dir
+C:/Users/alext/Documents/AU/IOT_F26_PROJ/FW/IOT_DEV_SENSOR_REV_B.X/_build/IOT_DEV_SENSOR_REV_B/default/CMakeFiles/IOT_DEV_SENSOR_REV_B_default_image_GoKf5ETJ.dir
+C:/Users/alext/Documents/AU/IOT_F26_PROJ/FW/IOT_DEV_SENSOR_REV_B.X/_build/IOT_DEV_SENSOR_REV_B/default/CMakeFiles/edit_cache.dir
+C:/Users/alext/Documents/AU/IOT_F26_PROJ/FW/IOT_DEV_SENSOR_REV_B.X/_build/IOT_DEV_SENSOR_REV_B/default/CMakeFiles/rebuild_cache.dir
