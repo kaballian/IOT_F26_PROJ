@@ -1,4 +1,4 @@
-26806382571458381
+26811737128298185
 1042P
 BAT_1042P
 
@@ -6,6 +6,13 @@ BAT_1042P
 0
 2
 2
+4363X10458XX
+4363X10458XX
+
+
+0
+4
+4
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -61382,6 +61389,13 @@ One digit LED 7 segment SA39-11 SC39-11 SA39-12 SC39-12
 0
 10
 10
+FTSH_105_01_L_DV_K
+SAMTEC_FTSH-105-01-X-DV-K-X
+
+
+0
+10
+10
 Ferrite_THT
 LairdTech_28C0236-0JW-10
 Ferrite, vertical, LairdTech 28C0236-0JW-10, https://assets.lairdtech.com/home/brandworld/files/28C0236-0JW-10.pdf, JW Miller core https://www.bourns.com/products/magnetic-products/j.w.-miller-through-hole-ferrite-beads-emi-filters
@@ -70636,6 +70650,13 @@ MC14051BDR2G
 0
 16
 16
+MDBT42Q_NRF52832
+MDBT42Q_NRF52832
+
+MDBT42Q-P512KV2 
+0
+41
+41
 Module
 A20_OLINUXINO_LIME2
 A20 Olinuxino LIME2, 1.2GHz, 512-1024MB RAM, Micro-SD, NAND or eMMC, 1000Mbit Ethernet
